@@ -76,15 +76,41 @@ task dotnetBuildDebug {
     }
 }
 
+// task dotnetResolveReferences {
+//     mustRunAfter("dotnetBuildDebug",'dotnetBuildRelease')
+//     exec {
+//         println "I'm dotnetResolveReferences task!"
+//         assert file("./src/main/assets/Data/DotNet/Game.dll").exists() 
+//         commandLine 'dotnet','../../tools/ReferenceAssemblyResolver/ReferenceAssemblyResolver.dll','--assembly','./src/main/assets/Data/DotNet/Game.dll' , '--output', 'src/main/assets/Data/DotNet/android/arm64-v8a' , '--search' , '../../libs/dotnet/urho/mobile/android,../../libs/dotnet/bcl/android/arm64-v8a'
+//         commandLine 'dotnet','../../tools/ReferenceAssemblyResolver/ReferenceAssemblyResolver.dll','--assembly','./src/main/assets/Data/DotNet/Game.dll' , '--output', 'src/main/assets/Data/DotNet/android/armeabi-v7a' , '--search' , '../../libs/dotnet/urho/mobile/android,../../libs/dotnet/bcl/android/armeabi-v7a'
+//     }
+// }
+
 task dotnetResolveReferences {
     mustRunAfter("dotnetBuildDebug",'dotnetBuildRelease')
     exec {
-        println "I'm dotnetResolveReferences task!"
+        println "I'm dotnetResolveReferences arm64-v8a task!"
         assert file("./src/main/assets/Data/DotNet/Game.dll").exists() 
-        commandLine 'dotnet','../../tools/ReferenceAssemblyResolver/ReferenceAssemblyResolver.dll','--assembly','./src/main/assets/Data/DotNet/Game.dll' , '--output', 'src/main/assets/Data/DotNet/android' , '--search' , '../../libs/dotnet/urho/mobile/android,../../libs/dotnet/bcl/android,../../libs/dotnet/bcl/android/Facades'
+        commandLine 'dotnet','../../tools/ReferenceAssemblyResolver/ReferenceAssemblyResolver.dll','--assembly','./src/main/assets/Data/DotNet/Game.dll' , '--output', 'src/main/assets/Data/DotNet/android/arm64-v8a' , '--search' , '../../libs/dotnet/urho/mobile/android,../../libs/dotnet/bcl/android/arm64-v8a'
     }
-    
+    exec {
+        println "I'm dotnetResolveReferences armeabi-v7a task!"
+        assert file("./src/main/assets/Data/DotNet/Game.dll").exists() 
+        commandLine 'dotnet','../../tools/ReferenceAssemblyResolver/ReferenceAssemblyResolver.dll','--assembly','./src/main/assets/Data/DotNet/Game.dll' , '--output', 'src/main/assets/Data/DotNet/android/armeabi-v7a' , '--search' , '../../libs/dotnet/urho/mobile/android,../../libs/dotnet/bcl/android/armeabi-v7a'
+    }
+    exec {
+        println "I'm dotnetResolveReferences x86 task!"
+        assert file("./src/main/assets/Data/DotNet/Game.dll").exists() 
+        commandLine 'dotnet','../../tools/ReferenceAssemblyResolver/ReferenceAssemblyResolver.dll','--assembly','./src/main/assets/Data/DotNet/Game.dll' , '--output', 'src/main/assets/Data/DotNet/android/x86' , '--search' , '../../libs/dotnet/urho/mobile/android,../../libs/dotnet/bcl/android/x86'
+    }
+    exec {
+        println "I'm dotnetResolveReferences x86_64 task!"
+        assert file("./src/main/assets/Data/DotNet/Game.dll").exists() 
+        commandLine 'dotnet','../../tools/ReferenceAssemblyResolver/ReferenceAssemblyResolver.dll','--assembly','./src/main/assets/Data/DotNet/Game.dll' , '--output', 'src/main/assets/Data/DotNet/android/x86_64' , '--search' , '../../libs/dotnet/urho/mobile/android,../../libs/dotnet/bcl/android/x86_64'
+    }
 }
+
+
 
 task dotnetDebug {
     println "I'm dotnetDebug task!"
