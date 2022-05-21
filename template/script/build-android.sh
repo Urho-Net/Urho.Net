@@ -77,12 +77,21 @@ else
     if [ ! -d libs/dotnet/bcl/android ] ; then
         verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android" 
         mkdir -p libs/dotnet/bcl/android
-        cp "-r"  ${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android/*  libs/dotnet/bcl/android/
+        if [ -n "$ANDROID_ARCHITECTURE" ] ; then
+            for i in "${ANDROID_ARCHITECTURE[@]}"
+            do
+                mkdir -p libs/dotnet/bcl/android/${i}
+                cp "-r"  ${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android/${i}/*  libs/dotnet/bcl/android/${i}/
+            done
+        else
+            mkdir -p libs/dotnet/bcl/android/armeabi-v7a
+            cp "-r"  ${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android/armeabi-v7a/*  libs/dotnet/bcl/android/armeabi-v7a/
+        fi
     fi
 
-    if [ ! -d libs/dotnet/urho//mobile/android ] ; then
-        verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/libs/dotnet/urho//mobile/android" 
-        mkdir -p libs/dotnet/urho//mobile/android
+    if [ ! -d libs/dotnet/urho/mobile/android ] ; then
+        verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/libs/dotnet/urho/mobile/android" 
+        mkdir -p libs/dotnet/urho/mobile/android
         cp "-r"  ${URHONET_HOME_ROOT}/template/libs/dotnet/urho//mobile/android/*  libs/dotnet/urho//mobile/android/
     fi
 
@@ -118,6 +127,16 @@ else
         aliassedinplace "s*TEMPLATE_PROJECT_NAME*$PROJECT_NAME*g" "Android/settings.gradle"
         aliassedinplace "s*TEMPLATE_PROJECT_NAME*$PROJECT_NAME*g" "Android/app/src/main/res/values/strings.xml"
         
+        if [ -n "$ANDROID_ARCHITECTURE" ] ; then
+            for i in "${ANDROID_ARCHITECTURE[@]}"
+            do
+                 mkdir -p "Android/app/src/main/jniLibs/"${i}
+                cp -R ${URHONET_HOME_ROOT}/template/libs/android/${i}/* "Android/app/src/main/jniLibs/"${i}/
+            done
+        else
+            mkdir -p "Android/app/src/main/jniLibs/armeabi-v7a"
+            cp -R ${URHONET_HOME_ROOT}/template/libs/android/armeabi-v7a/* "Android/app/src/main/jniLibs/armeabi-v7a/"
+        fi
 
         if [ -n "$PLUGINS" ] ; then
             rm "${CWD}/Assets/Data/plugins.cfg"

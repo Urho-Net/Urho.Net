@@ -50,12 +50,12 @@ task deleteIOSFolder(type: Delete) {
 }
 
 task copyDotNetAssets(type: Copy) {
-    println "I'm copyDotNetAssets task!"
-    from("../../libs/dotnet/urho/mobile") {
-        include "android/UrhoDotNet.dll"
-        include "android/Mono.Android.dll"
-    }
-    into "src/main/assets/Data/DotNet"
+    println "I'm copyDotNetAssets task! , skipped for .NET 6.x"
+    // from("../../libs/dotnet/urho/mobile") {
+    //     include "android/UrhoDotNet.dll"
+    //     include "android/Mono.Android.dll"
+    // }
+    // into "src/main/assets/Data/DotNet"
 }
 
 
@@ -75,16 +75,6 @@ task dotnetBuildDebug {
         commandLine 'dotnet','build','--configuration','Debug','-p:DefineConstants=_MOBILE_'
     }
 }
-
-// task dotnetResolveReferences {
-//     mustRunAfter("dotnetBuildDebug",'dotnetBuildRelease')
-//     exec {
-//         println "I'm dotnetResolveReferences task!"
-//         assert file("./src/main/assets/Data/DotNet/Game.dll").exists() 
-//         commandLine 'dotnet','../../tools/ReferenceAssemblyResolver/ReferenceAssemblyResolver.dll','--assembly','./src/main/assets/Data/DotNet/Game.dll' , '--output', 'src/main/assets/Data/DotNet/android/arm64-v8a' , '--search' , '../../libs/dotnet/urho/mobile/android,../../libs/dotnet/bcl/android/arm64-v8a'
-//         commandLine 'dotnet','../../tools/ReferenceAssemblyResolver/ReferenceAssemblyResolver.dll','--assembly','./src/main/assets/Data/DotNet/Game.dll' , '--output', 'src/main/assets/Data/DotNet/android/armeabi-v7a' , '--search' , '../../libs/dotnet/urho/mobile/android,../../libs/dotnet/bcl/android/armeabi-v7a'
-//     }
-// }
 
 task dotnetResolveReferences {
     mustRunAfter("dotnetBuildDebug",'dotnetBuildRelease')
