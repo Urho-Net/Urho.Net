@@ -271,7 +271,14 @@ if [ -n "$DOTNET_BCL_REFERENCE" ] ; then
 fi 
 
 rm Game.dll
-csc  /target:exe /out:Game.dll -define:_MOBILE_ /unsafe -lib:${URHO3D_DLL_PATH},${LOCAL_MONO_PATH},${LOCAL_MONO_PATH}/Facades /reference:UrhoDotNet.dll /reference:netstandard.dll ${DLL_REFERENCES} /platform:x64 ${C_SHARP_SOURCE_CODE}
+export CSPROJ=$(ls ../../*.csproj)
+if [ -f ${CSPROJ} ] ; then
+    dotnet build ${CSPROJ} --configuration Release -p:DefineConstants=_MOBILE_ --output:.
+else
+    echo "Didn't find csproj file , aborting."
+    exit -1
+fi
+# csc  /target:exe /out:Game.dll -define:_MOBILE_ /unsafe -lib:${URHO3D_DLL_PATH},${LOCAL_MONO_PATH},${LOCAL_MONO_PATH}/Facades /reference:UrhoDotNet.dll /reference:netstandard.dll ${DLL_REFERENCES} /platform:x64 ${C_SHARP_SOURCE_CODE}
 if [ -f ./Game.dll ] ; then
     mkdir -p ${ASSETS_FOLDER_DOTNET_PATH}
     cp Game.dll ${ASSETS_FOLDER_DOTNET_PATH}
