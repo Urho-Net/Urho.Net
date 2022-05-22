@@ -43,12 +43,17 @@ set (TARGET_NAME TEMPLATE_PROJECT_NAME)
 set (MONO_LIBPATH  ../libs/ios)  
 set (LIBS 
     lib-urho3d-mono-aot.a
-    libmonosgen-2.0.iphone.fat.a
-    libmono-native.iphone.fat.a
-    libmono-ee-interp.iphone.fat.a
-    libmono-icall-table.iphone.fat.a
-    libmono-ilgen.iphone.fat.a
-    libmono-profiler-log.iphone.fat.a
+    libSystem.IO.Compression.Native.a		
+    libicudata.a					
+    libSystem.Native.a				
+    libicui18n.a					
+    libSystem.Net.Security.Native.a			
+    libicuuc.a					
+    libSystem.Security.Cryptography.Native.Apple.a			
+    libmonosgen-2.0.a
+    libmono-component-debugger-stub-static.a
+    libmono-component-hot_reload-stub-static.a
+    libmono-component-diagnostics_tracing-stub-static.a
     "-framework Security"
     "-framework GSS"
     "-framework CFNetwork"
@@ -69,7 +74,7 @@ endif()
 
 link_directories(. ${MONO_LIBPATH})
 
-set (INCLUDE_DIRS ${INCLUDE_DIRS} ../include Plugins)
+set (INCLUDE_DIRS ${INCLUDE_DIRS} include/mono-2.0 Plugins)
 
 file(GLOB_RECURSE cmakeFiles ${CMAKE_SOURCE_DIR}/Plugins/CMakeLists.txt)
 foreach(cmakeFile ${cmakeFiles})

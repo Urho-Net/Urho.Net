@@ -73,6 +73,9 @@ void unregister_camera_types() { /*stub*/ };
 
 
 void initialize() {
+
+	setenv ("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "1", TRUE);
+	
 	mono_dllmap_insert(NULL, "System.Native", NULL, "__Internal", NULL);
 	mono_dllmap_insert(NULL, "System.IO.Compression.Native", NULL, "__Internal", NULL);
 	mono_dllmap_insert(NULL, "System.Security.Cryptography.Native.Apple", NULL, "__Internal", NULL);

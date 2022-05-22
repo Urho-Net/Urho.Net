@@ -136,7 +136,6 @@ int start_urho_mono_main(Platform platform) {
     file = argv[1];
     
 
-    mono_config_parse(NULL);
     
     MonoDomain* domain = NULL;
 #if defined(IOS) || defined(TVOS) || defined(__ANDROID__)
