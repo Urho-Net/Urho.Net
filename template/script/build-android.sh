@@ -74,21 +74,7 @@ if [ ! -d "$URHONET_HOME_ROOT" ]; then
 else
 	echo  "URHONET_HOME_ROOT=$URHONET_HOME_ROOT"
 
-    if [ ! -d libs/dotnet/bcl/android ] ; then
-        verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android" 
-        mkdir -p libs/dotnet/bcl/android
-        if [ -n "$ANDROID_ARCHITECTURE" ] ; then
-            for i in "${ANDROID_ARCHITECTURE[@]}"
-            do
-                mkdir -p libs/dotnet/bcl/android/${i}
-                cp "-r"  ${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android/${i}/*  libs/dotnet/bcl/android/${i}/
-            done
-        else
-            mkdir -p libs/dotnet/bcl/android/armeabi-v7a
-            cp "-r"  ${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android/armeabi-v7a/*  libs/dotnet/bcl/android/armeabi-v7a/
-        fi
-    fi
-
+    
     if [ ! -d libs/dotnet/urho/mobile/android ] ; then
         verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/libs/dotnet/urho/mobile/android" 
         mkdir -p libs/dotnet/urho/mobile/android
@@ -127,17 +113,6 @@ else
         aliassedinplace "s*TEMPLATE_PROJECT_NAME*$PROJECT_NAME*g" "Android/settings.gradle"
         aliassedinplace "s*TEMPLATE_PROJECT_NAME*$PROJECT_NAME*g" "Android/app/src/main/res/values/strings.xml"
         
-        if [ -n "$ANDROID_ARCHITECTURE" ] ; then
-            for i in "${ANDROID_ARCHITECTURE[@]}"
-            do
-                 mkdir -p "Android/app/src/main/jniLibs/"${i}
-                cp -R ${URHONET_HOME_ROOT}/template/libs/android/${i}/* "Android/app/src/main/jniLibs/"${i}/
-            done
-        else
-            mkdir -p "Android/app/src/main/jniLibs/armeabi-v7a"
-            cp -R ${URHONET_HOME_ROOT}/template/libs/android/armeabi-v7a/* "Android/app/src/main/jniLibs/armeabi-v7a/"
-        fi
-
         if [ -n "$PLUGINS" ] ; then
             rm "${CWD}/Assets/Data/plugins.cfg"
             touch "${CWD}/Assets/Data/plugins.cfg"
@@ -181,6 +156,44 @@ else
                 fi
             done
         fi               
+    fi
+
+    verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android" 
+    mkdir -p libs/dotnet/bcl/android
+    if [ -n "$ANDROID_ARCHITECTURE" ] ; then
+        for i in "${ANDROID_ARCHITECTURE[@]}"
+            do
+                if [ ! -d libs/dotnet/bcl/android/${i} ] ; then
+                    mkdir -p libs/dotnet/bcl/android/${i}
+                    cp "-r"  ${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android/${i}/*  libs/dotnet/bcl/android/${i}/
+                fi
+                    mkdir -p Android/app/src/main/jniLibs/${i}
+                    cp -R ${URHONET_HOME_ROOT}/template/libs/android/${i}/* Android/app/src/main/jniLibs/${i}/
+            done
+        ANDROID_ALL_ARCHITECTURES=('arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64')
+        Arraydiff=(`echo ${ANDROID_ALL_ARCHITECTURES[@]} ${ANDROID_ARCHITECTURE[@]} | tr ' ' '\n' | sort | uniq -u `)
+        for j in "${Arraydiff[@]}"
+            do
+                rm -rf libs/dotnet/bcl/android/${j}/
+                rm -rf Android/app/src/main/assets/Data/DotNet/android/${j}/
+                rm -rf Android/app/src/main/jniLibs/${j}/
+            done
+    else
+        ANDROID_REMOVE_ARCHITECTURES=('arm64-v8a' 'x86' 'x86_64')
+        for j in "${ANDROID_REMOVE_ARCHITECTURES[@]}"
+            do
+                rm -rf libs/dotnet/bcl/android/${j}/
+                rm -rf Android/app/src/main/assets/Data/DotNet/android/${j}/
+                rm -rf Android/app/src/main/jniLibs/${j}/
+            done
+        if [ ! -d libs/dotnet/bcl/android/armeabi-v7a ] ; then
+            mkdir -p libs/dotnet/bcl/android/armeabi-v7a
+            cp "-r"  ${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android/armeabi-v7a/*  libs/dotnet/bcl/android/armeabi-v7a/
+        fi
+        if [ ! -d Android/app/src/main/jniLibs/armeabi-v7a ] ; then
+                mkdir -p Android/app/src/main/jniLibs/armeabi-v7a
+                cp -R ${URHONET_HOME_ROOT}/template/libs/android/armeabi-v7a/* Android/app/src/main/jniLibs/armeabi-v7a/
+        fi
     fi
 
     #Create AndroidManifest.xml based upon the project configuration variables in project_vars.sh

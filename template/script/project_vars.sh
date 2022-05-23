@@ -27,6 +27,6 @@ export JAVA_PACKAGE_PATH='TEMPLATE_JAVA_PACKAGE_PATH'
 
 # Supported Android architectures  , remove any architecture that is not needed inorder to reduce the apk size.
 # The minimal ABI on ARM devices is armeabi-v7a , that's the minimal one  to make is work on ARM based devices
-# In case of an Intel based processor (x86/x86_64) , one must add 'x86' or and 'x86_64' to mkae it work on such device
-# if this line is modified , one must make a clean build inordr to make the changes.
+# In case of an Intel based processor (x86/x86_64) , one must add 'x86' or and 'x86_64' to make it work on such device
+# if this variable is not defined then armeabi-v7a will be added by default.
 export ANDROID_ARCHITECTURE=('arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64')
