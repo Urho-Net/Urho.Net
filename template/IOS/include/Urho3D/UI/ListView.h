@@ -202,6 +202,14 @@ public:
     /// Ensure full visibility of the item.
     void EnsureItemVisibility(UIElement* item);
 
+    /// Return whether Item visibility is ensured on focuse changed.
+    /// @property
+    bool GetEnsureItemVisibilityOnFcousChanged() const { return ensureItemVisibilityOnFocusChanged_; }
+
+    /// Set Item visibility is ensured on focuse changed.
+    /// @property
+    void SetEnsureItemVisibilityOnFcousChanged(bool enable);
+
 protected:
     /// Filter implicit attributes in serialization process.
     bool FilterImplicitAttributes(XMLElement& dest) const override;
@@ -224,6 +232,9 @@ protected:
     bool clearSelectionOnDefocus_;
     /// React to click end instead of click start flag.
     bool selectOnClickEnd_;
+
+    /// Ensure Item visiablity on Focus change.
+    bool ensureItemVisibilityOnFocusChanged_;
 
 private:
     /// Handle global UI mouseclick to check for selection change.

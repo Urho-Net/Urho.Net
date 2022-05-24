@@ -97,6 +97,7 @@ URHO3D_EVENT(E_SCENEPOSTUPDATE, ScenePostUpdate)
 URHO3D_EVENT(E_ASYNCLOADPROGRESS, AsyncLoadProgress)
 {
     URHO3D_PARAM(P_SCENE, Scene);                  // Scene pointer
+    URHO3D_PARAM(P_NODE, Node);                    // Node pointer
     URHO3D_PARAM(P_PROGRESS, Progress);            // float
     URHO3D_PARAM(P_LOADEDNODES, LoadedNodes);      // int
     URHO3D_PARAM(P_TOTALNODES, TotalNodes);        // int
@@ -108,6 +109,7 @@ URHO3D_EVENT(E_ASYNCLOADPROGRESS, AsyncLoadProgress)
 URHO3D_EVENT(E_ASYNCLOADFINISHED, AsyncLoadFinished)
 {
     URHO3D_PARAM(P_SCENE, Scene);                  // Scene pointer
+    URHO3D_PARAM(P_NODE, Node);                  // Node pointer
 }
 
 /// A child node has been added to a parent node.

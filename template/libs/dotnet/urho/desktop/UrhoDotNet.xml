@@ -5748,6 +5748,18 @@
              Ensure full visibility of the item.
              </summary>
             </member>
+        <member name="M:Urho.Gui.ListView.GetEnsureItemVisibilityOnFcousChanged">
+             <summary>
+             Return whether Item visibility is ensured on focuse changed.
+             
+             </summary>
+            </member>
+        <member name="M:Urho.Gui.ListView.SetEnsureItemVisibilityOnFcousChanged(System.Boolean)">
+             <summary>
+             Set Item visibility is ensured on focuse changed.
+             
+             </summary>
+            </member>
         <member name="P:Urho.Gui.ListView.Selection">
              <summary>
              Return first selected index, or M_MAX_UNSIGNED if none selected.
@@ -5822,6 +5834,15 @@
         <member name="P:Urho.Gui.ListView.SelectedItem">
              <summary>
              Return first selected item, or null if none selected.
+             
+             </summary>
+            </member>
+        <member name="P:Urho.Gui.ListView.EnsureItemVisibilityOnFcousChanged">
+             <summary>
+             Return whether Item visibility is ensured on focuse changed.
+             
+             Or
+             Set Item visibility is ensured on focuse changed.
              
              </summary>
             </member>
@@ -10311,6 +10332,38 @@
              Load from a JSON file asynchronously. Return true if started successfully. The LOAD_RESOURCES_ONLY mode can also be used to preload resources from object prefab files.
              </summary>
             </member>
+        <member name="M:Urho.Scene.LoadAsyncNodeXml(System.String,Urho.CreateMode)">
+             <summary>
+             Load a Node prefab from an XML file asynchronously into an exsiting scene. Return true if started successfully.
+             </summary>
+            </member>
+        <member name="M:Urho.Scene.LoadAsyncNodeXml(Urho.IO.File,Urho.CreateMode)">
+             <summary>
+             Load a Node prefab from a XML file asynchronously into an exsiting scene. Return true if started successfully.
+             </summary>
+            </member>
+        <member name="M:Urho.Scene.LoadAsyncNodeJson(System.String,Urho.CreateMode)">
+             <summary>
+             Load a Node prefab from a JSON file asynchronously into an exsiting scene. Return true if started successfully.
+             </summary>
+            </member>
+        <member name="M:Urho.Scene.LoadAsyncNodeJson(Urho.IO.File,Urho.CreateMode)">
+             <summary>
+             Load a Node prefab from a JSON file asynchronously into an exsiting scene. Return true if started successfully.
+             </summary>
+            </member>
+        <member name="M:Urho.Scene.LoadAsyncNode(System.String,Urho.CreateMode)">
+             <summary>
+             Load a Node prefab from a binary file asynchronously into an exsiting scene. Return true if started
+             successfully.
+             </summary>
+            </member>
+        <member name="M:Urho.Scene.LoadAsyncNode(Urho.IO.File,Urho.CreateMode)">
+             <summary>
+             Load a Node prefab from a binary file asynchronously into an exsiting scene. Return true if started
+             successfully.
+             </summary>
+            </member>
         <member name="M:Urho.Scene.StopAsyncLoading">
              <summary>
              Stop asynchronous loading.
@@ -10389,6 +10442,12 @@
         <member name="M:Urho.Scene.SetAsyncLoadingMs(System.Int32)">
              <summary>
              Set maximum milliseconds per frame to spend on async scene loading.
+             
+             </summary>
+            </member>
+        <member name="M:Urho.Scene.SetAsyncIntervalMs(System.Int32)">
+             <summary>
+             Set inerval milliseconds between consequtive loads.
              
              </summary>
             </member>
@@ -10490,6 +10549,12 @@
         <member name="M:Urho.Scene.GetAsyncLoadingMs">
              <summary>
              Return maximum milliseconds per frame to spend on async loading.
+             
+             </summary>
+            </member>
+        <member name="M:Urho.Scene.GetAsyncIntervalMs">
+             <summary>
+             Return Maximum milliseconds interval between qonsequtive asynLoad calls.
              
              </summary>
             </member>
@@ -10641,6 +10706,15 @@
              
              Or
              Set maximum milliseconds per frame to spend on async scene loading.
+             
+             </summary>
+            </member>
+        <member name="P:Urho.Scene.AsyncIntervalMs">
+             <summary>
+             Return Maximum milliseconds interval between qonsequtive asynLoad calls.
+             
+             Or
+             Set inerval milliseconds between consequtive loads.
              
              </summary>
             </member>

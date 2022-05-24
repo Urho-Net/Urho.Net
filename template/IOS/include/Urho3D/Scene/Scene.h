@@ -81,6 +81,13 @@ struct AsyncProgress
     unsigned loadedNodes_;
     /// Total root-level nodes.
     unsigned totalNodes_;
+
+    SharedPtr<Node> rootNode_;
+    bool isNodeLoading_;
+    bool isFirstNodeLoad_;
+    SceneResolver resolver_;
+    HiresTimer asyncIntervalTimer_;
+    unsigned int  asyncIntervalTime_;
 };
 
 /// Root scene node, represents the whole scene.
@@ -131,6 +138,27 @@ public:
     bool LoadAsyncXML(File* file, LoadMode mode = LOAD_SCENE_AND_RESOURCES);
     /// Load from a JSON file asynchronously. Return true if started successfully. The LOAD_RESOURCES_ONLY mode can also be used to preload resources from object prefab files.
     bool LoadAsyncJSON(File* file, LoadMode mode = LOAD_SCENE_AND_RESOURCES);
+
+    /// Load a Node prefab from an XML file asynchronously into an exsiting scene. Return true if started successfully.
+    bool LoadAsyncNodeXML(const String& name, CreateMode createMode = REPLICATED);
+
+    /// Load a Node prefab from a XML file asynchronously into an exsiting scene. Return true if started successfully.
+    bool LoadAsyncNodeXML(File* file, CreateMode createMode = REPLICATED);
+
+    /// Load a Node prefab from a JSON file asynchronously into an exsiting scene. Return true if started successfully.
+    bool LoadAsyncNodeJSON(const String& name, CreateMode createMode = REPLICATED);
+
+    /// Load a Node prefab from a JSON file asynchronously into an exsiting scene. Return true if started successfully.
+    bool LoadAsyncNodeJSON(File* file, CreateMode createMode = REPLICATED);
+
+    /// Load a Node prefab from a binary file asynchronously into an exsiting scene. Return true if started
+    /// successfully.
+    bool LoadAsyncNode(const String& name, CreateMode createMode = REPLICATED);
+
+    /// Load a Node prefab from a binary file asynchronously into an exsiting scene. Return true if started
+    /// successfully.
+    bool LoadAsyncNode(File* file, CreateMode createMode = REPLICATED);
+
     /// Stop asynchronous loading.
     void StopAsyncLoading();
     /// Instantiate scene content from binary data. Return root node if successful.
@@ -166,6 +194,11 @@ public:
     /// Set maximum milliseconds per frame to spend on async scene loading.
     /// @property
     void SetAsyncLoadingMs(int ms);
+
+    /// Set inerval milliseconds between consequtive loads.
+    /// @property
+    void SetAsyncIntervalMs(int ms);
+
     /// Add a required package file for networking. To be called on the server.
     void AddRequiredPackageFile(PackageFile* package);
     /// Clear required package files.
@@ -227,6 +260,10 @@ public:
     /// Return maximum milliseconds per frame to spend on async loading.
     /// @property
     int GetAsyncLoadingMs() const { return asyncLoadingMs_; }
+
+    /// Return Maximum milliseconds interval between qonsequtive asynLoad calls.
+    /// @property
+    int GetAsyncIntervalMs() const { return asyncIntervalMs_; }
 
     /// Return required package files.
     /// @property
@@ -290,6 +327,8 @@ private:
     void HandleResourceBackgroundLoaded(StringHash eventType, VariantMap& eventData);
     /// Update asynchronous loading.
     void UpdateAsyncLoading();
+     /// Send Update asynchronous loading.
+    void SendUpdateAsyncLoading();
     /// Finish asynchronous loading.
     void FinishAsyncLoading();
     /// Finish loading. Sets the scene filename and checksum.
@@ -359,6 +398,8 @@ private:
     bool asyncLoading_;
     /// Threaded update flag.
     bool threadedUpdate_;
+    /// Maximum milliseconds interval between qonsequtive asynLoad calls.
+    int asyncIntervalMs_;
 };
 
 /// Register Scene library objects.

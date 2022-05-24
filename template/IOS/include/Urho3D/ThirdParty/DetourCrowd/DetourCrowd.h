@@ -16,8 +16,6 @@
 // 3. This notice may not be removed or altered from any source distribution.
 //
 
-// Modified by Yao Wei Tjong for Urho3D
-
 #ifndef DETOURCROWD_H
 #define DETOURCROWD_H
 
@@ -208,7 +206,7 @@ typedef void (*dtUpdateCallback)(dtCrowdAgent* ag, float dt);
 /// @ingroup crowd
 class dtCrowd
 {
-    dtUpdateCallback m_updateCallback; // Urho3D
+	dtUpdateCallback m_updateCallback; // Urho3D
 	int m_maxAgents;
 	dtCrowdAgent* m_agents;
 	dtCrowdAgent** m_activeAgents;
@@ -247,8 +245,7 @@ class dtCrowd
 public:
 	dtCrowd();
 	~dtCrowd();
-
-	// Urho3D: Add update callback support
+	
 	/// Initializes the crowd.  
 	///  @param[in]		maxAgents		The maximum number of agents the crowd can manage. [Limit: >= 1]
 	///  @param[in]		maxAgentRadius	The maximum radius of any agent that will be added to the crowd. [Limit: > 0]
@@ -281,11 +278,6 @@ public:
 	/// The maximum number of agents that can be managed by the object.
 	/// @return The maximum number of agents.
 	int getAgentCount() const;
-
-	// Urho3D: Add missing getter
-	/// The maximum radius of any agent that will be added to the crowd.
-	/// @return The maximum radius of any agent.
-	float getMaxAgentRadius() const { return m_maxAgentRadius; }
 	
 	/// Adds a new agent to the crowd.
 	///  @param[in]		pos		The requested position of the agent. [(x, y, z)]
@@ -361,6 +353,11 @@ public:
 
 	/// Gets the query object used by the crowd.
 	const dtNavMeshQuery* getNavMeshQuery() const { return m_navquery; }
+
+    // Urho3D: Add missing getter
+    /// The maximum radius of any agent that will be added to the crowd.
+    /// @return The maximum radius of any agent.
+    float getMaxAgentRadius() { return m_maxAgentRadius; }
 
 private:
 	// Explicitly disabled copy constructor and copy assignment operator.
