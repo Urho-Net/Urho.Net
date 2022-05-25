@@ -158,6 +158,8 @@ else
         fi               
     fi
 
+    rm -rf Android/app/src/main/jniLibs
+    
     verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android" 
     mkdir -p libs/dotnet/bcl/android
     if [ -n "$ANDROID_ARCHITECTURE" ] ; then
