@@ -1,6 +1,10 @@
 # Urho.Net
-Multi-Platform C# Game development framework based upon the Urho3D game engine .\
-Currently supports :  Windows , Linux , OSX , iOS , Android and Web browsers . 
+Multi-Platform C# .NET 6.x Game development framework based upon the Urho3D game engine .\
+Currently supports :  Windows , Linux , OSX , iOS , Android  . 
+Web support will be added in the future\
+
+This dotnet-6.x branch is still in a development phase so expect to encounter some issues.
+
 
 First class Visual Studio Code support as the main IDE on all 3 major platforms , Windows , MacOS and Linux .
 ### Check the Wiki for quick start
@@ -10,8 +14,8 @@ First class Visual Studio Code support as the main IDE on all 3 major platforms 
 - **Visual Studio Code** \
   https://code.visualstudio.com/download
 
-- **NET Core SDK 3.1**  \
-  https://dotnet.microsoft.com/download/dotnet-core/3.1
+- NET 6.x SDK  \
+  https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
 - **C# for Visual Studio Code (powered by OmniSharp)**.\
   - https://channel9.msdn.com/Blogs/dotnet/Get-started-VSCode-Csharp-NET-Core-Windows
@@ -22,17 +26,10 @@ First class Visual Studio Code support as the main IDE on all 3 major platforms 
 - CMake
 - XCode
 - Valid Apple developer account
-- Mono SDK \
-  https://www.mono-project.com/download/stable/
 - ios-deploy , `brew install ios-deploy`
 
 # <u> Android Dependencies </u>
 - Android SDK https://developer.android.com/studio
-
-# <u> Web Dependencies </u>
-- Just a working browser
-- Browser working live samples can be found in [Urho.Net Feature Samples on Web](https://elix22.itch.io/urhonet-feature-samples)
-- Please note that Urho.Network is not supported on Web browsers and will cause unpredictable behavior of the application.
 
 # <u> Getting Started </u>
 - General (updated on 31/01/2021)
@@ -41,22 +38,17 @@ First class Visual Studio Code support as the main IDE on all 3 major platforms 
   - https://youtu.be/6YZC6N9cIGk
 - Android development
   - https://youtu.be/ElMs_jkcLxo
-- Web development
-  - Building for Web is done via Visual Studio Code editor
-  - To build the application for web deployment 
-    - Press Ctrl+Shift+P (Cmd+Shift+P on Mac)
-    - Choose Tasks: Run Task
-    - Choose web-build
-    - The build will generate Web folder in the project directory
-    - The Web folder contains everything that is needed for web deployment.
-    - You can test it on your local browser with the [Live Server extention](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
-  - Web support is still in the development phase , you may submit any issues found with a detailed description of the issue and  Browser Console logs.
+
 
 # Samples 
+The samples repo contains several samples with the dotnet-6.x branch\
+Not all  samples were converted to .Net 6.x  , mostly due to my laziness , the plan is to convert them over time.\
 https://github.com/Urho-Net/Samples
 
 ## <u> Urho.Net uses the following third-party libraries: </u>
 
+- The Mono runtime used in Android and iOS is taken from https://github.com/dotnet/runtime/tree/v6.0.5
+  
 - Urho3D game engine, Special customized version , this is the main development link of this framework. \
   It contains the entire source code , tools and scripts that allow proper development of this C# Multiplatform game framework.\
   https://github.com/elix22/Urho3D/tree/dotnet
