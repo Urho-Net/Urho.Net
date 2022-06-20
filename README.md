@@ -1,7 +1,7 @@
 # Urho.Net
 Multi-Platform C# .NET 6.x Game development framework based upon the Urho3D game engine .\
-Currently supports :  Windows , Linux , OSX , iOS , Android  . 
-Web support will be added in the future\
+Currently supports :  Windows , Linux , OSX , iOS , Android.\
+Web support will be added in the future.
 
 This dotnet-6.x branch is still in a development phase so expect to encounter some issues.
 
