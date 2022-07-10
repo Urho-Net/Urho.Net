@@ -60,19 +60,22 @@ task copyDotNetAssets(type: Copy) {
 
 
 task dotnetBuildRelease {
-    exec {
-        println "I'm dotnetBuildRelease task!"
-        workingDir '../../'
-        commandLine 'dotnet','build','--configuration','Release','-p:DefineConstants=_MOBILE_'
+    if (!project.hasProperty('skipDotnetRelease')) {
+        exec {
+            println "I'm dotnetBuildRelease task!"
+            workingDir '../../'
+            commandLine 'dotnet','build','--configuration','Release','-p:DefineConstants=_MOBILE_'
+        }
     }
-    
 }
 
 task dotnetBuildDebug {
-    exec {
-        println "I'm dotnetBuildDebug task!"
-        workingDir '../../'
-        commandLine 'dotnet','build','--configuration','Debug','-p:DefineConstants=_MOBILE_'
+    if (!project.hasProperty('skipDotnetDebug')) {
+        exec {
+            println "I'm dotnetBuildDebug task!"
+            workingDir '../../'
+            commandLine 'dotnet','build','--configuration','Debug','-p:DefineConstants=_MOBILE_'
+        }
     }
 }
 
@@ -103,13 +106,17 @@ task dotnetResolveReferences {
 
 
 task dotnetDebug {
-    println "I'm dotnetDebug task!"
-    mustRunAfter("copyAssets",'deleteIOSFolder','copyDotNetAssets','dotnetBuildDebug','dotnetResolveReferences')
-    dependsOn('copyAssets','deleteIOSFolder','copyDotNetAssets','dotnetBuildDebug','dotnetResolveReferences','assembleDebug')
+    if (!project.hasProperty('skipDotnetDebug')) {
+        println "I'm dotnetDebug task!"
+        mustRunAfter("copyAssets",'deleteIOSFolder','copyDotNetAssets','dotnetBuildDebug','dotnetResolveReferences')
+        dependsOn('copyAssets','deleteIOSFolder','copyDotNetAssets','dotnetBuildDebug','dotnetResolveReferences','assembleDebug')
+    }
 }
 
 task dotnetRelease {
-    println "I'm dotnetRelease task!"
-    mustRunAfter("copyAssets",'deleteIOSFolder','copyDotNetAssets','dotnetBuildRelease','dotnetResolveReferences')
-    dependsOn('copyAssets','deleteIOSFolder','copyDotNetAssets','dotnetBuildRelease','dotnetResolveReferences','assembleRelease')
+    if (!project.hasProperty('skipDotnetRelease')) {
+        println "I'm dotnetRelease task!"
+        mustRunAfter("copyAssets",'deleteIOSFolder','copyDotNetAssets','dotnetBuildRelease','dotnetResolveReferences')
+        dependsOn('copyAssets','deleteIOSFolder','copyDotNetAssets','dotnetBuildRelease','dotnetResolveReferences','assembleRelease')
+    }
 }

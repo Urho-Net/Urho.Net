@@ -204,7 +204,7 @@ fi
 
 if [[ "$BUILD" == "debug" ]]; then
     cd Android
-    ./gradlew dotnetDebug
+    ./gradlew dotnetDebug -PskipDotnetRelease=true
     cd ..
     mkdir -p output/Android
     cp Android/app/build/outputs/apk/debug/app-debug.apk output/Android
@@ -216,7 +216,7 @@ if [[ "$BUILD" == "debug" ]]; then
     fi
 elif [[ "$BUILD" == "release" ]]; then
     cd Android
-    ./gradlew dotnetRelease
+    ./gradlew dotnetRelease -PskipDotnetDebug=true
     cd ..
     mkdir -p output/Android
     cp Android/app/build/outputs/apk/release/app-release-unsigned.apk output/Android
