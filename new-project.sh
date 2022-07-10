@@ -169,7 +169,6 @@ aliassedinplace "s*TEMPLATE_JAVA_PACKAGE_PATH*$java_package_path*g" "$projPath/s
 
 
 cp "-r" "template/Assets" "$projPath"
-cp "-r" "template/include" "$projPath"
 
 cp "-r" "template/Source" "$projPath"
 mv "$projPath/Source/template.cs" "$projPath/Source/${projName}.cs" 
@@ -189,6 +188,8 @@ cp "template/template.csproj" "$projPath/$projName.csproj"
 mkdir "-p" "$projPath/tools"
 cp "-r" "tools/ReferenceAssemblyResolver" "$projPath/tools"
 cp "-R" "tools/bash_mini/." "$projPath/tools/bash"
+
+cp "template/obfuscar.xml" "$projPath/obfuscar.xml"
 
 echo "Successful creation"
 echo "Project name : '$projName'"

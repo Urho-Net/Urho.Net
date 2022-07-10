@@ -127,8 +127,6 @@
     <Error Condition="! Exists('$(libUrho3D)')" Text="Urho3D.dll not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
     <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutDir)\%(RecursiveDir)" SkipUnchangedFiles="true" Retries="3" RetryDelayMilliseconds="300" />
     <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Assets/Data/DotNet" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="@(AndroidAssetsDestinationDir)" SkipUnchangedFiles="true" />
   </Target>
 
   <Target Name="CopyCustomContentMacOS" AfterTargets="AfterBuild" Condition="'$(IsOSX)'=='true'">
@@ -138,8 +136,6 @@
     <Error Condition="! Exists('$(libUrho3D)')" Text="libUrho3D.dylib not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
     <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutDir)\%(RecursiveDir)" SkipUnchangedFiles="true" Retries="3" RetryDelayMilliseconds="300" />
     <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Assets/Data/DotNet" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="@(AndroidAssetsDestinationDir)" SkipUnchangedFiles="true" />
   </Target>
   
   <Target Name="CopyCustomContentLinux" AfterTargets="AfterBuild" Condition="'$(IsLinux)'=='true'">
@@ -149,8 +145,6 @@
     <Error Condition="! Exists('$(libUrho3D)')" Text="libUrho3D.so not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
     <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutDir)\%(RecursiveDir)" SkipUnchangedFiles="true" Retries="3" RetryDelayMilliseconds="300" />
     <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Assets/Data/DotNet" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="@(AndroidAssetsDestinationDir)" SkipUnchangedFiles="true" />
   </Target>
 
   <Target Name="CopyCustomContentPublish" AfterTargets="Publish" Condition="'$(PublishFlavor)'=='linux-x64' Or '$(PublishFlavor)'=='win-x64' Or '$(PublishFlavor)'=='osx-x64'">
@@ -162,6 +156,16 @@
     <Error Condition="! Exists('$(libUrho3D)')" Text="libUrho3D.dylib not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
     <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutDir)\publish\%(RecursiveDir)" SkipUnchangedFiles="true" Retries="3" RetryDelayMilliseconds="300" />
     <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)\publish" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyObfuscatedGameAssembly" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Copy SourceFiles="$(OutDir)/Obfuscator_Output/Game.dll" DestinationFolder="Assets/Data/DotNet" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(OutDir)/Obfuscator_Output/Game.dll" DestinationFolder="@(AndroidAssetsDestinationDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyGameAssembly" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Assets/Data/DotNet" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="@(AndroidAssetsDestinationDir)" SkipUnchangedFiles="true" />
   </Target>
 
   <Target Name = "CustomAfterClean" AfterTargets="AfterClean">
@@ -183,4 +187,22 @@
     </Reference>
   </ItemGroup>
 
+  <!-- Obfuscation enabled in release build -->
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Content Include="obfuscar.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <PropertyGroup  Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PostBuildEvent>mono "$(Obfuscar)" obfuscar.xml</PostBuildEvent>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PackageReference Include="Obfuscar" Version="2.2.33">
+      <PrivateAssets>all</PrivateAssets>
+       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
 </Project>

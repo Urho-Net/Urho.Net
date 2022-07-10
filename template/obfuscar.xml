@@ -1,0 +1,8 @@
+<?xml version='1.0'?>
+<Obfuscator>
+  <Var name="InPath" value="." />
+  <Var name="OutPath" value="./Obfuscator_Output" />
+  <Var name="HidePrivateApi" value="true" />
+  <Var name="KeepPublicApi" value="false" />
+  <Module file="$(InPath)/Game.dll" />
+</Obfuscator>
