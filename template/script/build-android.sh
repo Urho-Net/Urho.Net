@@ -146,7 +146,7 @@ else
 
     rm -rf Android/app/src/main/jniLibs
     mkdir -p Android/app/src/main/jniLibs
-    
+
     if [ -n "$PLUGINS" ] ; then
         rm "${CWD}/Assets/Data/plugins.cfg"
         touch "${CWD}/Assets/Data/plugins.cfg"
@@ -207,6 +207,14 @@ if [[ "$BUILD" == "debug" ]]; then
     cd Android
     ./gradlew dotnetDebug -PskipDotnetRelease=true
     cd ..
+    if [ -n "$ANDROID_ARCHITECTURE" ] ; then
+        ANDROID_ALL_ARCHITECTURES=('arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64')
+        Arraydiff=(`echo ${ANDROID_ALL_ARCHITECTURES[@]} ${ANDROID_ARCHITECTURE[@]} | tr ' ' '\n' | sort | uniq -u `)
+        for j in "${Arraydiff[@]}"
+            do
+                rm -rf Android/app/src/main/assets/Data/DotNet/android/${j}/
+            done
+    fi
     mkdir -p output/Android
     cp Android/app/build/outputs/apk/debug/app-debug.apk output/Android
     if [[ "$DEPLOY" == "1" ]]; then
@@ -219,6 +227,14 @@ elif [[ "$BUILD" == "release" ]]; then
     cd Android
     ./gradlew dotnetRelease -PskipDotnetDebug=true
     cd ..
+    if [ -n "$ANDROID_ARCHITECTURE" ] ; then
+        ANDROID_ALL_ARCHITECTURES=('arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64')
+        Arraydiff=(`echo ${ANDROID_ALL_ARCHITECTURES[@]} ${ANDROID_ARCHITECTURE[@]} | tr ' ' '\n' | sort | uniq -u `)
+        for j in "${Arraydiff[@]}"
+            do
+                rm -rf Android/app/src/main/assets/Data/DotNet/android/${j}/
+            done
+    fi
     mkdir -p output/Android
     cp Android/app/build/outputs/apk/release/app-release-unsigned.apk output/Android
     KEY_STORE=$(echo "$KEY_STORE" | tr -d ' ')
