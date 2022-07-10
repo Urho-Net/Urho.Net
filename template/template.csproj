@@ -164,6 +164,7 @@
   </Target>
 
   <Target Name="CopyGameAssembly" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Copy SourceFiles="$(OutDir)/Obfuscator_Output/Game.dll" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Assets/Data/DotNet" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="@(AndroidAssetsDestinationDir)" SkipUnchangedFiles="true" />
   </Target>
@@ -204,5 +205,5 @@
        <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  
+
 </Project>

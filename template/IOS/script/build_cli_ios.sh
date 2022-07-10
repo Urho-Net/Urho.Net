@@ -273,7 +273,7 @@ fi
 rm Game.dll
 export CSPROJ=$(ls ../../*.csproj)
 if [ -f ${CSPROJ} ] ; then
-    dotnet build ${CSPROJ} --configuration Release -p:DefineConstants=_MOBILE_ --output:.
+    dotnet build ${CSPROJ} --configuration Debug -p:DefineConstants=_MOBILE_ --output:.
 else
     echo "Didn't find csproj file , aborting."
     exit -1
