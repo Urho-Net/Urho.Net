@@ -113,20 +113,6 @@ else
         aliassedinplace "s*TEMPLATE_PROJECT_NAME*$PROJECT_NAME*g" "Android/settings.gradle"
         aliassedinplace "s*TEMPLATE_PROJECT_NAME*$PROJECT_NAME*g" "Android/app/src/main/res/values/strings.xml"
         
-        if [ -n "$PLUGINS" ] ; then
-            rm "${CWD}/Assets/Data/plugins.cfg"
-            touch "${CWD}/Assets/Data/plugins.cfg"
-            mkdir "-p" "Android/app/src/main/java/com/urho3d/plugin"
-            for i in "${PLUGINS[@]}"
-            do
-                verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/Plugins/${i}/android"
-                cp -R ${URHONET_HOME_ROOT}/template/Plugins/${i}/android/java/ "Android/app/src/main/java/com/urho3d/plugin/${i}"
-                cp -R ${URHONET_HOME_ROOT}/template/Plugins/${i}/android/lib/* "Android/app/src/main/jniLibs"
-                aliassedinplace "s*TEMPLATE_UUID*$PROJECT_UUID*g" "Android/app/src/main/java/com/urho3d/plugin/${i}/${i}.java"
-                echo ${i} >> "${CWD}/Assets/Data/plugins.cfg"
-            done
-        fi
-
         if [ -n "$ANDROID_DEPENDENCIES" ] ; then
             echo " " >> "Android/app/build.gradle"
             echo " " >> "Android/app/build.gradle"
@@ -159,7 +145,22 @@ else
     fi
 
     rm -rf Android/app/src/main/jniLibs
+    mkdir -p Android/app/src/main/jniLibs
     
+    if [ -n "$PLUGINS" ] ; then
+        rm "${CWD}/Assets/Data/plugins.cfg"
+        touch "${CWD}/Assets/Data/plugins.cfg"
+        mkdir "-p" "Android/app/src/main/java/com/urho3d/plugin"
+        for i in "${PLUGINS[@]}"
+        do
+            verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/Plugins/${i}/android"
+            cp -R ${URHONET_HOME_ROOT}/template/Plugins/${i}/android/java/ "Android/app/src/main/java/com/urho3d/plugin/${i}"
+            cp -R ${URHONET_HOME_ROOT}/template/Plugins/${i}/android/lib/* "Android/app/src/main/jniLibs"
+            aliassedinplace "s*TEMPLATE_UUID*$PROJECT_UUID*g" "Android/app/src/main/java/com/urho3d/plugin/${i}/${i}.java"
+            echo ${i} >> "${CWD}/Assets/Data/plugins.cfg"
+        done
+    fi
+
     verify_dir_exist_or_exit "${URHONET_HOME_ROOT}/template/libs/dotnet/bcl/android" 
     mkdir -p libs/dotnet/bcl/android
     if [ -n "$ANDROID_ARCHITECTURE" ] ; then
