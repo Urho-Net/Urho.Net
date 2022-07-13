@@ -191,6 +191,14 @@ cp "-R" "tools/bash_mini/." "$projPath/tools/bash"
 
 cp "template/obfuscar.xml" "$projPath/obfuscar.xml"
 
+mkdir "-p" "$projPath/platform"
+mkdir "-p" "$projPath/platform/android/java"
+mkdir "-p" "$projPath/platform/ios"
+mkdir "-p" "$projPath/platform/windows"
+mkdir "-p" "$projPath/platform/linux"
+mkdir "-p" "$projPath/platform/macos"
+mkdir "-p" "$projPath/platform/web"
+
 echo "Successful creation"
 echo "Project name : '$projName'"
 echo "Unique identifier : '$uuid'"

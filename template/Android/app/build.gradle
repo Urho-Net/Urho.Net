@@ -47,7 +47,7 @@ task copyAssets(type: Copy) {
 
 task copyJava(type: Copy) {
     println "I'm copyJava task!"
-    from "../../Java"
+    from "../../platform/android/java"
     into "src/main/java"
 }
 

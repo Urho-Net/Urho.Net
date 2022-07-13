@@ -65,6 +65,9 @@ set(CMAKE_XCODE_ATTRIBUTE_ENABLE_BITCODE "NO" CACHE INTERNAL "")
 file (GLOB S_FILES *.s)
 file (GLOB EXTRA_MM_FILES *.mm)
 
+file (GLOB EXTRA_PLATFORM_M_FILES ../platform/ios/*.m)
+file (GLOB EXTRA_PLATFORM_MM_FILES ../platform/ios/*.mm)
+file (GLOB EXTRA_PLATFORM_CPP_FILES ../platform/ios/*.cpp)
 
 if(APPLE)
 set (LIBS  ${LIBS}  z ncurses)
@@ -83,7 +86,7 @@ foreach(cmakeFile ${cmakeFiles})
 endforeach(cmakeFile)
 
 # Define source files
-define_source_files (EXTRA_H_FILES ${COMMON_SAMPLE_H_FILES} ${S_FILES} ${EXTRA_MM_FILES} ${MACOS_FILES} ${PLUGIN_FILES})
+define_source_files (EXTRA_H_FILES ${COMMON_SAMPLE_H_FILES} ${S_FILES} ${EXTRA_MM_FILES} ${MACOS_FILES} ${PLUGIN_FILES} ${EXTRA_PLATFORM_M_FILES} ${EXTRA_PLATFORM_MM_FILES} ${EXTRA_PLATFORM_CPP_FILES})
 
 # Setup target with resource copying
 setup_main_executable ()
