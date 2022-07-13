@@ -45,6 +45,13 @@ task copyAssets(type: Copy) {
     into "src/main/assets"
 }
 
+task copyJava(type: Copy) {
+    println "I'm copyJava task!"
+    from "../../Java"
+    into "src/main/java"
+}
+
+
 task deleteIOSFolder(type: Delete) {
   delete 'src/main/assets/Data/DotNet/ios'
 }
@@ -108,15 +115,15 @@ task dotnetResolveReferences {
 task dotnetDebug {
     if (!project.hasProperty('skipDotnetDebug')) {
         println "I'm dotnetDebug task!"
-        mustRunAfter("copyAssets",'deleteIOSFolder','copyDotNetAssets','dotnetBuildDebug','dotnetResolveReferences')
-        dependsOn('copyAssets','deleteIOSFolder','copyDotNetAssets','dotnetBuildDebug','dotnetResolveReferences','assembleDebug')
+        mustRunAfter('copyAssets','copyJava','deleteIOSFolder','copyDotNetAssets','dotnetBuildDebug','dotnetResolveReferences')
+        dependsOn('copyAssets','copyJava','deleteIOSFolder','copyDotNetAssets','dotnetBuildDebug','dotnetResolveReferences','assembleDebug')
     }
 }
 
 task dotnetRelease {
     if (!project.hasProperty('skipDotnetRelease')) {
         println "I'm dotnetRelease task!"
-        mustRunAfter("copyAssets",'deleteIOSFolder','copyDotNetAssets','dotnetBuildRelease','dotnetResolveReferences')
-        dependsOn('copyAssets','deleteIOSFolder','copyDotNetAssets','dotnetBuildRelease','dotnetResolveReferences','assembleRelease')
+        mustRunAfter('copyAssets','copyJava','deleteIOSFolder','copyDotNetAssets','dotnetBuildRelease','dotnetResolveReferences')
+        dependsOn('copyAssets','copyJava','deleteIOSFolder','copyDotNetAssets','dotnetBuildRelease','dotnetResolveReferences','assembleRelease')
     }
 }
