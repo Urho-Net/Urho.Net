@@ -8,7 +8,7 @@ import com.xamarin.java_interop.GCUserPeerable;
 		extends java.lang.Object
 		implements GCUserPeerable
 {
-	static  final   String  assemblyQualifiedName   = "Java.Interop.JavaProxyObject, Java.Interop";
+	static  final   String  assemblyQualifiedName   = "Java.Interop.JavaProxyObject, UrhoDotNet";
 	static {
 		com.xamarin.java_interop.ManagedPeer.registerNativeMembers (
 				JavaProxyObject.class,
