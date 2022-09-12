@@ -160,13 +160,11 @@
 
   <Target Name="CopyObfuscatedGameAssembly" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Copy SourceFiles="$(OutDir)/Obfuscator_Output/Game.dll" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Obfuscator_Output/Game.dll" DestinationFolder="Assets/Data/DotNet" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Obfuscator_Output/Game.dll" DestinationFolder="@(AndroidAssetsDestinationDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(OutDir)/Obfuscator_Output/Game.dll" DestinationFolder="Intermediate/" SkipUnchangedFiles="true" />
   </Target>
 
   <Target Name="CopyGameAssembly" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Assets/Data/DotNet" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="@(AndroidAssetsDestinationDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Intermediate/" SkipUnchangedFiles="true" />
   </Target>
 
   <Target Name = "CustomAfterClean" AfterTargets="AfterClean">
@@ -179,6 +177,7 @@
         <RemoveDir Directories="obj" />
         <RemoveDir Directories= "Assets/Data/DotNet" />
         <RemoveDir Directories="Web" />
+        <RemoveDir Directories="Intermediate" />
   </Target>
 
   <!-- needed for intellisense -->
@@ -196,14 +195,7 @@
   </ItemGroup>
 
   <PropertyGroup  Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PostBuildEvent>mono "$(Obfuscar)" obfuscar.xml</PostBuildEvent>
+    <PostBuildEvent>mono "@(URHONET_HOME_ROOT)/tools/obfuscar/Obfuscar.Console.exe" obfuscar.xml</PostBuildEvent>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PackageReference Include="Obfuscar" Version="2.2.33">
-      <PrivateAssets>all</PrivateAssets>
-       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 
 </Project>

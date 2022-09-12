@@ -3,133 +3,201 @@
     "tasks": [
         {
             "label": "ios-build",
-            "command": "./script/build-ios.sh",
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-t",
-                "${input:DeveloperID}",
-                "-r",
-                "gles"
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
+                "${input:DeveloperID}"
             ],
             "problemMatcher": []
         },
         {
             "label": "ios-deploy",
-            "command": "./script/build-ios.sh",
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-d",
-                "launch",
-                "-t",
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
                 "${input:DeveloperID}",
-                "-r",
-                "gles"
+                "--install",
+                "true"
             ],
             "problemMatcher": []
         },
         {
             "label": "ios-debug",
-            "command": "./script/build-ios.sh",
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-d",
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
                 "debug",
-                "-t",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
                 "${input:DeveloperID}",
-                "-r",
-                "gles"
+                "--debug",
+                "true"
             ],
             "problemMatcher": []
         },
         {
             "label": "ios-build-metal",
-            "command": "./script/build-ios.sh",
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-t",
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
                 "${input:DeveloperID}",
-                "-r",
+                "--graphics",
                 "metal"
             ],
             "problemMatcher": []
         },
         {
             "label": "ios-deploy-metal",
-            "command": "./script/build-ios.sh",
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-d",
-                "launch",
-                "-t",
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
                 "${input:DeveloperID}",
-                "-r",
-                "metal"
+                "--graphics",
+                "metal",
+                "--install",
+                "true"
             ],
             "problemMatcher": []
         },
         {
             "label": "ios-debug-metal",
-            "command": "./script/build-ios.sh",
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-d",
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
                 "debug",
-                "-t",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
                 "${input:DeveloperID}",
-                "-r",
-                "metal"
+                "--graphics",
+                "metal",
+                "--debug",
+                "true"
             ],
             "problemMatcher": []
         },
         {
             "label": "android-build-debug",
-            "command": "./script/build-android.sh",
-            "windows":{
-                "command": "call \"tools/bash/git-bash.exe\" script/build-android.sh"
-            },
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-b","debug"
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "android",
+                "--path",
+                "."
             ],
             "problemMatcher": []
         },
         {
             "label": "android-deploy-debug",
-            "command": "./script/build-android.sh",
-            "windows":{
-                "command": "call \"tools/bash/git-bash.exe\" script/build-android.sh"
-            },
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-b","debug",
-                "-d","1"
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "android",
+                "--path",
+                ".",
+                "--install",
+                "true"
             ],
             "problemMatcher": []
         },
         {
             "label": "android-build-release",
-            "command": "./script/build-android.sh",
-            "windows":{
-                "command": "call \"tools/bash/git-bash.exe\" script/build-android.sh"
-            },
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-b","release",
-                "-k","${input:keystore}",
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "release",
+                "--architecture",
+                "android",
+                "--path",
+                "."
             ],
             "problemMatcher": []
         },
         {
             "label": "android-deploy-release",
-            "command": "./script/build-android.sh",
-            "windows":{
-                "command": "call \"tools/bash/git-bash.exe\" script/build-android.sh"
-            },
-            "type": "shell",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "-b","release",
-                "-k","${input:keystore}",
-                "-d","1"
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "release",
+                "--architecture",
+                "android",
+                "--path",
+                ".",
+                "--install",
+                "true"
             ],
             "problemMatcher": []
         },
