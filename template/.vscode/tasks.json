@@ -10,13 +10,15 @@
                 "--task",
                 "build",
                 "--type",
-                "debug",
+                "release",
                 "--architecture",
                 "ios",
                 "--path",
                 ".",
                 "--developer",
-                "${input:DeveloperID}"
+                "${input:DeveloperID}",
+                "--obfuscate",
+                "true"
             ],
             "problemMatcher": []
         },
@@ -29,13 +31,15 @@
                 "--task",
                 "build",
                 "--type",
-                "debug",
+                "release",
                 "--architecture",
                 "ios",
                 "--path",
                 ".",
                 "--developer",
                 "${input:DeveloperID}",
+                "--obfuscate",
+                "true",
                 "--install",
                 "true"
             ],
@@ -71,7 +75,7 @@
                 "--task",
                 "build",
                 "--type",
-                "debug",
+                "release",
                 "--architecture",
                 "ios",
                 "--path",
@@ -79,7 +83,9 @@
                 "--developer",
                 "${input:DeveloperID}",
                 "--graphics",
-                "metal"
+                "metal",
+                "--obfuscate",
+                "true"
             ],
             "problemMatcher": []
         },
@@ -92,7 +98,7 @@
                 "--task",
                 "build",
                 "--type",
-                "debug",
+                "release",
                 "--architecture",
                 "ios",
                 "--path",
@@ -101,6 +107,8 @@
                 "${input:DeveloperID}",
                 "--graphics",
                 "metal",
+                "--obfuscate",
+                "true",
                 "--install",
                 "true"
             ],
@@ -178,7 +186,9 @@
                 "--architecture",
                 "android",
                 "--path",
-                "."
+                ".",
+                "--obfuscate",
+                "true"
             ],
             "problemMatcher": []
         },
@@ -196,6 +206,8 @@
                 "android",
                 "--path",
                 ".",
+                "--obfuscate",
+                "true",
                 "--install",
                 "true"
             ],

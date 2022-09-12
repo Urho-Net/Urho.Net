@@ -158,12 +158,8 @@
     <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)\publish" SkipUnchangedFiles="true" />
   </Target>
 
-  <Target Name="CopyObfuscatedGameAssembly" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Copy SourceFiles="$(OutDir)/Obfuscator_Output/Game.dll" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutDir)/Obfuscator_Output/Game.dll" DestinationFolder="Intermediate/" SkipUnchangedFiles="true" />
-  </Target>
 
-  <Target Name="CopyGameAssembly" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <Target Name="CopyGameAssembly" AfterTargets="AfterBuild">
     <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Intermediate/" SkipUnchangedFiles="true" />
   </Target>
 
@@ -186,16 +182,5 @@
         <HintPath>References\UrhoDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-  <!-- Obfuscation enabled in release build -->
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Content Include="obfuscar.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <PropertyGroup  Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PostBuildEvent>mono "@(URHONET_HOME_ROOT)/tools/obfuscar/Obfuscar.Console.exe" obfuscar.xml</PostBuildEvent>
-  </PropertyGroup>
 
 </Project>
