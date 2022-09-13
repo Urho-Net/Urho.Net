@@ -214,6 +214,48 @@
             "problemMatcher": []
         },
         {
+            "label": "android-build-signed-release",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "release",
+                "--architecture",
+                "android",
+                "--path",
+                ".",
+                "--obfuscate",
+                "true",
+                "--keystore","${input:keystore}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "android-deploy-signed-release",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "release",
+                "--architecture",
+                "android",
+                "--path",
+                ".",
+                "--obfuscate",
+                "true",
+                "--install",
+                "true",
+                "--keystore","${input:keystore}"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "web-build",
             "command": "./script/build-web.sh",
             "windows":{
