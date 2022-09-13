@@ -6,5 +6,7 @@
   <AssemblySearchPath path="References" />  <!-- Don't modify -->
   <Var name="HidePrivateApi" value="true" />
   <Var name="KeepPublicApi" value="true" />
-  <Module file="$(InPath)/Game.dll" />  <!-- Don't modify -->
+  <Module file="$(InPath)/Game.dll">
+   <!-- Add some settings here -->
+  </Module>
 </Obfuscator>
