@@ -85,6 +85,12 @@ foreach(cmakeFile ${cmakeFiles})
     include(${cmakeFile})
 endforeach(cmakeFile)
 
+file(GLOB_RECURSE cmakeFiles ${CMAKE_SOURCE_DIR}/../platform/ios/CMakeLists.txt)
+foreach(cmakeFile ${cmakeFiles})
+    message("INCLUDE ${cmakeFile}")
+    include(${cmakeFile})
+endforeach(cmakeFile)
+
 # Define source files
 define_source_files (EXTRA_H_FILES ${COMMON_SAMPLE_H_FILES} ${S_FILES} ${EXTRA_MM_FILES} ${MACOS_FILES} ${PLUGIN_FILES} ${EXTRA_PLATFORM_M_FILES} ${EXTRA_PLATFORM_MM_FILES} ${EXTRA_PLATFORM_CPP_FILES})
 
