@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "ios-build",
+            "label": "ios-build-gles-release",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -23,7 +23,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-deploy",
+            "label": "ios-deploy-gles-release",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -46,7 +46,47 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-debug",
+            "label": "ios-build-gles-debug",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
+                "${input:DeveloperID}",
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "ios-deploy-gles-debug",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
+                "${input:DeveloperID}",
+                "--install",
+                "true"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "ios-debug-gles",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -67,7 +107,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-build-metal",
+            "label": "ios-build-release-metal",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -90,7 +130,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-deploy-metal",
+            "label": "ios-deploy-release-metal",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -99,6 +139,54 @@
                 "build",
                 "--type",
                 "release",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
+                "${input:DeveloperID}",
+                "--graphics",
+                "metal",
+                "--obfuscate",
+                "true",
+                "--install",
+                "true"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "ios-build-debug-metal",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "ios",
+                "--path",
+                ".",
+                "--developer",
+                "${input:DeveloperID}",
+                "--graphics",
+                "metal",
+                "--obfuscate",
+                "true"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "ios-deploy-debug-metal",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
                 "--architecture",
                 "ios",
                 "--path",
