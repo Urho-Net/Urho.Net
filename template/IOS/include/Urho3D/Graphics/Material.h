@@ -300,6 +300,24 @@ public:
     /// Parse a shader parameter value from a string. Retunrs either a bool, a float, or a 2 to 4-component vector.
     static Variant ParseShaderParameterValue(const String& value);
 
+#if defined(URHO3D_DOTNET)
+    unsigned  GetShaderParametersKeysSize()
+    {
+        return shaderParameters_.Keys().Size();
+    }
+
+    void GetShaderParametersKeys(unsigned int *buffer)
+    {
+        Vector<StringHash> keys = shaderParameters_.Keys();
+         for(unsigned i = 0 ; i< keys.Size();i++)
+        {
+            buffer[i] =  keys[i].ToHash();
+        }
+    }
+
+    /// Return material shader parameter.
+    const MaterialShaderParameter* GetMaterialShaderParameterPtr(StringHash & name) const;
+#endif
 private:
     /// Helper function for loading JSON files.
     bool BeginLoadJSON(Deserializer& source);
