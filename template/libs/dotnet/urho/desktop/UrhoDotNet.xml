@@ -26221,6 +26221,21 @@
             Root scene node, represents the whole scene.
             </summary>
         </member>
+        <member name="M:Urho.Scene.InstantiateXml(System.String,Urho.Vector3,Urho.Quaternion,Urho.CreateMode)">
+            <summary>
+            Instantiate prefab content from XML data. Return root node if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Scene.InstantiateJson(System.String,Urho.Vector3,Urho.Quaternion,Urho.CreateMode)">
+            <summary>
+            Instantiate prefab content from JSON data. Return root node if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Scene.Instantiate(System.String,Urho.Vector3,Urho.Quaternion,Urho.CreateMode)">
+            <summary>
+            Instantiate prefab content from binary data. Return root node if successful.
+            </summary>
+        </member>
         <member name="M:Urho.Scene.RegisterObject(Urho.Context)">
             <summary>
             Register object factory. Node must be registered first.

@@ -655,13 +655,13 @@ public:
     const PODVector<unsigned char>& GetNetParentAttr() const;
     /// Load components and optionally load child nodes.
     bool Load(Deserializer& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
-        CreateMode mode = REPLICATED);
+        CreateMode mode = REPLICATED,bool markPrefab = false);
     /// Load components from XML data and optionally load child nodes.
     bool LoadXML(const XMLElement& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
-        CreateMode mode = REPLICATED);
+        CreateMode mode = REPLICATED,bool markPrefab = false);
     /// Load components from XML data and optionally load child nodes.
     bool LoadJSON(const JSONValue& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
-        CreateMode mode = REPLICATED);
+        CreateMode mode = REPLICATED,bool markPrefab = false);
     /// Return the depended on nodes to order network updates.
     const PODVector<Node*>& GetDependencyNodes() const { return impl_->dependencyNodes_; }
 

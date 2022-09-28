@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "ios-build-gles-release",
+            "label": "ios-build-release-gles",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -23,7 +23,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-deploy-gles-release",
+            "label": "ios-deploy-release-gles",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -46,7 +46,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-build-gles-debug",
+            "label": "ios-build-debug-gles",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -65,7 +65,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-deploy-gles-debug",
+            "label": "ios-deploy-debug-gles",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -172,8 +172,6 @@
                 "${input:DeveloperID}",
                 "--graphics",
                 "metal",
-                "--obfuscate",
-                "true"
             ],
             "problemMatcher": []
         },
@@ -195,8 +193,6 @@
                 "${input:DeveloperID}",
                 "--graphics",
                 "metal",
-                "--obfuscate",
-                "true",
                 "--install",
                 "true"
             ],
