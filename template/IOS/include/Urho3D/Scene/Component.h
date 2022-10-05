@@ -58,6 +58,10 @@ public:
     /// Destruct.
     ~Component() override;
 
+    /// Register object factory.
+    /// @nobind
+    static void RegisterObject(Context* context);
+
     /// Handle enabled/disabled state change.
     virtual void OnSetEnabled() { }
 
@@ -118,6 +122,20 @@ public:
     /// @manualbind
     void CleanupConnection(Connection* connection);
 
+    /// Return a user variable.
+    const Variant& GetVar(StringHash key) const;
+    /// Return a user variable.
+    Variant GetVar(const String& key) const;
+    /// Return all user variables.
+    const VariantMap& GetVars() const { return vars_; }
+    /// Set a user variable.
+    void SetVar(StringHash key, const Variant& value);
+    /// Set a user variable.
+    void SetVar(const String&  key, const Variant& value);
+    /// Check if variable exist , 0 - doesn't exist , 1 - exist.
+    int HasVar(StringHash key);
+     /// Check if variable exist , 0 - doesn't exist , 1 - exist.
+    int HasVar(const String&  key);
 protected:
     /// Handle attribute animation added.
     void OnAttributeAnimationAdded() override;
@@ -151,6 +169,8 @@ protected:
     bool networkUpdate_;
     /// Enabled flag.
     bool enabled_;
+    /// User variables.
+    VariantMap vars_;
 };
 
 template <class T> T* Component::GetComponent() const { return static_cast<T*>(GetComponent(T::GetTypeStatic())); }

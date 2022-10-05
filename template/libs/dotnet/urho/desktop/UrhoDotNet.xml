@@ -4103,6 +4103,12 @@
             Make sure you set SubscribeToSceneUpdate property to true in order to receive Update events
             </summary>
         </member>
+        <member name="M:Urho.Component.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
         <member name="M:Urho.Component.OnSetEnabled">
             <summary>
             Handle enabled/disabled state change.
@@ -4198,6 +4204,171 @@
             <summary>
             Clean up all references to a network connection that is about to be removed.
             
+            </summary>
+        </member>
+        <member name="M:Urho.Component.GetVar(System.String)">
+            <summary>
+            Return a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.Vector3)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.IntRect)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.Color)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.Vector2)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.Vector4)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.IntVector2)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.Quaternion)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.Matrix4)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.Matrix3)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,Urho.Matrix3x4)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,System.Int32)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,System.UInt32)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,System.Single)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,System.String)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(Urho.StringHash,System.Boolean)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.Vector3)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.IntRect)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.Color)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.Vector2)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.Vector4)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.IntVector2)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.Quaternion)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.Matrix4)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.Matrix3)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,Urho.Matrix3x4)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,System.Int32)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,System.UInt32)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,System.Single)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,System.String)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.SetVar(System.String,System.Boolean)">
+            <summary>
+            Set a user variable.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.HasVar(Urho.StringHash)">
+            <summary>
+            Check if variable exist , 0 - doesn't exist , 1 - exist.
+            </summary>
+        </member>
+        <member name="M:Urho.Component.HasVar(System.String)">
+            <summary>
+            Check if variable exist , 0 - doesn't exist , 1 - exist.
             </summary>
         </member>
         <member name="P:Urho.Component.Enabled">

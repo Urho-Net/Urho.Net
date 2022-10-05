@@ -724,7 +724,10 @@ private:
     void RemoveComponent(Vector<SharedPtr<Component> >::Iterator i);
     /// Handle attribute animation update event.
     void HandleAttributeAnimationUpdate(StringHash eventType, VariantMap& eventData);
-
+    /// Check if variable exist , 0 - doesn't exist , 1 - exist.
+    int HasVar(StringHash key);
+     /// Check if variable exist , 0 - doesn't exist , 1 - exist.
+    int HasVar(const String&  key);
     /// World-space transform matrix.
     mutable Matrix3x4 worldTransform_;
     /// World transform needs update flag.
