@@ -18,6 +18,8 @@ enum CallbackType
     Serializable_LoadXml,
     VGElement_Render,
     Component_Clone,
+    Component_Serialize,
+    Serializable_Load
 };
 
 class Mono

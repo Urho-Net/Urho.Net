@@ -693,6 +693,11 @@ public:
     /// Set local transform silently without marking the node & child nodes dirty. Used by animation code.
     void SetTransformSilent(const Vector3& position, const Quaternion& rotation, const Vector3& scale);
 
+    /// Check if variable exist , 0 - doesn't exist , 1 - exist.
+    int HasVar(StringHash key);
+     /// Check if variable exist , 0 - doesn't exist , 1 - exist.
+    int HasVar(const String& key);
+
 protected:
     /// Handle attribute animation added.
     void OnAttributeAnimationAdded() override;
@@ -724,10 +729,6 @@ private:
     void RemoveComponent(Vector<SharedPtr<Component> >::Iterator i);
     /// Handle attribute animation update event.
     void HandleAttributeAnimationUpdate(StringHash eventType, VariantMap& eventData);
-    /// Check if variable exist , 0 - doesn't exist , 1 - exist.
-    int HasVar(StringHash key);
-     /// Check if variable exist , 0 - doesn't exist , 1 - exist.
-    int HasVar(const String&  key);
     /// World-space transform matrix.
     mutable Matrix3x4 worldTransform_;
     /// World transform needs update flag.
