@@ -19,7 +19,9 @@ enum CallbackType
     VGElement_Render,
     Component_Clone,
     Component_Serialize,
-    Serializable_Load
+    Serializable_Load,
+    Drawable2D_UpdateSourceBatches,
+    StaticSprite2D_OnWorldBoundingBoxUpdate
 };
 
 class Mono

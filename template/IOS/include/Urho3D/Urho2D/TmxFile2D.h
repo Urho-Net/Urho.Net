@@ -24,6 +24,7 @@
 
 #include "../Resource/Resource.h"
 #include "../Urho2D/TileMapDefs2D.h"
+#include <vector>
 
 namespace Urho3D
 {
@@ -101,6 +102,8 @@ public:
 protected:
     /// Tiles.
     Vector<SharedPtr<Tile2D> > tiles_;
+private :
+    bool Decompress(const char* source, std::vector<unsigned char>& dest, std::size_t inSize, std::size_t & expectedSize);
 };
 
 /// Tmx objects layer.

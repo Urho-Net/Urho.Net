@@ -153,7 +153,7 @@ public:
     /// Return custom material attribute.
     ResourceRef GetCustomMaterialAttr() const;
 
-
+    void SetMonoWorldBoundingBoxUpdate (bool val){monoWorldBoundingBoxUpdate_ = val;}
 protected:
 
     /// Handle scene being assigned.
@@ -195,6 +195,8 @@ protected:
     Rect textureRect_;
     /// Custom material.
     SharedPtr<Material> customMaterial_;
+    
+    bool monoWorldBoundingBoxUpdate_;
 };
 
 }

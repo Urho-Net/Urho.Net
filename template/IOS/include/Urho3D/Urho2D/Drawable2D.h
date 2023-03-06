@@ -100,6 +100,12 @@ public:
     /// Return all source batches (called by Renderer2D).
     const Vector<SourceBatch2D>& GetSourceBatches();
 
+    void SetSourceBatches(Vertex2D * ptr , int count);
+    /// @property
+    void SetSourceBatchesDirty(){sourceBatchesDirty_ = true; worldBoundingBoxDirty_=true;}
+
+    void SetMonoUpdateSourceBatches(bool val){monoUpdateSourceBatches_ = val;}
+
 protected:
     /// Handle scene being assigned.
     void OnSceneSet(Scene* scene) override;
@@ -123,6 +129,7 @@ protected:
     bool sourceBatchesDirty_;
     /// Renderer2D.
     WeakPtr<Renderer2D> renderer_;
+    bool monoUpdateSourceBatches_;
 };
 
 }

@@ -284,6 +284,7 @@
 #include "../Database/DatabaseEvents.h"
 #include "../Database/DbConnection.h"
 #include "../Database/DbResult.h"
+#include "../Automation/Automation.h"
 #if defined(URHO3D_DOTNET)
 #include "Mono.h"
 #endif
