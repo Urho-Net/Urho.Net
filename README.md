@@ -47,11 +47,13 @@ https://github.com/Urho-Net/Samples
 
 ## <u> Urho.Net uses the following third-party libraries: </u>
 
-- The Mono runtime used in Android and iOS is taken from https://github.com/dotnet/runtime/tree/v6.0.5
+- The Mono runtime used in Android and iOS binaries are compiled from https://github.com/dotnet/runtime/tree/v6.0.5
   
-- Urho3D game engine, Special customized version , this is the main development link of this framework. \
+- Urho3D game engine, special customized version , this is the main development link of this framework. \
   It contains the entire source code , tools and scripts that allow proper development of this C# Multiplatform game framework.\
-  https://github.com/elix22/Urho3D/tree/dotnet
+ [Urho3D dotnet-6.x](https://github.com/elix22/Urho3D/tree/dotnet-6.x)
 
 - ReferenceAssemblyResolver , written from scratch, tool that resolves all the reference assembly dependencies that are part of the main Game.dll\
   https://github.com/elix22/ReferenceAssemblyResolver
+
+- [UrhoCooker](https://github.com/Urho-Net/UrhoCooker) , All purpose utility tool for Urho.Net  , currently supports iOS and Android deployment
