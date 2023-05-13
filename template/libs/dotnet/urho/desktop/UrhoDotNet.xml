@@ -5624,6 +5624,11 @@
             Type: vec2, Defined in Uniforms.glsl:L87
             </summary>
         </member>
+        <member name="T:Urho.SQLite">
+            <summary>
+            % SQlite Database connection.
+            </summary>
+        </member>
         <member name="T:Urho.DbConnection">
             <summary>
             %Database connection.
@@ -5655,11 +5660,6 @@
         <member name="P:Urho.DbConnection.Connected">
             <summary>
             Return true when the connection object is connected to the associated database.
-            </summary>
-        </member>
-        <member name="T:Urho.SQLite">
-            <summary>
-            % SQlite Database connection.
             </summary>
         </member>
         <member name="T:Urho.Urho2D.Drawable2D">
@@ -26330,6 +26330,84 @@
         <member name="F:Urho.ResourceRefList.Names">
             List of object names.
         </member>
+        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_A">
+              \name Usage page 0x07
+            
+              These values are from usage page 0x07 (USB keyboard page).
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_NONUSHASH" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_SEMICOLON" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_COMMA" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_HOME" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KP_DIVIDE" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_APPLICATION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_POWER" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KP_EQUALS" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_UNDO" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_INTERNATIONAL2" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_INTERNATIONAL4" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG2" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG3" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG4" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG5" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG6" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG7" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG8" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG9" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_ALTERASE" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_SYSREQ" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LGUI" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_RCTRL" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_RGUI" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_MODE" -->
+        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_AUDIONEXT">
+              \name Usage page 0x0C
+            
+              These values are mapped from usage page 0x0C (USB consumer page).
+        </member>
+        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_BRIGHTNESSDOWN">
+              \name Walther keys
+            
+              These are values that Christian Walther added (for mac keyboard?).
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KBDILLUMTOGGLE" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_QUIT" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_TERMINATING" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_LOWMEMORY" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_WILLENTERBACKGROUND" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_DIDENTERBACKGROUND" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_WILLENTERFOREGROUND" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_DIDENTERFOREGROUND" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_WINDOWEVENT" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_SYSWMEVENT" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_KEYDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_KEYUP" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_TEXTEDITING" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_TEXTINPUT" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEBUTTONDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEBUTTONUP" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEWHEEL" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYAXISMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBALLMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYHATMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBUTTONDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBUTTONUP" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYDEVICEADDED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYDEVICEREMOVED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERAXISMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERBUTTONDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERBUTTONUP" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEADDED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEREMOVED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEREMAPPED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_FINGERDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_DROPFILE" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_RENDER_TARGETS_RESET" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_USEREVENT" -->
+        <member name="F:Urho.SdlEventType.SDL_LASTEVENT">
+            This last event is only for bounding internal arrays
+        </member>
         <member name="T:Urho.Scene">
             <summary>
             Root scene node, represents the whole scene.
@@ -26877,84 +26955,6 @@
             <summary>
             Return node user variable reverse mappings.
             </summary>
-        </member>
-        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_A">
-              \name Usage page 0x07
-            
-              These values are from usage page 0x07 (USB keyboard page).
-        </member>
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_NONUSHASH" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_SEMICOLON" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_COMMA" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_HOME" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KP_DIVIDE" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_APPLICATION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_POWER" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KP_EQUALS" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_UNDO" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_INTERNATIONAL2" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_INTERNATIONAL4" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG2" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG3" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG4" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG5" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG6" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG7" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG8" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG9" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_ALTERASE" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_SYSREQ" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LGUI" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_RCTRL" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_RGUI" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_MODE" -->
-        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_AUDIONEXT">
-              \name Usage page 0x0C
-            
-              These values are mapped from usage page 0x0C (USB consumer page).
-        </member>
-        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_BRIGHTNESSDOWN">
-              \name Walther keys
-            
-              These are values that Christian Walther added (for mac keyboard?).
-        </member>
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KBDILLUMTOGGLE" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_QUIT" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_TERMINATING" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_LOWMEMORY" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_WILLENTERBACKGROUND" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_DIDENTERBACKGROUND" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_WILLENTERFOREGROUND" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_DIDENTERFOREGROUND" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_WINDOWEVENT" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_SYSWMEVENT" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_KEYDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_KEYUP" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_TEXTEDITING" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_TEXTINPUT" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEBUTTONDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEBUTTONUP" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEWHEEL" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYAXISMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBALLMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYHATMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBUTTONDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBUTTONUP" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYDEVICEADDED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYDEVICEREMOVED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERAXISMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERBUTTONDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERBUTTONUP" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEADDED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEREMOVED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEREMAPPED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_FINGERDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_DROPFILE" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_RENDER_TARGETS_RESET" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_USEREVENT" -->
-        <member name="F:Urho.SdlEventType.SDL_LASTEVENT">
-            This last event is only for bounding internal arrays
         </member>
         <member name="T:Urho.Serializable">
             <summary>
@@ -28021,6 +28021,102 @@
             Helper functions to return elements from a VariantMap
             </summary>
         </member>
+        <member name="T:Urho.VGComponent">
+            <summary>
+            Return child VGComponent.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.GetChild(System.String,System.Boolean)">
+            <summary>
+            Return child VGComponent.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetPosition(Urho.Vector2)">
+            <summary>
+            Set floating point position.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetPosition(System.Single,System.Single)">
+            <summary>
+            Set floating point position.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetHotSpot(Urho.Vector2)">
+            <summary>
+            Set hotspot for positioning and rotation.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetHotSpot(System.Single,System.Single)">
+            <summary>
+            Set hotspot for positioning and rotation.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetScale(Urho.Vector2)">
+            <summary>
+            Set scale. Scale also affects child sprites.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetScale(System.Single,System.Single)">
+            <summary>
+            Set scale. Scale also affects child sprites.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetScale(System.Single)">
+            <summary>
+            Set uniform scale. Scale also affects child sprites.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetRotation(System.Single)">
+            <summary>
+            Set rotation angle.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.GetHotSpot">
+            <summary>
+            Return hotspot.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.VGComponent.HotSpot">
+            <summary>
+            Return hotspot.
+            
+            Or
+            Set hotspot for positioning and rotation.
+            
+            </summary>
+        </member>
+        <member name="T:Urho.VGElement">
+            <summary>
+            Register object factory.
+            </summary>
+            <summary>
+            Register object factory.
+            </summary>
+        </member>
+        <member name="M:Urho.VGElement.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGElement.OnResize(Urho.IntVector2,Urho.IntVector2)">
+            <summary>
+            React to resize.
+            </summary>
+        </member>
+        <member name="T:Urho.VGTextRowBuffer">
+            <summary>
+            Destruct.
+            </summary>
+            <summary>
+            Destruct.
+            </summary>
+        </member>
         <member name="T:Urho.VertexBuffer">
             <summary>
             Hardware vertex buffer.
@@ -28186,102 +28282,6 @@
         <member name="P:Urho.VertexBuffer.ShadowData">
             <summary>
             Return CPU memory shadow data.
-            </summary>
-        </member>
-        <member name="T:Urho.VGComponent">
-            <summary>
-            Return child VGComponent.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.GetChild(System.String,System.Boolean)">
-            <summary>
-            Return child VGComponent.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetPosition(Urho.Vector2)">
-            <summary>
-            Set floating point position.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetPosition(System.Single,System.Single)">
-            <summary>
-            Set floating point position.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetHotSpot(Urho.Vector2)">
-            <summary>
-            Set hotspot for positioning and rotation.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetHotSpot(System.Single,System.Single)">
-            <summary>
-            Set hotspot for positioning and rotation.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetScale(Urho.Vector2)">
-            <summary>
-            Set scale. Scale also affects child sprites.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetScale(System.Single,System.Single)">
-            <summary>
-            Set scale. Scale also affects child sprites.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetScale(System.Single)">
-            <summary>
-            Set uniform scale. Scale also affects child sprites.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetRotation(System.Single)">
-            <summary>
-            Set rotation angle.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.GetHotSpot">
-            <summary>
-            Return hotspot.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.VGComponent.HotSpot">
-            <summary>
-            Return hotspot.
-            
-            Or
-            Set hotspot for positioning and rotation.
-            
-            </summary>
-        </member>
-        <member name="T:Urho.VGElement">
-            <summary>
-            Register object factory.
-            </summary>
-            <summary>
-            Register object factory.
-            </summary>
-        </member>
-        <member name="M:Urho.VGElement.RegisterObject(Urho.Context)">
-            <summary>
-            Register object factory.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGElement.OnResize(Urho.IntVector2,Urho.IntVector2)">
-            <summary>
-            React to resize.
-            </summary>
-        </member>
-        <member name="T:Urho.VGTextRowBuffer">
-            <summary>
-            Destruct.
-            </summary>
-            <summary>
-            Destruct.
             </summary>
         </member>
         <member name="T:Urho.Viewport">
@@ -28978,6 +28978,13 @@
             <param name="other">A vector to compare with this vector.</param>
             <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
         </member>
+        <member name="P:Urho.IntVector2.Item(System.Int32)">
+            <summary>
+            Gets or sets the value at the index of the Vector.
+            </summary>
+            <param name="index">The index of the component from the Vector.</param>
+            <exception cref="T:System.IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 1.</exception>
+        </member>
         <member name="M:Urho.IntVector2.Distance(Urho.IntVector2,Urho.IntVector2)">
             <summary>
             Distance between two 2D points (should be moved to IntVector2).
@@ -29473,6 +29480,13 @@
             <summary>Indicates whether the current vector is equal to another vector.</summary>
             <param name="other">A vector to compare with this vector.</param>
             <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
+        </member>
+        <member name="P:Urho.IntVector3.Item(System.Int32)">
+            <summary>
+            Gets or sets the value at the index of the Vector.
+            </summary>
+            <param name="index">The index of the component from the Vector.</param>
+            <exception cref="T:System.IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 2.</exception>
         </member>
         <member name="M:Urho.IntVector3.Distance(Urho.IntVector3,Urho.IntVector3)">
             <summary>
@@ -35985,6 +35999,11 @@
             
             </summary>
         </member>
+        <member name="T:Urho.DBAPI">
+            <summary>
+            Supported database API.
+            </summary>
+        </member>
         <member name="T:Urho.Database">
             <summary>
             %Database subsystem. Manage database connections.
@@ -36041,11 +36060,6 @@
             Or
             Set internal database connection pool size.
             
-            </summary>
-        </member>
-        <member name="T:Urho.DBAPI">
-            <summary>
-            Supported database API.
             </summary>
         </member>
         <member name="T:Urho.DebugHud">
@@ -37375,6 +37389,11 @@
             Frustum planes.
             </summary>
         </member>
+        <member name="T:Urho.GImpactMeshData">
+            <summary>
+            Triangle mesh geometry data.
+            </summary>
+        </member>
         <member name="T:Urho.Geometry">
             <summary>
             Defines one or more vertex buffers, an index buffer and a draw range.
@@ -37574,11 +37593,6 @@
         <member name="T:Urho.GeometryType">
             <summary>
             %Geometry type for vertex shader geometry variations.
-            </summary>
-        </member>
-        <member name="T:Urho.GImpactMeshData">
-            <summary>
-            Triangle mesh geometry data.
             </summary>
         </member>
         <member name="T:Urho.HeightfieldData">
@@ -45622,6 +45636,22 @@
             Geometry update type.
             </summary>
         </member>
+        <member name="T:Urho.VGCanvas">
+            <summary>
+            Construct.
+            </summary>
+        </member>
+        <member name="M:Urho.VGCanvas.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
+        <member name="T:Urho.VGTextRow">
+            <summary>
+            Destruct.
+            </summary>
+        </member>
         <member name="T:Urho.ValueAnimation">
             <summary>
             Value animation class.
@@ -45967,22 +45997,6 @@
         <member name="T:Urho.VertexLightVSVariation">
             <summary>
             Per-vertex light vertex shader variations.
-            </summary>
-        </member>
-        <member name="T:Urho.VGCanvas">
-            <summary>
-            Construct.
-            </summary>
-        </member>
-        <member name="M:Urho.VGCanvas.RegisterObject(Urho.Context)">
-            <summary>
-            Register object factory.
-            
-            </summary>
-        </member>
-        <member name="T:Urho.VGTextRow">
-            <summary>
-            Destruct.
             </summary>
         </member>
         <member name="T:Urho.WrapMode">
@@ -51490,82 +51504,6 @@
             <param name="reader">The reader.</param>
             <returns>An instance of <see cref="T:Urho.Json.Linq.JRaw"/> with the content of the reader's current token.</returns>
         </member>
-        <member name="T:Urho.Json.Linq.JsonLoadSettings">
-            <summary>
-            Specifies the settings used when loading JSON.
-            </summary>
-        </member>
-        <member name="M:Urho.Json.Linq.JsonLoadSettings.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Urho.Json.Linq.JsonLoadSettings"/> class.
-            </summary>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonLoadSettings.CommentHandling">
-            <summary>
-            Gets or sets how JSON comments are handled when loading JSON.
-            The default value is <see cref="F:Urho.Json.Linq.CommentHandling.Ignore" />.
-            </summary>
-            <value>The JSON comment handling.</value>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonLoadSettings.LineInfoHandling">
-            <summary>
-            Gets or sets how JSON line info is handled when loading JSON.
-            The default value is <see cref="F:Urho.Json.Linq.LineInfoHandling.Load" />.
-            </summary>
-            <value>The JSON line info handling.</value>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonLoadSettings.DuplicatePropertyNameHandling">
-            <summary>
-            Gets or sets how duplicate property names in JSON objects are handled when loading JSON.
-            The default value is <see cref="F:Urho.Json.Linq.DuplicatePropertyNameHandling.Replace" />.
-            </summary>
-            <value>The JSON duplicate property name handling.</value>
-        </member>
-        <member name="T:Urho.Json.Linq.JsonMergeSettings">
-            <summary>
-            Specifies the settings used when merging JSON.
-            </summary>
-        </member>
-        <member name="M:Urho.Json.Linq.JsonMergeSettings.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Urho.Json.Linq.JsonMergeSettings"/> class.
-            </summary>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonMergeSettings.MergeArrayHandling">
-            <summary>
-            Gets or sets the method used when merging JSON arrays.
-            </summary>
-            <value>The method used when merging JSON arrays.</value>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonMergeSettings.MergeNullValueHandling">
-            <summary>
-            Gets or sets how null value properties are merged.
-            </summary>
-            <value>How null value properties are merged.</value>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonMergeSettings.PropertyNameComparison">
-            <summary>
-            Gets or sets the comparison used to match property names while merging.
-            The exact property name will be searched for first and if no matching property is found then
-            the <see cref="T:System.StringComparison"/> will be used to match a property.
-            </summary>
-            <value>The comparison used to match property names while merging.</value>
-        </member>
-        <member name="T:Urho.Json.Linq.JsonSelectSettings">
-            <summary>
-            Specifies the settings used when selecting JSON.
-            </summary>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonSelectSettings.ErrorWhenNoMatch">
-            <summary>
-            Gets or sets a flag that indicates whether an error should be thrown if
-            no tokens are found when evaluating part of the expression.
-            </summary>
-            <value>
-            A flag that indicates whether an error should be thrown if
-            no tokens are found when evaluating part of the expression.
-            </value>
-        </member>
         <member name="T:Urho.Json.Linq.JToken">
             <summary>
             Represents an abstract JSON token.
@@ -53042,6 +52980,82 @@
             <exception cref="T:System.ArgumentException">
             	<paramref name="obj"/> is not of the same type as this instance.
             </exception>
+        </member>
+        <member name="T:Urho.Json.Linq.JsonLoadSettings">
+            <summary>
+            Specifies the settings used when loading JSON.
+            </summary>
+        </member>
+        <member name="M:Urho.Json.Linq.JsonLoadSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Urho.Json.Linq.JsonLoadSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonLoadSettings.CommentHandling">
+            <summary>
+            Gets or sets how JSON comments are handled when loading JSON.
+            The default value is <see cref="F:Urho.Json.Linq.CommentHandling.Ignore" />.
+            </summary>
+            <value>The JSON comment handling.</value>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonLoadSettings.LineInfoHandling">
+            <summary>
+            Gets or sets how JSON line info is handled when loading JSON.
+            The default value is <see cref="F:Urho.Json.Linq.LineInfoHandling.Load" />.
+            </summary>
+            <value>The JSON line info handling.</value>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonLoadSettings.DuplicatePropertyNameHandling">
+            <summary>
+            Gets or sets how duplicate property names in JSON objects are handled when loading JSON.
+            The default value is <see cref="F:Urho.Json.Linq.DuplicatePropertyNameHandling.Replace" />.
+            </summary>
+            <value>The JSON duplicate property name handling.</value>
+        </member>
+        <member name="T:Urho.Json.Linq.JsonMergeSettings">
+            <summary>
+            Specifies the settings used when merging JSON.
+            </summary>
+        </member>
+        <member name="M:Urho.Json.Linq.JsonMergeSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Urho.Json.Linq.JsonMergeSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonMergeSettings.MergeArrayHandling">
+            <summary>
+            Gets or sets the method used when merging JSON arrays.
+            </summary>
+            <value>The method used when merging JSON arrays.</value>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonMergeSettings.MergeNullValueHandling">
+            <summary>
+            Gets or sets how null value properties are merged.
+            </summary>
+            <value>How null value properties are merged.</value>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonMergeSettings.PropertyNameComparison">
+            <summary>
+            Gets or sets the comparison used to match property names while merging.
+            The exact property name will be searched for first and if no matching property is found then
+            the <see cref="T:System.StringComparison"/> will be used to match a property.
+            </summary>
+            <value>The comparison used to match property names while merging.</value>
+        </member>
+        <member name="T:Urho.Json.Linq.JsonSelectSettings">
+            <summary>
+            Specifies the settings used when selecting JSON.
+            </summary>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonSelectSettings.ErrorWhenNoMatch">
+            <summary>
+            Gets or sets a flag that indicates whether an error should be thrown if
+            no tokens are found when evaluating part of the expression.
+            </summary>
+            <value>
+            A flag that indicates whether an error should be thrown if
+            no tokens are found when evaluating part of the expression.
+            </value>
         </member>
         <member name="T:Urho.Json.Linq.LineInfoHandling">
             <summary>
