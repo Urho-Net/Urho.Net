@@ -23,13 +23,17 @@ First class Visual Studio Code support as the main IDE on all 3 major platforms 
   - https://www.youtube.com/watch?v=LXxjCNfd5b4
 
 # <u> iOS Dependencies </u>
-- CMake
-- XCode
+- CMake , version > 3.26.3
+- XCode , Command Line Tools , version > 14
 - Valid Apple developer account
 - ios-deploy , `brew install ios-deploy`
 
 # <u> Android Dependencies </u>
 - Android SDK https://developer.android.com/studio
+-  The following Environment variables should be added pointing to the Android SDK and JAVA SDK 
+-  ANDROID_HOME="loaction/Android/sdk"
+-  ANDROID_SDK_ROOT="loaction/Android/sdk"
+-  JAVA_HOME="location/java-sdk"
 
 # <u> Getting Started </u>
 - General (updated on 31/01/2021)
