@@ -57,6 +57,7 @@ jobs:
                  dotnet-version: '6.0.x'
              - name: Install Visual Studio 2019 Build Tools
                run: |
+                choco install mono
                 choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
                 choco install visualstudio2019-workload-vctools --package-parameters "--includeRecommended --includeOptional"
              - name: build and install Windows urhonet libs
