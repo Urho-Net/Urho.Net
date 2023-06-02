@@ -59,8 +59,8 @@ jobs:
                run : choco install mono
              - name: Configure Mono Environment
                run: |
-                 echo 'export PATH="/c/Program Files/Mono/bin:$PATH"' >> $GITHUB_ENV
-                 echo 'export FrameworkPathOverride="/c/Program Files/Mono/lib/mono/4.5"' >> $GITHUB_ENV  
+                 echo "C:\Program Files\Mono\bin" >> $env:PATH
+                 echo "C:\Program Files\Mono\lib\mono\4.5" >> $env:FrameworkPathOverride
              - name: Install Visual Studio 2019 Build Tools
                run: |
                 choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
