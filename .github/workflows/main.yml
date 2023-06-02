@@ -58,6 +58,5 @@ jobs:
                 run:|
                choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
                choco install visualstudio2019-workload-vctools --package-parameters "--includeRecommended --includeOptional"
-
             - name: build and install Windows urhonet libs
               run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
