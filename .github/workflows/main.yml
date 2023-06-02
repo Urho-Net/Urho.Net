@@ -59,8 +59,8 @@ jobs:
                run : choco install mono
              - name: Configure Mono Environment
                run: |
-                 echo "C:\Program Files\Mono\bin" >> $env:PATH
-                 echo "C:\Program Files\Mono\lib\mono\4.5" >> $env:FrameworkPathOverride
+                 echo C:\Program Files\Mono\bin >> %PATH%
+                 echo C:\Program Files\Mono\lib\mono\4.5 >> %FrameworkPathOverride%
              - name: Install Visual Studio 2019 Build Tools
                run: |
                 choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
