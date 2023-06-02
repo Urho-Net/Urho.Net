@@ -1,0 +1,27 @@
+name : Build
+    
+on: workflow_dispatch
+
+jobs: 
+    build-macos:
+        name: build install urhonet macOS
+        runs-on: macos-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+            - name: Dotnet setup
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: '6.0.x'
+            - name: Setup Java
+              uses: actions/setup-java@v2
+              with:
+                distribution: 'microsoft'
+                java-version: '11' 
+            - name: Select xcode
+              run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+            - name: Install Mono SDK on macOS
+              run: brew install mono
+            - name: build and install macos urhonet libs
+              run : ./Source/script/build_install_urhonet_macos.sh
+
