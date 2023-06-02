@@ -21,7 +21,7 @@ jobs:
             - name: Select xcode
               run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
             - name: Install Mono SDK on macOS
-              run: brew install mono
-            - name: build and install macos urhonet libs
+#               run: brew link --overwrite mono
+#             - name: build and install macos urhonet libs
               run : ./Source/script/build_install_urhonet_macos.sh
 
