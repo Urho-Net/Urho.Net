@@ -25,19 +25,39 @@ jobs:
 #             - name: build and install macos urhonet libs
 #               run : ./Source/script/build_install_urhonet_macos.sh
 
-    build-Linux:
-        name: build install urhonet Linux
-        runs-on: ubuntu-latest
+    # build-Linux:
+    #     name: build install urhonet Linux
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: Checkout repository
+    #           uses: actions/checkout@v2
+    #           with:
+    #             submodules: recursive
+    #         - name: Dotnet setup
+    #           uses: actions/setup-dotnet@v1
+    #           with:
+    #             dotnet-version: '6.0.x'
+    #         - name: Install OpenGL development libraries
+    #           run: sudo apt-get install libgl1-mesa-dev -y
+    #         - name: build and install Linux urhonet libs
+    #           run : ./Source/script/build_install_urhonet_linux.sh
+
+                  
+    build-Windows:
+        name: build install urhonet Windows
+        runs-on: windows-latest
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2
-              with:
-                submodules: recursive
-            - name: Dotnet setup
-              uses: actions/setup-dotnet@v1
-              with:
-                dotnet-version: '6.0.x'
-            - name: Install OpenGL development libraries
-              run: sudo apt-get install libgl1-mesa-dev -y
-            - name: build and install Linux urhonet libs
-              run : ./Source/script/build_install_urhonet_linux.sh
+             - name: Checkout repository
+               uses: actions/checkout@v2
+               with:
+                 submodules: recursive
+             - name: Dotnet setup
+               uses: actions/setup-dotnet@v1
+               with:
+                 dotnet-version: '6.0.x'
+             - name: Install Visual Studio 2019 Build Tools
+               run: |
+                choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
+                choco install visualstudio2019-workload-vctools --package-parameters "--includeRecommended --includeOptional"
+             - name: build and install Windows urhonet libs
+               run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
