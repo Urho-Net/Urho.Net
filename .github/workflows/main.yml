@@ -55,20 +55,11 @@ jobs:
                uses: actions/setup-dotnet@v1
                with:
                  dotnet-version: '6.0.x'
-             - name: Install mono
-               run : choco install mono
-             - name: Configure Mono Environment
-               run: |
-                 echo C:\Program Files\Mono\bin >> %PATH%
-                 echo C:\Program Files\Mono\lib\mono\4.5 >> %FrameworkPathOverride%
-             - name: Check Mono installation directory
-               id: mono
-               run: |
-                   where mono
-                   reg query "HKLM\SOFTWARE\WOW6432Node\Novell\Mono" /v DefaultCLR
+             - name: Install and Configure Mono
+               run: pwsh -File ./Source/script/install_mono.ps1
              - name: Install Visual Studio 2019 Build Tools
                run: |
                 choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
                 choco install visualstudio2019-workload-vctools --package-parameters "--includeRecommended --includeOptional"
              - name: build and install Windows urhonet libs
-               run : pwsh -File ./Source/script/build_install_windows_dotnet_dll.ps1
+               run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
