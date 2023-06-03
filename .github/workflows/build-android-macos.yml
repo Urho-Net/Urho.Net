@@ -1,0 +1,18 @@
+name : Build AndroidmacOS
+    
+on: workflow_dispatch
+
+jobs: 
+
+    build-android-macos:
+        name: build install Android Urho.Net on macOS
+        runs-on: macos-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+              with:
+                submodules: recursive
+            - name: Setup Android SDK and NDK and Java SDK
+              run : ./Source/script/setup_android_macos.sh
+            - name: build and install Android urho.Net libs
+              run : ./Source/script/build_install_urhonet_android_libs.sh
