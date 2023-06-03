@@ -3,44 +3,44 @@ name : Build
 on: workflow_dispatch
 
 jobs: 
-#     build-macos:
-#         name: build install urhonet macOS
-#         runs-on: macos-latest
-#         steps:
-#             - name: Checkout repository
-#               uses: actions/checkout@v2
-#               with:
-#                 submodules: recursive
-#             - name: Dotnet setup
-#               uses: actions/setup-dotnet@v1
-#               with:
-#                 dotnet-version: '6.0.x'
-#             - name: Setup Java
-#               uses: actions/setup-java@v2
-#               with:
-#                 distribution: 'microsoft'
-#                 java-version: '11' 
-#             - name: Select xcode
-#               run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
-#             - name: build and install macos urhonet libs
-#               run : ./Source/script/build_install_urhonet_macos.sh
+    build-macos:
+        name: build install urhonet macOS
+        runs-on: macos-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+              with:
+                submodules: recursive
+            - name: Dotnet setup
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: '6.0.x'
+            - name: Setup Java
+              uses: actions/setup-java@v2
+              with:
+                distribution: 'microsoft'
+                java-version: '11' 
+            - name: Select xcode
+              run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+            - name: build and install macos urhonet libs
+              run : ./Source/script/build_install_urhonet_macos.sh
 
-    # build-Linux:
-    #     name: build install urhonet Linux
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #         - name: Checkout repository
-    #           uses: actions/checkout@v2
-    #           with:
-    #             submodules: recursive
-    #         - name: Dotnet setup
-    #           uses: actions/setup-dotnet@v1
-    #           with:
-    #             dotnet-version: '6.0.x'
-    #         - name: Install OpenGL development libraries
-    #           run: sudo apt-get install libgl1-mesa-dev -y
-    #         - name: build and install Linux urhonet libs
-    #           run : ./Source/script/build_install_urhonet_linux.sh
+    build-Linux:
+        name: build install urhonet Linux
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+              with:
+                submodules: recursive
+            - name: Dotnet setup
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: '6.0.x'
+            - name: Install dependencies
+              run: sudo apt-get install -y libgl1-mesa-dev libegl1-mesa-dev mesa-common-dev xorg-dev libasound-dev
+            - name: build and install Linux urhonet libs
+              run : ./Source/script/build_install_urhonet_linux.sh
 
                   
     build-Windows:
@@ -48,7 +48,7 @@ jobs:
         runs-on: windows-latest
         steps:
              - name: Checkout repository
-               uses: actions/checkout@v2
+               uses: actions/checkout@v3
                with:
                  submodules: recursive
              - name: Dotnet setup
@@ -61,9 +61,14 @@ jobs:
                run: |
                  echo C:\Program Files\Mono\bin >> %PATH%
                  echo C:\Program Files\Mono\lib\mono\4.5 >> %FrameworkPathOverride%
+             - name: Check Mono installation directory
+               id: mono
+               run: |
+                   where mono
+                   reg query "HKLM\SOFTWARE\WOW6432Node\Novell\Mono" /v DefaultCLR
              - name: Install Visual Studio 2019 Build Tools
                run: |
                 choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
                 choco install visualstudio2019-workload-vctools --package-parameters "--includeRecommended --includeOptional"
              - name: build and install Windows urhonet libs
-               run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
+               run : pwsh -File ./Source/script/build_install_windows_dotnet_dll.ps1
