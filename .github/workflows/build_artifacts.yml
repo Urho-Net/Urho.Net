@@ -82,6 +82,7 @@ jobs:
     create-artifacts:
            name: Create combined artifacts
            runs-on: ubuntu-latest
+           needs: [build-macos, build-Linux, build-Windows]
            steps:
               - name: Create artifacts directory
                 run: mkdir artifacts
