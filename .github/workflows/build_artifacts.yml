@@ -181,28 +181,3 @@ jobs:
                 with:
                   name: combined-artifacts
                   path: combined-artifacts.tar.gz
-
-              - name: Delete macOS artifacts
-                uses: actions/delete-artifact@v2
-                with:
-                    name: build-macos
-
-              - name: Delete Linux artifacts
-                uses: actions/delete-artifact@v2
-                with:
-                  name: build-Linux
-
-              - name: Delete Windows artifacts
-                uses: actions/delete-artifact@v2
-                with:
-                  name: build-Windows
-
-              - name: Delete Android artifacts
-                uses: actions/delete-artifact@v2
-                with:
-                    name: build-android-linux
-
-              - name: Delete iOS artifacts
-                uses: actions/delete-artifact@v2
-                with:
-                  name: build-ios
