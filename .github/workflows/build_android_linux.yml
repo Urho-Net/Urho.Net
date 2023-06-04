@@ -13,10 +13,8 @@ jobs:
                 submodules: recursive
            - name: Setup Android SDK and NDK and Java SDK
              run : ./Source/script/setup_android_linux.sh
-           - name: Setup cmake
-             uses: jwlawson/actions-setup-cmake@v1.13
-             with:
-               cmake-version: '3.26.3'
+           - name: Install CMake
+             run: sudo apt-get install cmake
            - name: Use cmake
              run: cmake --version
            - name: build and install Android urho.Net libs
