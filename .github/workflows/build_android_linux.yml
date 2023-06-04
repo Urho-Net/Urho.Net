@@ -26,4 +26,31 @@ jobs:
              run: cmake --version
            - name: build and install Android urho.Net libs
              run : ./Source/script/build_install_urhonet_android_libs.sh
+           - name: Get current date and time
+             id: datetime
+             run: echo "::set-output name=datetime::$(date +'%Y%m%d_%H%M%S')"
+           - name: Set artifact name
+             id: artifact-name
+             run: echo "::set-output name=name::${{ github.workflow }}_${{ steps.datetime.outputs.datetime }}"
+           - name: Compress Artifacts
+             run: |
+               zip -r ${{ steps.artifact-name.outputs.name }}.zip \
+                 "Source/DotNet/UrhoDotNet/mobile/android/UrhoDotNet.dll" \
+                 "Source/DotNet/UrhoDotNet/mobile/android/Mono.Android.dll" \
+                 "Source/DotNet/libs/android/net6.0-Release/arm64-v8a/libUrho3D.so" \
+                 "Source/DotNet/libs/android/net6.0-Release/armeabi-v7a/libUrho3D.so" \
+                 "Source/DotNet/libs/android/net6.0-Release/x86/libUrho3D.so" \
+                 "Source/DotNet/libs/android/net6.0-Release/x86_64/libUrho3D.so" \
+                 "Source/DotNet/libs/android/net6.0-Release/arm64-v8a/libMonoEmbedded.so" \
+                 "Source/DotNet/libs/android/net6.0-Release/armeabi-v7a/libMonoEmbedded.so" \
+                 "Source/DotNet/libs/android/net6.0-Release/x86/libMonoEmbedded.so" \
+                 "Source/DotNet/libs/android/net6.0-Release/x86_64/libMonoEmbedded.so" \
+                 "Source/android/urho3d-lib/build/intermediates/aar_main_jar/release/classes.jar"
+           - name: Upload Artifacts
+             uses: actions/upload-artifact@v3
+             with:
+                name: ${{ steps.artifact-name.outputs.name }}
+                path: ${{ steps.artifact-name.outputs.name }}.zip
+     
+     
                
