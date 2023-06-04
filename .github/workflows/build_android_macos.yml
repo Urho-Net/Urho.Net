@@ -16,6 +16,9 @@ jobs:
               uses: actions/setup-java@v2
               with:
                 java-version: '11'
+                distribution: 'adopt'
+            - name: Print Java version
+              run: echo $JAVA_HOME
             - name: Setup Android SDK and NDK
               run : ./Source/script/setup_android_macos.sh
             - name: build and install Android urho.Net libs

@@ -17,7 +17,7 @@ jobs:
                 java-version: '11'
                 distribution: 'adopt'
            - name: Print Java version
-             run: echo %JAVA_HOME%
+             run: echo $JAVA_HOME
            - name: Setup Android SDK and NDK
              run : pwsh -File ./Source/script/setup_android_windows.ps1
            - name: Install and Configure Mono
