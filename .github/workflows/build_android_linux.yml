@@ -1,0 +1,24 @@
+name : BuildAndroidLinux
+    
+on: workflow_dispatch
+
+jobs: 
+    build-android-linux:
+        name: build install Android Urho.Net on Linux
+        runs-on: ubuntu-latest
+        steps:
+           - name: Checkout repository
+             uses: actions/checkout@v3
+             with:
+                submodules: recursive
+           - name: Setup Android SDK and NDK and Java SDK
+             run : ./Source/script/setup_android_linux.sh
+           - name: Setup CMake
+             uses: actions/setup-cmake@v1
+             with:
+               cmake-version: '3.26.3'
+           - name: Use cmake
+             run: cmake --version
+           - name: build and install Android urho.Net libs
+             run : ./Source/script/build_install_urhonet_android_libs.sh
+               
