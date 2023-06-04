@@ -1,0 +1,109 @@
+name : Build
+    
+on: workflow_dispatch
+
+jobs: 
+    build-macos:
+        name: build install urho.Net macOS
+        runs-on: macos-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+              with:
+                submodules: recursive
+            - name: Dotnet setup
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: '6.0.x'
+            - name: Select xcode
+              run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+            - name: build and install macos urho.Net libs
+              run : ./Source/script/build_install_urhonet_macos.sh
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                 name: build-macos
+                 path: | 
+                  template/libs/dotnet/urho/desktop/UrhoDotNet.dll
+                  template/libs/dotnet/urho/desktop/UrhoDotNet.xml
+                  template/libs/macos/libUrho3D.dylib
+
+    build-Linux:
+        name: build install urho.Net Linux
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+              with:
+                submodules: recursive
+            - name: Dotnet setup
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: '6.0.x'
+            - name: Install dependencies
+              run: sudo apt-get install -y libgl1-mesa-dev libegl1-mesa-dev mesa-common-dev xorg-dev libasound-dev
+            - name: build and install Linux urho.Net libs
+              run : ./Source/script/build_install_urhonet_linux.sh
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                 name: build-Linux
+                 path: | 
+                   template/libs/linux/libUrho3D.so
+
+                  
+    build-Windows:
+        name: build install urho.Net Windows
+        runs-on: windows-latest
+        steps:
+             - name: Checkout repository
+               uses: actions/checkout@v3
+               with:
+                 submodules: recursive
+             - name: Dotnet setup
+               uses: actions/setup-dotnet@v1
+               with:
+                 dotnet-version: '6.0.x'
+             - name: Install and Configure Mono
+               run: pwsh -File ./Source/script/install_mono.ps1
+             - name: Install Visual Studio 2019 Build Tools
+               run: |
+                choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
+                choco install visualstudio2019-workload-vctools --package-parameters "--includeRecommended --includeOptional"
+             - name: build and install Windows urho.Net libs
+               run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
+             - name: Upload Artifacts
+               uses: actions/upload-artifact@v3
+               with:
+                  name: build-Windows
+                  path: | 
+                    template/libs/windows/Urho3D.dll
+
+    create-artifacts:
+           name: Create combined artifacts
+           runs-on: ubuntu-latest
+           steps:
+              - name: Create artifacts directory
+                run: mkdir artifacts
+              - name: Download macOS artifacts
+                uses: actions/download-artifact@v3
+                with:
+                 name: build-macos
+                 path: artifacts
+              - name: Download Linux artifacts
+                uses: actions/download-artifact@v3
+                with:
+                   name: build-Linux
+                   path: artifacts
+              - name: Download Windows artifacts
+                uses: actions/download-artifact@v3
+                with:
+                   name: build-Windows
+                   path: artifacts
+              - name: Combine artifacts
+                run: tar -czvf combined-artifacts.tar.gz -C artifacts .
+              - name: Upload combined artifacts
+                uses: actions/upload-artifact@v3
+                with:
+                  name: combined-artifacts
+                  path: combined-artifacts.tar.gz
