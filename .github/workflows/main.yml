@@ -67,7 +67,14 @@ jobs:
               uses: actions/checkout@v3
               with:
                 submodules: recursive
-            - name: Setup Android SDK and NDK and Java SDK
+            - name: Set up JDK 11
+              uses: actions/setup-java@v2
+              with:
+                java-version: '11'
+                distribution: 'adopt'
+            - name: Print Java version
+              run: echo $JAVA_HOME               
+            - name: Setup Android SDK and NDK
               run : ./Source/script/setup_android_macos.sh
             - name: build and install Android urho.Net libs
               run : ./Source/script/build_install_urhonet_android_libs.sh
@@ -81,7 +88,14 @@ jobs:
              uses: actions/checkout@v3
              with:
                 submodules: recursive
-           - name: Setup Android SDK and NDK and Java SDK
+           - name: Set up JDK 11
+             uses: actions/setup-java@v2
+             with:
+                java-version: '11'
+                distribution: 'adopt'
+           - name: Print Java version
+             run: echo $JAVA_HOME
+           - name: Setup Android SDK and NDK
              run : ./Source/script/setup_android_linux.sh
            - name: Install CMake
              run: sudo apt-get install cmake
@@ -98,7 +112,14 @@ jobs:
              uses: actions/checkout@v3
              with:
                 submodules: recursive
-           - name: Setup Android SDK and NDK and Java SDK
+           - name: Set up JDK 11
+             uses: actions/setup-java@v2
+             with:
+                java-version: '11'
+                distribution: 'adopt'
+           - name: Print Java version
+             run: echo $JAVA_HOME
+           - name: Setup Android SDK and NDK 
              run : pwsh -File ./Source/script/setup_android_windows.ps1
            - name: Install and Configure Mono
              run: pwsh -File ./Source/script/install_mono.ps1
