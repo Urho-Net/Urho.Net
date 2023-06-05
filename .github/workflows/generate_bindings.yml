@@ -15,9 +15,18 @@ jobs:
               uses: actions/setup-dotnet@v1
               with:
                 dotnet-version: '6.0.x'
+
             - name: Select xcode
               run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
 
+            - name: Install Xcode Command-Line Tools
+              run: |
+                xcode-select --install
+                sudo xcode-select --switch /Library/Developer/CommandLineTools
+      
+            - name: Verify Xcode Command-Line Tools Installation
+              run: xcode-select --version
+              
             - name: generate bindings
               run : |
                     cd Source
