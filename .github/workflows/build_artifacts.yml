@@ -68,100 +68,124 @@ jobs:
                     build-Linux
                   
    
-    # build-Windows:
-    #     name: build install urho.Net Windows
-    #     runs-on: windows-latest
-    #     steps:
-    #          - name: Checkout repository
-    #            uses: actions/checkout@v3
-    #            with:
-    #              submodules: recursive
-    #          - name: Dotnet setup
-    #            uses: actions/setup-dotnet@v1
-    #            with:
-    #              dotnet-version: '6.0.x'
-    #          - name: Install and Configure Mono
-    #            run: pwsh -File ./Source/script/install_mono.ps1
-    #          - name: Install Visual Studio 2019 Build Tools
-    #            run: |
-    #             choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
-    #             choco install visualstudio2019-workload-vctools --package-parameters "--includeRecommended --includeOptional"
-    #          - name: build and install Windows urho.Net libs
-    #            run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
-    #          - name: Upload Artifacts
-    #            uses: actions/upload-artifact@v3
-    #            with:
-    #               name: build-Windows
-    #               path: | 
-    #                 template/libs/windows
+    build-Windows:
+        name: build install urho.Net Windows
+        runs-on: windows-latest
+        steps:
+             - name: Checkout repository
+               uses: actions/checkout@v3
+               with:
+                 submodules: recursive
+             - name: Dotnet setup
+               uses: actions/setup-dotnet@v1
+               with:
+                 dotnet-version: '6.0.x'
+             - name: Install and Configure Mono
+               run: pwsh -File ./Source/script/install_mono.ps1
+             - name: Install Visual Studio 2019 Build Tools
+               run: |
+                choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
+                choco install visualstudio2019-workload-vctools --package-parameters "--includeRecommended --includeOptional"
+             - name: build and install Windows urho.Net libs
+               run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
+             - name: Create artifact directory
+               run: mkdir -p build-Windows/template/libs
+             - name: Copy files to artifact directory
+               run: cp -R template/libs/windows build-Windows/template/libs
+             - name: Upload Artifacts
+               uses: actions/upload-artifact@v3
+               with:
+                 name: build-Windows
+                 path: build-Windows
 
-    # build-android-linux:
-    #     name: build install Android Urho.Net on Linux
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #        - name: Checkout repository
-    #          uses: actions/checkout@v3
-    #          with:
-    #             submodules: recursive
-    #        - name: Set up JDK 11
-    #          uses: actions/setup-java@v2
-    #          with:
-    #             java-version: '11'
-    #             distribution: 'adopt'
-    #        - name: Print Java version
-    #          run: echo $JAVA_HOME
-    #        - name: Setup Android SDK and NDK
-    #          run : ./Source/script/setup_android_linux.sh
-    #        - name: Install CMake
-    #          run: sudo apt-get install cmake
-    #        - name: Use cmake
-    #          run: cmake --version
-    #        - name: build and install Android urho.Net libs
-    #          run : ./Source/script/build_install_urhonet_android_libs.sh
-    #        - name: Upload Artifacts
-    #          uses: actions/upload-artifact@v3
-    #          with:
-    #             name: build-android-linux
-    #             path: | 
-    #               template/libs/dotnet/urho/mobile/android
-    #               template/libs/android/arm64-v8a
-    #               template/libs/android/armeabi-v7a
-    #               template/libs/android/x86
-    #               template/libs/android/x86_64
-    #               template/Android/classes 
+    build-android-linux:
+        name: build install Android Urho.Net on Linux
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v3
+            with:
+              submodules: recursive
+          - name: Set up JDK 11
+            uses: actions/setup-java@v2
+            with:
+              java-version: '11'
+              distribution: 'adopt'
+          - name: Print Java version
+            run: echo $JAVA_HOME
+          - name: Setup Android SDK and NDK
+            run : ./Source/script/setup_android_linux.sh
+          - name: Install CMake
+            run: sudo apt-get install cmake
+          - name: Use cmake
+            run: cmake --version
+          - name: Create artifact directories
+            run: |
+              mkdir -p build-android-linux/template/libs/dotnet/urho/mobile/android
+              mkdir -p build-android-linux/template/libs/android/arm64-v8a
+              mkdir -p build-android-linux/template/libs/android/armeabi-v7a
+              mkdir -p build-android-linux/template/libs/android/x86
+              mkdir -p build-android-linux/template/libs/android/x86_64
+              mkdir -p build-android-linux/template/Android/classes
+          - name: Copy Android artifacts
+            run: |
+              cp -R template/libs/dotnet/urho/mobile/android build-android-linux/template/libs/dotnet/urho/mobile/
+              cp -R template/libs/android/arm64-v8a build-android-linux/template/libs/android/
+              cp -R template/libs/android/armeabi-v7a build-android-linux/template/libs/android/
+              cp -R template/libs/android/x86 build-android-linux/template/libs/android/
+              cp -R template/libs/android/x86_64 build-android-linux/template/libs/android/
+              cp -R template/Android/classes build-android-linux/template/Android/
+          - name: Upload Artifacts
+            uses: actions/upload-artifact@v3
+            with:
+              name: build-android-linux
+              path: build-android-linux
+      
 
-    # build-ios:
-    #     name: build install urho.Net iOS
-    #     runs-on: macos-latest
-    #     steps:
-    #        - name: Checkout repository
-    #          uses: actions/checkout@v3
-    #          with:
-    #             submodules: recursive
-    #        - name: Dotnet setup
-    #          uses: actions/setup-dotnet@v1
-    #          with:
-    #             dotnet-version: '6.0.x'
-    #        - name: Select xcode
-    #          run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
-    #        - name: build and install ios urho.Net libs
-    #          run : ./Source/script/build_install_urhonet_ios.sh
-    #        - name: Upload Artifacts
-    #          uses: actions/upload-artifact@v3
-    #          with:
-    #               name: build-ios
-    #               path: | 
-    #                 template/IOS
-    #                 template/libs/ios/urho3d/gles/release
-    #                 template/libs/ios/urho3d/gles/debug
-    #                 template/libs/ios/urho3d/metal/release
-    #                 template/libs/ios/urho3d/metal/debug
-    #                 template/libs/dotnet/urho/mobile/ios
+
+    build-ios:
+     name: build install urho.Net iOS
+     runs-on: macos-latest
+     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+         submodules: recursive
+      - name: Dotnet setup
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+      - name: Select xcode
+        run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+      - name: build and install iOS urho.Net libs
+        run : ./Source/script/build_install_urhonet_ios.sh
+      - name: Create artifact directories
+        run: |
+          mkdir -p build-ios/template/IOS
+          mkdir -p build-ios/template/libs/ios/urho3d/gles/release
+          mkdir -p build-ios/template/libs/ios/urho3d/gles/debug
+          mkdir -p build-ios/template/libs/ios/urho3d/metal/release
+          mkdir -p build-ios/template/libs/ios/urho3d/metal/debug
+          mkdir -p build-ios/template/libs/dotnet/urho/mobile/ios
+      - name: Copy iOS artifacts
+        run: |
+          cp -R template/IOS build-ios/template
+          cp -R template/libs/ios/urho3d/gles/release build-ios/template/libs/ios/urho3d/gles/
+          cp -R template/libs/ios/urho3d/gles/debug build-ios/template/libs/ios/urho3d/gles/
+          cp -R template/libs/ios/urho3d/metal/release build-ios/template/libs/ios/urho3d/metal/
+          cp -R template/libs/ios/urho3d/metal/debug build-ios/template/libs/ios/urho3d/metal/
+          cp -R template/libs/dotnet/urho/mobile/ios build-ios/template/libs/dotnet/urho/mobile/
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-ios
+          path: build-ios
+
 
     create-artifacts:
            name: Create combined artifacts
            runs-on: ubuntu-latest
-           needs: [build-macos, build-Linux]
+           needs: [build-macos, build-Linux , build-Windows , build-android-linux , build-ios]
            steps:
               - name: Create artifacts directory
                 run: mkdir artifacts
@@ -178,37 +202,26 @@ jobs:
                    name: build-Linux
                    path: artifacts
 
+              - name: Download Windows artifacts
+                uses: actions/download-artifact@v3
+                with:
+                   name: build-Windows
+                   path: artifacts
+
+              - name: Download Android artifacts
+                uses: actions/download-artifact@v3
+                with:
+                      name: build-android-linux
+                      path: artifacts
+
+              - name: Download iOS artifacts
+                uses: actions/download-artifact@v3
+                with:
+                    name: build-ios
+                    path: artifacts
 
               - name: Upload combined artifacts
                 uses: actions/upload-artifact@v3
                 with:
-                  name: combined-artifacts
-                  path: artifacts
-
-
-    #           - name: Download Windows artifacts
-    #             uses: actions/download-artifact@v3
-    #             with:
-    #                name: build-Windows
-    #                path: artifacts
-
-    #           - name: Download Android artifacts
-    #             uses: actions/download-artifact@v3
-    #             with:
-    #                   name: build-android-linux
-    #                   path: artifacts
-
-    #           - name: Download iOS artifacts
-    #             uses: actions/download-artifact@v3
-    #             with:
-    #                 name: build-ios
-    #                 path: artifacts
-
-    #           - name: Combine artifacts
-    #             run: tar -czvf combined-artifacts.tar.gz -C artifacts .
-
-    #           - name: Upload combined artifacts
-    #             uses: actions/upload-artifact@v3
-    #             with:
-    #               name: combined-artifacts
-    #               path: combined-artifacts.tar.gz
+                   name: combined-artifacts
+                   path: artifacts
