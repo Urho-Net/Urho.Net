@@ -30,7 +30,9 @@ jobs:
               run: |
                  echo "SDKROOT=$(xcrun --sdk macosx --show-sdk-path)" | sudo tee /Library/Developer/CommandLineTools/usr/share/SDKs/default.sdk/MacOSX.sdk/SDKSettings.plist
 
-                    
+            - name: Symbolic link to OpenGL headers
+              run: sudo ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL         
+           
             - name: generate bindings
               run : |
                     cd Source
