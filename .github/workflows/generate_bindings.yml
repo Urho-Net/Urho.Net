@@ -17,8 +17,12 @@ jobs:
                 dotnet-version: '6.0.x'
             - name: Select xcode
               run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
-            - name: build and install macos urho.Net libs
-              run : ./Source/script/make_csharp_bindings.sh
+
+            - name: generate bindings
+              run : |
+                    cd Source
+                    ./script/make_csharp_bindings.sh
+                    cd ..
 
             - name: Create artifact directory
               run:  |
@@ -37,5 +41,5 @@ jobs:
                  path: | 
                     bindings
 
-            - name: Delete Artifacts
+            - name: Delete artifact directory
               run: rm -rf bindings
