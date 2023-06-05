@@ -3,29 +3,39 @@ name : Build-Artifacts
 on: workflow_dispatch
 
 jobs: 
-    # build-macos:
-    #     name: build install urho.Net macOS
-    #     runs-on: macos-latest
-    #     steps:
-    #         - name: Checkout repository
-    #           uses: actions/checkout@v3
-    #           with:
-    #             submodules: recursive
-    #         - name: Dotnet setup
-    #           uses: actions/setup-dotnet@v1
-    #           with:
-    #             dotnet-version: '6.0.x'
-    #         - name: Select xcode
-    #           run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
-    #         - name: build and install macos urho.Net libs
-    #           run : ./Source/script/build_install_urhonet_macos.sh
-    #         - name: Upload Artifacts
-    #           uses: actions/upload-artifact@v3
-    #           with:
-    #              name: build-macos
-    #              path: | 
-    #               template/libs/dotnet/urho/desktop
-    #               template/libs/macos
+    build-macos:
+        name: build install urho.Net macOS
+        runs-on: macos-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+              with:
+                submodules: recursive
+            - name: Dotnet setup
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: '6.0.x'
+            - name: Select xcode
+              run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+            - name: build and install macos urho.Net libs
+              run : ./Source/script/build_install_urhonet_macos.sh
+
+            - name: Create artifact directory
+              run:  |
+                mkdir -p build-macos/template/libs/dotnet/urho
+                mkdir -p build-macos/template/libs
+           
+            - name: Copy files to artifact directory
+              run: |
+                  cp -R template/libs/dotnet/urho/desktop build-macos/template/libs/dotnet/urho
+                  cp -R template/libs/macos build-macos/template/libs
+
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                 name: build-macos
+                 path: | 
+                    build-macos
 
     build-Linux:
         name: build install urho.Net Linux
@@ -45,10 +55,10 @@ jobs:
               run : ./Source/script/build_install_urhonet_linux.sh
 
             - name: Create artifact directory
-              run:  mkdir -p build-Linux/template/libs/linux
+              run:  mkdir -p build-Linux/template/libs
 
             - name: Copy files to artifact directory
-              run: cp -R template/libs/linux build-Linux/template/libs/linux
+              run: cp -R template/libs/linux build-Linux/template/libs
 
             - name: Upload Artifacts
               uses: actions/upload-artifact@v3
