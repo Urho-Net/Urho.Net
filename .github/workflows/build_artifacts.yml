@@ -158,25 +158,33 @@ jobs:
     #                 template/libs/ios/urho3d/metal/debug
     #                 template/libs/dotnet/urho/mobile/ios
 
-    # create-artifacts:
-    #        name: Create combined artifacts
-    #        runs-on: ubuntu-latest
-    #        needs: [build-macos, build-Linux, build-Windows , build-android-linux , build-ios]
-    #        steps:
-    #           - name: Create artifacts directory
-    #             run: mkdir artifacts
+    create-artifacts:
+           name: Create combined artifacts
+           runs-on: ubuntu-latest
+           needs: [build-macos, build-Linux]
+           steps:
+              - name: Create artifacts directory
+                run: mkdir artifacts
 
-    #           - name: Download macOS artifacts
-    #             uses: actions/download-artifact@v3
-    #             with:
-    #              name: build-macos
-    #              path: artifacts
+              - name: Download macOS artifacts
+                uses: actions/download-artifact@v3
+                with:
+                 name: build-macos
+                 path: artifacts
 
-    #           - name: Download Linux artifacts
-    #             uses: actions/download-artifact@v3
-    #             with:
-    #                name: build-Linux
-    #                path: artifacts
+              - name: Download Linux artifacts
+                uses: actions/download-artifact@v3
+                with:
+                   name: build-Linux
+                   path: artifacts
+
+
+              - name: Upload combined artifacts
+                uses: actions/upload-artifact@v3
+                with:
+                  name: combined-artifacts
+                  path: artifacts
+
 
     #           - name: Download Windows artifacts
     #             uses: actions/download-artifact@v3
