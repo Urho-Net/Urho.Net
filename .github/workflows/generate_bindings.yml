@@ -39,22 +39,22 @@ jobs:
                     ./script/make_csharp_bindings.sh
                     cd ..
 
-            # - name: Create artifact directory
-            #   run:  |
-            #     mkdir -p bindings/Source/DotNet/Bindings
-            #     mkdir -p bindings/Source/Source/Urho3D/DotNet
+            - name: Create artifact directory
+              run:  |
+                mkdir -p bindings/Source/DotNet/Bindings
+                mkdir -p bindings/Source/Source/Urho3D/DotNet
            
-            # - name: Copy files to artifact directory
-            #   run: |
-            #       cp -R Source/DotNet/Bindings/Portable bindings/Source/DotNet/Bindings
-            #       cp  Source/Source/Urho3D/DotNet/binding.cpp  bindings/Source/Source/Urho3D/DotNet
+            - name: Copy files to artifact directory
+              run: |
+                  cp -R Source/DotNet/Bindings/Portable bindings/Source/DotNet/Bindings
+                  cp  Source/Source/Urho3D/DotNet/binding.cpp  bindings/Source/Source/Urho3D/DotNet
 
-            # - name: Upload Artifacts
-            #   uses: actions/upload-artifact@v3
-            #   with:
-            #      name: bindings
-            #      path: | 
-            #         bindings
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                 name: bindings
+                 path: | 
+                    bindings
 
-            # - name: Delete artifact directory
-            #   run: rm -rf bindings
+            - name: Delete artifact directory
+              run: rm -rf bindings
