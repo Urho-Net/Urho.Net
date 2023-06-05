@@ -18,7 +18,7 @@ jobs:
 
             - name: Select Xcode version
               run: |
-                  sudo xcode-select --switch /Applications/Xcode.app
+                  sudo xcode-select --switch /Library/Developer/CommandLineTools
 
             - name: Create SDK directory
               run: sudo mkdir -p /Library/Developer/CommandLineTools/usr/share/SDKs/default.sdk/MacOSX.sdk
