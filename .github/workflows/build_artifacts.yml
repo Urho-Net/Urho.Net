@@ -43,23 +43,21 @@ jobs:
               run: sudo apt-get install -y libgl1-mesa-dev libegl1-mesa-dev mesa-common-dev xorg-dev libasound-dev
             - name: build and install Linux urho.Net libs
               run : ./Source/script/build_install_urhonet_linux.sh
+
+            - name: Create artifact directory
+              run: mkdir build-Linux
               
+            - name: Copy files to artifact directory
+              run: cp -R template/libs/linux build-Linux/template/libs/linux
+
             - name: Upload Artifacts
               uses: actions/upload-artifact@v3
               with:
-                 name: build-Linux-1
+                 name: build-Linux
                  path: | 
-                   template/libs/linux
+                    build-Linux
                   
-            - name: Compress linux
-              run: tar -czvf build-Linux-2.tar.gz -C  template/libs/linux .
-            - name: Upload Artifacts
-              uses: actions/upload-artifact@v3
-              with:
-                 name: build-Linux-2
-                 path: | 
-                    build-Linux-2.tar.gz
-                  
+   
     # build-Windows:
     #     name: build install urho.Net Windows
     #     runs-on: windows-latest
