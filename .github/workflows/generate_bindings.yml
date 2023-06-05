@@ -16,11 +16,21 @@ jobs:
               with:
                 dotnet-version: '6.0.x'
 
-            - name: Select Xcode version and set SDKROOT
+            - name: Select Xcode version
               run: |
                   sudo xcode-select --switch /Applications/Xcode.app
-                  echo "SDKROOT=$(xcrun --sdk macosx --show-sdk-path)" | sudo tee -a /Library/Developer/CommandLineTools/usr/share/SDKs/default.sdk/MacOSX.sdk/SDKSettings.plist
 
+            - name: Create SDK directory
+              run: sudo mkdir -p /Library/Developer/CommandLineTools/usr/share/SDKs/default.sdk/MacOSX.sdk
+                
+            - name: Create SDKSettings.plist file
+              run: sudo touch /Library/Developer/CommandLineTools/usr/share/SDKs/default.sdk/MacOSX.sdk/SDKSettings.plist
+                
+            - name: Set SDKROOT in SDKSettings.plist
+              run: |
+                 echo "SDKROOT=$(xcrun --sdk macosx --show-sdk-path)" | sudo tee /Library/Developer/CommandLineTools/usr/share/SDKs/default.sdk/MacOSX.sdk/SDKSettings.plist
+
+                    
             - name: generate bindings
               run : |
                     cd Source
