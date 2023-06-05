@@ -1,0 +1,41 @@
+name : Generate-Bindings
+    
+on: workflow_dispatch
+
+jobs: 
+    bindings:
+        name: build install urho.Net macOS
+        runs-on: macos-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+              with:
+                submodules: recursive
+            - name: Dotnet setup
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: '6.0.x'
+            - name: Select xcode
+              run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+            - name: build and install macos urho.Net libs
+              run : ./Source/script/make_csharp_bindings.sh
+
+            - name: Create artifact directory
+              run:  |
+                mkdir -p bindings/Source/DotNet/Bindings
+                mkdir -p bindings/Source/Source/Urho3D/DotNet
+           
+            - name: Copy files to artifact directory
+              run: |
+                  cp -R Source/DotNet/Bindings/Portable bindings/Source/DotNet/Bindings
+                  cp  Source/Source/Urho3D/DotNet/binding.cpp  bindings/Source/Source/Urho3D/DotNet
+
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                 name: bindings
+                 path: | 
+                    bindings
+
+            - name: Delete Artifacts
+              run: rm -rf bindings
