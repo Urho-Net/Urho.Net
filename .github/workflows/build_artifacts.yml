@@ -193,14 +193,10 @@ jobs:
               
              - name: Copy Bindings to the destination path
                run: |
-                  dir Source\DotNet\Bindings
-                  dir Source\Source\Urho3D\DotNet\binding.cpp
-                  rmdir /S /Q Source\DotNet\Bindings\Portable
+                  rd /S /Q Source\DotNet\Bindings\Portable
                   xcopy /E /I bindings\Source\DotNet\Bindings\Portable Source\DotNet\Bindings
                   copy /Y bindings\Source\Source\Urho3D\DotNet\binding.cpp Source\Source\Urho3D\DotNet
-                  rmdir /S /Q bindings
-                  dir Source\DotNet\Bindings
-                  dir Source\Source\Urho3D\DotNet\binding.cpp
+                  rd /S /Q bindings
 
              - name: build and install Windows urho.Net libs
                run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
