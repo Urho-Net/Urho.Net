@@ -1,4 +1,4 @@
-name : Build-Artifacts
+name : Build-Linux-Artifacts
     
 on: workflow_dispatch
 
