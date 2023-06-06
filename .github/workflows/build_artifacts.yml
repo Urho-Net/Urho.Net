@@ -1,11 +1,17 @@
 name : Build-Artifacts
     
-on: workflow_dispatch
+on: 
+    workflow_dispatch:
+    push:
+     branches:
+      - dotnet-6.x
 
 jobs: 
+    
     generate-bindings:
         name: Generate Bindings
         runs-on: macos-latest
+        if: contains(github.event.head_commit.message, 'build-artifacts') || github.event_name == 'workflow_dispatch'
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
@@ -63,6 +69,7 @@ jobs:
     build-macos:
         name: build install urho.Net macOS
         runs-on: macos-latest
+        if: contains(github.event.head_commit.message, 'build-artifacts') || github.event_name == 'workflow_dispatch'
         needs: [generate-bindings]
         steps:
             - name: Checkout repository
@@ -117,6 +124,7 @@ jobs:
     build-Linux:
         name: build install urho.Net Linux
         runs-on: ubuntu-latest
+        if: contains(github.event.head_commit.message, 'build-artifacts') || github.event_name == 'workflow_dispatch'
         needs: [generate-bindings]
         steps:
             - name: Checkout repository
@@ -168,6 +176,7 @@ jobs:
     build-Windows:
         name: build install urho.Net Windows
         runs-on: windows-latest
+        if: contains(github.event.head_commit.message, 'build-artifacts') || github.event_name == 'workflow_dispatch'
         needs: [generate-bindings]
         steps:
              - name: Checkout repository
@@ -193,10 +202,10 @@ jobs:
               
              - name: Copy Bindings to the destination path
                run: |
-                  rd /S /Q Source\DotNet\Bindings\Portable
+                  rd /S  Source\DotNet\Bindings\Portable
                   xcopy /E /I bindings\Source\DotNet\Bindings\Portable Source\DotNet\Bindings
                   copy /Y bindings\Source\Source\Urho3D\DotNet\binding.cpp Source\Source\Urho3D\DotNet
-                  rd /S /Q bindings
+                  rd /S bindings
 
              - name: build and install Windows urho.Net libs
                run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
@@ -214,6 +223,7 @@ jobs:
     build-android-linux:
         name: build install Android Urho.Net on Linux
         runs-on: ubuntu-latest
+        if: contains(github.event.head_commit.message, 'build-artifacts') || github.event_name == 'workflow_dispatch'
         needs: [generate-bindings]
         steps:
           - name: Checkout repository
@@ -282,6 +292,7 @@ jobs:
     build-ios:
      name: build install urho.Net iOS
      runs-on: macos-latest
+     if: contains(github.event.head_commit.message, 'build-artifacts') || github.event_name == 'workflow_dispatch'
      needs: [generate-bindings]
      steps:
       - name: Checkout repository
@@ -341,6 +352,7 @@ jobs:
     create-artifacts:
            name: Create combined artifacts
            runs-on: ubuntu-latest
+           if: contains(github.event.head_commit.message, 'build-artifacts') || github.event_name == 'workflow_dispatch'
            needs: [build-macos, build-Linux , build-Windows , build-android-linux , build-ios]
            steps:
               - name: Create artifacts directory

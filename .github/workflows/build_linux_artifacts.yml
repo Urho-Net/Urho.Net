@@ -1,11 +1,16 @@
 name : Build-Linux-Artifacts
     
-on: workflow_dispatch
+on: 
+    workflow_dispatch:
+    push:
+     branches:
+      - dotnet-6.x
 
 jobs: 
     generate-bindings:
         name: Generate Bindings
         runs-on: macos-latest
+        if: contains(github.event.head_commit.message, 'build-linux-artifacts') || github.event_name == 'workflow_dispatch'
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
@@ -63,6 +68,7 @@ jobs:
     build-Linux-Artifacts:
         name: build  urho.Net Linux artifacts
         runs-on: ubuntu-latest
+        if: contains(github.event.head_commit.message, 'build-linux-artifacts') || github.event_name == 'workflow_dispatch'
         needs: [generate-bindings]
         steps:
             - name: Checkout repository

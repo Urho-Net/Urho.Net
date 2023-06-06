@@ -1,11 +1,16 @@
 name : Build
     
-on: workflow_dispatch
+on: 
+    workflow_dispatch:
+    push:
+     branches:
+      - dotnet-6.x
 
 jobs: 
     build-macos:
         name: build install urho.Net macOS
         runs-on: macos-latest
+        if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
@@ -23,6 +28,7 @@ jobs:
     build-Linux:
         name: build install urho.Net Linux
         runs-on: ubuntu-latest
+        if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
@@ -41,6 +47,7 @@ jobs:
     build-Windows:
         name: build install urho.Net Windows
         runs-on: windows-latest
+        if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
         steps:
              - name: Checkout repository
                uses: actions/checkout@v3
@@ -62,6 +69,7 @@ jobs:
     build-android-macos:
         name: build install Android Urho.Net on macOS
         runs-on: macos-latest
+        if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
@@ -83,6 +91,7 @@ jobs:
     build-android-linux:
         name: build install Android Urho.Net on Linux
         runs-on: ubuntu-latest
+        if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
         steps:
            - name: Checkout repository
              uses: actions/checkout@v3
@@ -107,6 +116,7 @@ jobs:
     build-android-Windows:
         name: build install Android urho.Net on Windows
         runs-on: windows-latest
+        if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
         steps:
            - name: Checkout repository
              uses: actions/checkout@v3
@@ -129,6 +139,7 @@ jobs:
     build-ios:
         name: build install urho.Net iOS
         runs-on: macos-latest
+        if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
         steps:
            - name: Checkout repository
              uses: actions/checkout@v3
