@@ -88,7 +88,7 @@ jobs:
                      ls -la Source/Source/Urho3D/DotNet/binding.cpp
                      rm -Rf Source/DotNet/Bindings/Portable
                      cp -R bindings/Source/DotNet/Bindings/Portable Source/DotNet/Bindings
-                     cp -f bindings/Source/Source/Urho3D/DotNet Source/Source/Urho3D/DotNet/binding.cpp  
+                     cp -f bindings/Source/Source/Urho3D/DotNet/binding.cpp  Source/Source/Urho3D/DotNet/  
                      rm -Rf bindings
                      ls -ld Source/DotNet/Bindings
                      ls -la Source/Source/Urho3D/DotNet/binding.cpp
