@@ -84,10 +84,14 @@ jobs:
 
             - name: Copy Bindings to the destination path
               run: |
+                     ls -ld Source/DotNet/Bindings
+                     ls -la Source/Source/Urho3D/DotNet/binding.cpp
                      rm -Rf Source/DotNet/Bindings/Portable
                      cp -R bindings/Source/DotNet/Bindings/Portable Source/DotNet/Bindings
-                     cp  -f Source/Source/Urho3D/DotNet/binding.cpp  bindings/Source/Source/Urho3D/DotNet
+                     cp -f bindings/Source/Source/Urho3D/DotNet Source/Source/Urho3D/DotNet/binding.cpp  
                      rm -Rf bindings
+                     ls -ld Source/DotNet/Bindings
+                     ls -la Source/Source/Urho3D/DotNet/binding.cpp
 
             - name: build and install Linux urho.Net libs
               run : ./Source/script/build_install_urhonet_linux.sh
