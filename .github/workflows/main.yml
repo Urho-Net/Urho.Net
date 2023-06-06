@@ -7,8 +7,8 @@ on:
       - dotnet-6.x
 
 jobs: 
-    build-macos:
-        name: build install urho.Net macOS
+    generate-bindings:
+        name: Generate Bindings
         runs-on: macos-latest
         if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
         steps:
@@ -20,8 +20,85 @@ jobs:
               uses: actions/setup-dotnet@v1
               with:
                 dotnet-version: '6.0.x'
+
+            - name: Select Xcode version
+              run: |
+                  sudo xcode-select --switch /Applications/Xcode.app
+
+            - name: Create SDK directory
+              run: sudo mkdir -p /Library/Developer/CommandLineTools/usr/share/SDKs/default.sdk/MacOSX.sdk
+                
+            - name: Create SDKSettings.plist file
+              run: sudo touch /Library/Developer/CommandLineTools/usr/share/SDKs/default.sdk/MacOSX.sdk/SDKSettings.plist
+                
+            - name: Set SDKROOT in SDKSettings.plist
+              run: |
+                 echo "SDKROOT=$(xcrun --sdk macosx --show-sdk-path)" | sudo tee /Library/Developer/CommandLineTools/usr/share/SDKs/default.sdk/MacOSX.sdk/SDKSettings.plist
+
+            - name: Symbolic link to OpenGL headers
+              run: sudo ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL         
+           
+            - name: generate bindings
+              run : |
+                    cd Source
+                    ./script/make_csharp_bindings.sh
+                    cd ..
+
+            - name: Create artifact directory
+              run:  |
+                mkdir -p bindings/Source/DotNet/Bindings
+                mkdir -p bindings/Source/Source/Urho3D/DotNet
+           
+            - name: Copy files to artifact directory
+              run: |
+                  cp -R Source/DotNet/Bindings/Portable bindings/Source/DotNet/Bindings
+                  cp  Source/Source/Urho3D/DotNet/binding.cpp  bindings/Source/Source/Urho3D/DotNet
+
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                 name: bindings
+                 retention-days: 1
+                 path: | 
+                    bindings
+
+            - name: Delete artifact directory
+              run: rm -rf bindings
+
+    build-macos:
+        name: build install urho.Net macOS
+        runs-on: macos-latest
+        if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
+        needs: [generate-bindings]
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+              with:
+                submodules: recursive
+            - name: Dotnet setup
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: '6.0.x'
             - name: Select xcode
               run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+            
+            - name: Download Bindings artifacts
+              uses: actions/download-artifact@v3
+              with:
+                 name: bindings
+                 path: bindings
+
+            - name: Copy Bindings to the destination path
+              run: |
+                     ls -ld Source/DotNet/Bindings
+                     ls -la Source/Source/Urho3D/DotNet/binding.cpp
+                     rm -Rf Source/DotNet/Bindings/Portable
+                     cp -R bindings/Source/DotNet/Bindings/Portable Source/DotNet/Bindings
+                     cp -f bindings/Source/Source/Urho3D/DotNet/binding.cpp  Source/Source/Urho3D/DotNet/  
+                     rm -Rf bindings
+                     ls -ld Source/DotNet/Bindings
+                     ls -la Source/Source/Urho3D/DotNet/binding.cpp
+
             - name: build and install macos urho.Net libs
               run : ./Source/script/build_install_urhonet_macos.sh
 
@@ -29,6 +106,7 @@ jobs:
         name: build install urho.Net Linux
         runs-on: ubuntu-latest
         if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
+        needs: [generate-bindings]
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
@@ -40,6 +118,25 @@ jobs:
                 dotnet-version: '6.0.x'
             - name: Install dependencies
               run: sudo apt-get install -y libgl1-mesa-dev libegl1-mesa-dev mesa-common-dev xorg-dev libasound-dev
+            
+            - name: Download Bindings artifacts
+              uses: actions/download-artifact@v3
+              with:
+                 name: bindings
+                 path: bindings
+
+            - name: Copy Bindings to the destination path
+              run: |
+                     ls -ld Source/DotNet/Bindings
+                     ls -la Source/Source/Urho3D/DotNet/binding.cpp
+                     rm -Rf Source/DotNet/Bindings/Portable
+                     cp -R bindings/Source/DotNet/Bindings/Portable Source/DotNet/Bindings
+                     cp -f bindings/Source/Source/Urho3D/DotNet/binding.cpp  Source/Source/Urho3D/DotNet/  
+                     rm -Rf bindings
+                     ls -ld Source/DotNet/Bindings
+                     ls -la Source/Source/Urho3D/DotNet/binding.cpp
+                     
+             
             - name: build and install Linux urho.Net libs
               run : ./Source/script/build_install_urhonet_linux.sh
 
@@ -48,6 +145,7 @@ jobs:
         name: build install urho.Net Windows
         runs-on: windows-latest
         if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
+        needs: [generate-bindings]
         steps:
              - name: Checkout repository
                uses: actions/checkout@v3
@@ -63,6 +161,20 @@ jobs:
                run: |
                 choco install visualstudio2019buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional"
                 choco install visualstudio2019-workload-vctools --package-parameters "--includeRecommended --includeOptional"
+
+             - name: Download Bindings artifacts
+               uses: actions/download-artifact@v3
+               with:
+                   name: bindings
+                   path: bindings
+               
+             - name: Copy Bindings to the destination path
+               run: |
+                      Remove-Item -Path 'Source\DotNet\Bindings\Portable' -Recurse -Force
+                      Copy-Item -Path bindings\Source\DotNet\Bindings\Portable -Destination Source\DotNet\Bindings -Recurse -Force
+                      Copy-Item -Path bindings\Source\Source\Urho3D\DotNet\binding.cpp -Destination Source\Source\Urho3D\DotNet -Force
+                      Remove-Item -Path 'bindings' -Recurse -Force
+ 
              - name: build and install Windows urho.Net libs
                run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
 
@@ -70,6 +182,7 @@ jobs:
         name: build install Android Urho.Net on macOS
         runs-on: macos-latest
         if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
+        needs: [generate-bindings]
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
@@ -84,6 +197,25 @@ jobs:
               run: echo $JAVA_HOME               
             - name: Setup Android SDK and NDK
               run : ./Source/script/setup_android_macos.sh
+           
+            - name: Download Bindings artifacts
+              uses: actions/download-artifact@v3
+              with:
+                 name: bindings
+                 path: bindings
+
+            - name: Copy Bindings to the destination path
+              run: |
+                     ls -ld Source/DotNet/Bindings
+                     ls -la Source/Source/Urho3D/DotNet/binding.cpp
+                     rm -Rf Source/DotNet/Bindings/Portable
+                     cp -R bindings/Source/DotNet/Bindings/Portable Source/DotNet/Bindings
+                     cp -f bindings/Source/Source/Urho3D/DotNet/binding.cpp  Source/Source/Urho3D/DotNet/  
+                     rm -Rf bindings
+                     ls -ld Source/DotNet/Bindings
+                     ls -la Source/Source/Urho3D/DotNet/binding.cpp
+                     
+
             - name: build and install Android urho.Net libs
               run : ./Source/script/build_install_urhonet_android_libs.sh
 
@@ -92,6 +224,7 @@ jobs:
         name: build install Android Urho.Net on Linux
         runs-on: ubuntu-latest
         if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
+        needs: [generate-bindings]
         steps:
            - name: Checkout repository
              uses: actions/checkout@v3
@@ -110,6 +243,25 @@ jobs:
              run: sudo apt-get install cmake
            - name: Use cmake
              run: cmake --version
+           
+           - name: Download Bindings artifacts
+             uses: actions/download-artifact@v3
+             with:
+                name: bindings
+                path: bindings
+
+           - name: Copy Bindings to the destination path
+             run: |
+                    ls -ld Source/DotNet/Bindings
+                    ls -la Source/Source/Urho3D/DotNet/binding.cpp
+                    rm -Rf Source/DotNet/Bindings/Portable
+                    cp -R bindings/Source/DotNet/Bindings/Portable Source/DotNet/Bindings
+                    cp -f bindings/Source/Source/Urho3D/DotNet/binding.cpp  Source/Source/Urho3D/DotNet/  
+                    rm -Rf bindings
+                    ls -ld Source/DotNet/Bindings
+                    ls -la Source/Source/Urho3D/DotNet/binding.cpp
+                    
+
            - name: build and install Android urho.Net libs
              run : ./Source/script/build_install_urhonet_android_libs.sh
                
@@ -117,6 +269,7 @@ jobs:
         name: build install Android urho.Net on Windows
         runs-on: windows-latest
         if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
+        needs: [generate-bindings]
         steps:
            - name: Checkout repository
              uses: actions/checkout@v3
@@ -133,6 +286,23 @@ jobs:
              run : pwsh -File ./Source/script/setup_android_windows.ps1
            - name: Install and Configure Mono
              run: pwsh -File ./Source/script/install_mono.ps1
+
+
+           - name: Download Bindings artifacts
+             uses: actions/download-artifact@v3
+             with:
+                   name: bindings
+                   path: bindings
+               
+             
+           - name: Copy Bindings to the destination path
+             run: |
+                    Remove-Item -Path 'Source\DotNet\Bindings\Portable' -Recurse -Force
+                    Copy-Item -Path bindings\Source\DotNet\Bindings\Portable -Destination Source\DotNet\Bindings -Recurse -Force
+                    Copy-Item -Path bindings\Source\Source\Urho3D\DotNet\binding.cpp -Destination Source\Source\Urho3D\DotNet -Force
+                    Remove-Item -Path 'bindings' -Recurse -Force
+     
+
            - name: build and install Windows urho.Net libs
              run : pwsh -File ./Source/script/build_install_urhonet_android_libs.ps1         
 
@@ -140,6 +310,7 @@ jobs:
         name: build install urho.Net iOS
         runs-on: macos-latest
         if: contains(github.event.head_commit.message, 'build-test') || github.event_name == 'workflow_dispatch'
+        needs: [generate-bindings]
         steps:
            - name: Checkout repository
              uses: actions/checkout@v3
@@ -151,5 +322,24 @@ jobs:
                 dotnet-version: '6.0.x'
            - name: Select xcode
              run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app
+           
+           - name: Download Bindings artifacts
+             uses: actions/download-artifact@v3
+             with:
+                name: bindings
+                path: bindings
+
+           - name: Copy Bindings to the destination path
+             run: |
+                    ls -ld Source/DotNet/Bindings
+                    ls -la Source/Source/Urho3D/DotNet/binding.cpp
+                    rm -Rf Source/DotNet/Bindings/Portable
+                    cp -R bindings/Source/DotNet/Bindings/Portable Source/DotNet/Bindings
+                    cp -f bindings/Source/Source/Urho3D/DotNet/binding.cpp  Source/Source/Urho3D/DotNet/  
+                    rm -Rf bindings
+                    ls -ld Source/DotNet/Bindings
+                    ls -la Source/Source/Urho3D/DotNet/binding.cpp
+                    
+
            - name: build and install ios urho.Net libs
              run : ./Source/script/build_install_urhonet_ios.sh

@@ -202,10 +202,10 @@ jobs:
               
              - name: Copy Bindings to the destination path
                run: |
-                  rd /S  Source\DotNet\Bindings\Portable
-                  xcopy /E /I bindings\Source\DotNet\Bindings\Portable Source\DotNet\Bindings
-                  copy /Y bindings\Source\Source\Urho3D\DotNet\binding.cpp Source\Source\Urho3D\DotNet
-                  rd /S bindings
+                  Remove-Item -Path 'Source\DotNet\Bindings\Portable' -Recurse -Force
+                  Copy-Item -Path bindings\Source\DotNet\Bindings\Portable -Destination Source\DotNet\Bindings -Recurse -Force
+                  Copy-Item -Path bindings\Source\Source\Urho3D\DotNet\binding.cpp -Destination Source\Source\Urho3D\DotNet -Force
+                  Remove-Item -Path 'bindings' -Recurse -Force
 
              - name: build and install Windows urho.Net libs
                run : pwsh -File ./Source/script/build_install_urhonet_windows.ps1
