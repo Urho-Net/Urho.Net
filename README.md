@@ -20,10 +20,6 @@ First class Visual Studio Code support as the main IDE on all 3 major platforms 
 - NET 6.x SDK  \
   https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
-- **C# for Visual Studio Code (powered by OmniSharp)**.\
-  - https://channel9.msdn.com/Blogs/dotnet/Get-started-VSCode-Csharp-NET-Core-Windows
-  - https://www.youtube.com/watch?v=WeTesTCzep0
-  - https://www.youtube.com/watch?v=LXxjCNfd5b4
 
 # <u> iOS Dependencies </u>
 - CMake , version > 3.26.3
