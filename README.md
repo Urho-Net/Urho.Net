@@ -13,6 +13,9 @@ First class Visual Studio Code support as the main IDE on all 3 major platforms 
 # <u> Common Dependencies </u>
 - **Visual Studio Code** \
   https://code.visualstudio.com/download
+  
+- **C# Dev Kit for Visual Studio Code** \
+  https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit
 
 - NET 6.x SDK  \
   https://dotnet.microsoft.com/en-us/download/dotnet/6.0
