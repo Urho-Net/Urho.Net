@@ -21886,6 +21886,18 @@
             Draw debug geometry.
             </summary>
         </member>
+        <member name="M:Urho.KinematicCharacterController.SetPosition(Urho.Vector3)">
+            <summary>
+            Set  position in world space.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.KinematicCharacterController.SetRotation(Urho.Quaternion)">
+            <summary>
+            Set rotation in world space.
+            
+            </summary>
+        </member>
         <member name="P:Urho.KinematicCharacterController.Position">
             <summary>
             Return character position in world space.

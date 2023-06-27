@@ -68,8 +68,8 @@
 
 #if defined(__APPLE__)
 /* lets us know what version of Mac OS X we're compiling on */
-#include "AvailabilityMacros.h"
-#include "TargetConditionals.h"
+#include <AvailabilityMacros.h>
+#include <TargetConditionals.h>
 #if TARGET_OS_TV
 #undef __TVOS__
 #define __TVOS__ 1

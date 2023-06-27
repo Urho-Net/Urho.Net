@@ -124,6 +124,13 @@ public:
     /// Draw debug geometry.
     virtual void DrawDebugGeometry();
 
+    /// Set  position in world space.
+    /// @property
+    void SetPosition(const Vector3& position);
+    /// Set rotation in world space.
+    /// @property
+    void SetRotation(const Quaternion& rotation);
+
 protected:
     void ReleaseKinematic();
     void ApplySettings(bool reapply=false);
@@ -133,6 +140,8 @@ protected:
     void RemoveKinematicFromWorld();
     /// Handle physics post-step event.
     virtual void HandlePhysicsPostStep(StringHash eventType, VariantMap& eventData);
+    /// Handle node transform being dirtied.
+    void OnMarkedDirty(Node* node) override;
 
 protected:
     unsigned colLayer_{ 1 };
@@ -153,6 +162,11 @@ protected:
 
     Vector3 colShapeOffset_{ Vector3::ZERO };
     bool reapplyAttributes_{ false };
+    /// Last  position .
+    mutable Vector3 lastNodePosition_;
+    /// Last  rotation.
+    mutable Quaternion lastNodeRotation_;
+    bool isInit_ {false};
 };
 
 }

@@ -66,7 +66,7 @@
 #define URHO3D_DATABASE_SQLITE
 
 #ifdef __APPLE__
-#include "TargetConditionals.h"
+#include <TargetConditionals.h>
 #if defined(TARGET_OS_OSX) && defined(TARGET_CPU_ARM64)
 #define APPLE_SILICON
 #endif
