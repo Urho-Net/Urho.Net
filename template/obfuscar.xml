@@ -4,7 +4,7 @@
   <Var name="InPath" value="Intermediate" /> <!-- Don't modify -->
   <Var name="OutPath" value="Obfuscator_Output" />  <!-- Don't modify -->
   <AssemblySearchPath path="References" />  <!-- Don't modify -->
-  <Var name="HidePrivateApi" value="true" />
+  <Var name="HidePrivateApi" value="false" />
   <Var name="KeepPublicApi" value="true" />
   <Module file="$(InPath)/Game.dll">
    <!-- Add some settings here -->
