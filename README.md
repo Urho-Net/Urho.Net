@@ -46,7 +46,7 @@ First class Visual Studio Code support as the main IDE on all 3 major platforms 
 # Samples 
 The samples repo contains several samples with the dotnet-6.x branch\
 Not all  samples were converted to .Net 6.x  , mostly due to my laziness , the plan is to convert them over time.\
-https://github.com/Urho-Net/Samples
+[https://github.com/Urho-Net/Samples](https://github.com/Urho-Net/Samples/tree/dotnet-6.x)
 
 ## <u> Urho.Net uses the following third-party libraries: </u>
 
