@@ -176,6 +176,7 @@ cp "-R" "tools/bash_mini/." "$projPath/tools/bash"
 cp "-r" "tools/UrhoCooker" "$projPath/tools"
 
 cp "template/obfuscar.xml" "$projPath/obfuscar.xml"
+cp "template/global.json" "$projPath/global.json"
 
 mkdir "-p" "$projPath/platform"
 mkdir "-p" "$projPath/platform/android/java"
