@@ -1082,6 +1082,138 @@
             
             </summary>
         </member>
+        <member name="T:Urho.Audio.SoundSource3D">
+            <summary>
+            %Sound source component with three-dimensional position.
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.DrawDebugGeometry(Urho.DebugRenderer,System.Boolean)">
+            <summary>
+            Visualize the component as debug geometry.
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.Update(System.Single)">
+            <summary>
+            Update sound source.
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.SetDistanceAttenuation(System.Single,System.Single,System.Single)">
+            <summary>
+            Set attenuation parameters.
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.SetAngleAttenuation(System.Single,System.Single)">
+            <summary>
+            Set angle attenuation parameters.
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.SetNearDistance(System.Single)">
+            <summary>
+            Set near distance. Inside this range sound will not be attenuated.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.SetFarDistance(System.Single)">
+            <summary>
+            Set far distance. Outside this range sound will be completely attenuated.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.SetInnerAngle(System.Single)">
+            <summary>
+            Set inner angle in degrees. Inside this angle sound will not be attenuated.By default 360, meaning direction never has an effect.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.SetOuterAngle(System.Single)">
+            <summary>
+            Set outer angle in degrees. Outside this angle sound will be completely attenuated. By default 360, meaning direction never has an effect.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.SetRolloffFactor(System.Single)">
+            <summary>
+            Set rolloff power factor, defines attenuation function shape.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.CalculateAttenuation">
+            <summary>
+            Calculate attenuation and panning based on current position and listener position.
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.GetNearDistance">
+            <summary>
+            Return near distance.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.GetFarDistance">
+            <summary>
+            Return far distance.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.GetInnerAngle">
+            <summary>
+            Return inner angle in degrees.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.GetOuterAngle">
+            <summary>
+            Return outer angle in degrees.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Audio.SoundSource3D.RollAngleoffFactor">
+            <summary>
+            Return rolloff power factor.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Audio.SoundSource3D.NearDistance">
+            <summary>
+            Return near distance.
+            
+            Or
+            Set near distance. Inside this range sound will not be attenuated.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Audio.SoundSource3D.FarDistance">
+            <summary>
+            Return far distance.
+            
+            Or
+            Set far distance. Outside this range sound will be completely attenuated.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Audio.SoundSource3D.InnerAngle">
+            <summary>
+            Return inner angle in degrees.
+            
+            Or
+            Set inner angle in degrees. Inside this angle sound will not be attenuated.By default 360, meaning direction never has an effect.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Audio.SoundSource3D.OuterAngle">
+            <summary>
+            Return outer angle in degrees.
+            
+            Or
+            Set outer angle in degrees. Outside this angle sound will be completely attenuated. By default 360, meaning direction never has an effect.
+            
+            </summary>
+        </member>
         <member name="T:Urho.Audio.SoundSource">
             <summary>
             %Sound source component with stereo position. A sound source needs to be created to a node to be considered "enabled" and be able to play, however that node does not need to belong to a scene.
@@ -1345,138 +1477,6 @@
             Return sound position attribute.
             Or
             Set sound position attribute.
-            </summary>
-        </member>
-        <member name="T:Urho.Audio.SoundSource3D">
-            <summary>
-            %Sound source component with three-dimensional position.
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.RegisterObject(Urho.Context)">
-            <summary>
-            Register object factory.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.DrawDebugGeometry(Urho.DebugRenderer,System.Boolean)">
-            <summary>
-            Visualize the component as debug geometry.
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.Update(System.Single)">
-            <summary>
-            Update sound source.
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.SetDistanceAttenuation(System.Single,System.Single,System.Single)">
-            <summary>
-            Set attenuation parameters.
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.SetAngleAttenuation(System.Single,System.Single)">
-            <summary>
-            Set angle attenuation parameters.
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.SetNearDistance(System.Single)">
-            <summary>
-            Set near distance. Inside this range sound will not be attenuated.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.SetFarDistance(System.Single)">
-            <summary>
-            Set far distance. Outside this range sound will be completely attenuated.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.SetInnerAngle(System.Single)">
-            <summary>
-            Set inner angle in degrees. Inside this angle sound will not be attenuated.By default 360, meaning direction never has an effect.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.SetOuterAngle(System.Single)">
-            <summary>
-            Set outer angle in degrees. Outside this angle sound will be completely attenuated. By default 360, meaning direction never has an effect.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.SetRolloffFactor(System.Single)">
-            <summary>
-            Set rolloff power factor, defines attenuation function shape.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.CalculateAttenuation">
-            <summary>
-            Calculate attenuation and panning based on current position and listener position.
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.GetNearDistance">
-            <summary>
-            Return near distance.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.GetFarDistance">
-            <summary>
-            Return far distance.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.GetInnerAngle">
-            <summary>
-            Return inner angle in degrees.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.GetOuterAngle">
-            <summary>
-            Return outer angle in degrees.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Audio.SoundSource3D.RollAngleoffFactor">
-            <summary>
-            Return rolloff power factor.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Audio.SoundSource3D.NearDistance">
-            <summary>
-            Return near distance.
-            
-            Or
-            Set near distance. Inside this range sound will not be attenuated.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Audio.SoundSource3D.FarDistance">
-            <summary>
-            Return far distance.
-            
-            Or
-            Set far distance. Outside this range sound will be completely attenuated.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Audio.SoundSource3D.InnerAngle">
-            <summary>
-            Return inner angle in degrees.
-            
-            Or
-            Set inner angle in degrees. Inside this angle sound will not be attenuated.By default 360, meaning direction never has an effect.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Audio.SoundSource3D.OuterAngle">
-            <summary>
-            Return outer angle in degrees.
-            
-            Or
-            Set outer angle in degrees. Outside this angle sound will be completely attenuated. By default 360, meaning direction never has an effect.
-            
             </summary>
         </member>
         <member name="T:Urho.Audio.SoundStream">
@@ -5624,11 +5624,6 @@
             Type: vec2, Defined in Uniforms.glsl:L87
             </summary>
         </member>
-        <member name="T:Urho.SQLite">
-            <summary>
-            % SQlite Database connection.
-            </summary>
-        </member>
         <member name="T:Urho.DbConnection">
             <summary>
             %Database connection.
@@ -5660,6 +5655,11 @@
         <member name="P:Urho.DbConnection.Connected">
             <summary>
             Return true when the connection object is connected to the associated database.
+            </summary>
+        </member>
+        <member name="T:Urho.SQLite">
+            <summary>
+            % SQlite Database connection.
             </summary>
         </member>
         <member name="T:Urho.Urho2D.Drawable2D">
@@ -8520,14 +8520,14 @@
             2D particle emitter types.
             </summary>
         </member>
-        <member name="T:Urho.Urho2D.LoopMode">
-            <summary>
-            Loop Mode.
-            </summary>
-        </member>
         <member name="T:Urho.Urho2D.LoopMode2D">
             <summary>
             Loop mode.
+            </summary>
+        </member>
+        <member name="T:Urho.Urho2D.LoopMode">
+            <summary>
+            Loop Mode.
             </summary>
         </member>
         <member name="T:Urho.Urho2D.ObjectType">
@@ -14897,6 +14897,31 @@
             Is signed distance field font.
             </summary>
         </member>
+        <member name="T:Urho.Gui.FontFaceBitmap">
+            <summary>
+            Bitmap font face description.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.FontFaceBitmap.Load(System.Byte*,System.UInt32,System.Single)">
+            <summary>
+            Load font face.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.FontFaceBitmap.Load(Urho.Gui.FontFace,System.Boolean)">
+            <summary>
+            Load from existed font face, pack used glyphs into smallest texture size and smallest number of texture.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.FontFaceBitmap.Save(Urho.IO.File,System.Int32,System.String)">
+            <summary>
+            Save as a new bitmap font type in XML format. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.FontFaceBitmap.Save(Urho.MemoryBuffer,System.Int32,System.String)">
+            <summary>
+            Save as a new bitmap font type in XML format. Return true if successful.
+            </summary>
+        </member>
         <member name="T:Urho.Gui.FontFace">
             <summary>
             %Font face description.
@@ -14960,31 +14985,6 @@
         <member name="P:Urho.Gui.FontFace.Textures">
             <summary>
             Return textures.
-            </summary>
-        </member>
-        <member name="T:Urho.Gui.FontFaceBitmap">
-            <summary>
-            Bitmap font face description.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.FontFaceBitmap.Load(System.Byte*,System.UInt32,System.Single)">
-            <summary>
-            Load font face.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.FontFaceBitmap.Load(Urho.Gui.FontFace,System.Boolean)">
-            <summary>
-            Load from existed font face, pack used glyphs into smallest texture size and smallest number of texture.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.FontFaceBitmap.Save(Urho.IO.File,System.Int32,System.String)">
-            <summary>
-            Save as a new bitmap font type in XML format. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.FontFaceBitmap.Save(Urho.MemoryBuffer,System.Int32,System.String)">
-            <summary>
-            Save as a new bitmap font type in XML format. Return true if successful.
             </summary>
         </member>
         <member name="T:Urho.Gui.FontFaceFreeType">
@@ -16528,415 +16528,6 @@
             Update and return rendering transform, also used to transform child sprites.
             </summary>
         </member>
-        <member name="T:Urho.Gui.Text">
-            <summary>
-            %Text %UI element.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.RegisterObject(Urho.Context)">
-            <summary>
-            Register object factory.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.ApplyAttributes">
-            <summary>
-            Apply attribute changes that can not be applied immediately.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.OnResize(Urho.IntVector2,Urho.IntVector2)">
-            <summary>
-            React to resize.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.OnIndentSet">
-            <summary>
-            React to indent change.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetFont(System.String,System.Single)">
-            <summary>
-            Set font by looking from resource cache by name and font size. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetFont(Urho.Gui.Font,System.Single)">
-            <summary>
-            Set font and font size. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetFontSize(System.Single)">
-            <summary>
-            Set font size only while retaining the existing font. Return true if successful.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetText(System.String)">
-            <summary>
-            Set text. Text is assumed to be either ASCII or UTF8-encoded.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetTextAlignment(Urho.Gui.HorizontalAlignment)">
-            <summary>
-            Set row alignment.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetRowSpacing(System.Single)">
-            <summary>
-            Set row spacing, 1.0 for original font spacing.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetWordwrap(System.Boolean)">
-            <summary>
-            Set wordwrap. In wordwrap mode the text element will respect its current width. Otherwise it resizes itself freely.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetAutoLocalizable(System.Boolean)">
-            <summary>
-            The text will be automatically translated. The text value used as string identifier.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetSelection(System.UInt32,System.UInt32)">
-            <summary>
-            Set selection. When length is not provided, select until the text ends.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.ClearSelection">
-            <summary>
-            Clear selection.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetTextEffect(Urho.Gui.TextEffect)">
-            <summary>
-            Set text effect.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetEffectShadowOffset(Urho.IntVector2)">
-            <summary>
-            Set shadow offset.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetEffectStrokeThickness(System.Int32)">
-            <summary>
-            Set stroke thickness.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetEffectRoundStroke(System.Boolean)">
-            <summary>
-            Set stroke rounding. Corners of the font will be rounded off in the stroke so the stroke won't have corners.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetEffectColor(Urho.Color)">
-            <summary>
-            Set effect color.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetFont">
-            <summary>
-            Return font.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetFontSize">
-            <summary>
-            Return font size.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetText">
-            <summary>
-            Return text.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetTextAlignment">
-            <summary>
-            Return row alignment.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetRowSpacing">
-            <summary>
-            Return row spacing.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetWordwrap">
-            <summary>
-            Return wordwrap mode.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetAutoLocalizable">
-            <summary>
-            Return auto localizable mode.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetSelectionStart">
-            <summary>
-            Return selection start.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetSelectionLength">
-            <summary>
-            Return selection length.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetTextEffect">
-            <summary>
-            Return text effect.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetEffectShadowOffset">
-            <summary>
-            Return effect shadow offset.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetEffectStrokeThickness">
-            <summary>
-            Return effect stroke thickness.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetEffectRoundStroke">
-            <summary>
-            Return effect round stroke.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetEffectColor">
-            <summary>
-            Return effect color.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetRowHeight">
-            <summary>
-            Return row height.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetNumRows">
-            <summary>
-            Return number of rows.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetNumChars">
-            <summary>
-            Return number of characters.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetRowWidth(System.UInt32)">
-            <summary>
-            Return width of row by index.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetCharPosition(System.UInt32)">
-            <summary>
-            Return position of character by index relative to the text element origin.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetCharSize(System.UInt32)">
-            <summary>
-            Return size of character by index.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetEffectDepthBias(System.Single)">
-            <summary>
-            Set text effect Z bias. Zero by default, adjusted only in 3D mode.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetEffectDepthBias">
-            <summary>
-            Return effect Z bias.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetFontAttr">
-            <summary>
-            Return font attribute.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.SetTextAttr(System.String)">
-            <summary>
-            Set text attribute.
-            </summary>
-        </member>
-        <member name="M:Urho.Gui.Text.GetTextAttr">
-            <summary>
-            Return text attribute.
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.FontSize">
-            <summary>
-            Return font size.
-            
-            Or
-            Set font size only while retaining the existing font. Return true if successful.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.Value">
-            <summary>
-            Return text.
-            
-            Or
-            Set text. Text is assumed to be either ASCII or UTF8-encoded.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.TextAlignment">
-            <summary>
-            Return row alignment.
-            
-            Or
-            Set row alignment.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.RowSpacing">
-            <summary>
-            Return row spacing.
-            
-            Or
-            Set row spacing, 1.0 for original font spacing.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.Wordwrap">
-            <summary>
-            Return wordwrap mode.
-            
-            Or
-            Set wordwrap. In wordwrap mode the text element will respect its current width. Otherwise it resizes itself freely.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.AutoLocalizable">
-            <summary>
-            Return auto localizable mode.
-            
-            Or
-            The text will be automatically translated. The text value used as string identifier.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.TextEffect">
-            <summary>
-            Return text effect.
-            
-            Or
-            Set text effect.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.EffectShadowOffset">
-            <summary>
-            Return effect shadow offset.
-            
-            Or
-            Set shadow offset.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.EffectStrokeThickness">
-            <summary>
-            Return effect stroke thickness.
-            
-            Or
-            Set stroke thickness.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.EffectRoundStroke">
-            <summary>
-            Return effect round stroke.
-            
-            Or
-            Set stroke rounding. Corners of the font will be rounded off in the stroke so the stroke won't have corners.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.EffectColor">
-            <summary>
-            Return effect color.
-            
-            Or
-            Set effect color.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.Font">
-            <summary>
-            Return font.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.SelectionStart">
-            <summary>
-            Return selection start.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.SelectionLength">
-            <summary>
-            Return selection length.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.RowHeight">
-            <summary>
-            Return row height.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.NumRows">
-            <summary>
-            Return number of rows.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.NumChars">
-            <summary>
-            Return number of characters.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.EffectDepthBias">
-            <summary>
-            Return effect Z bias.
-            Or
-            Set text effect Z bias. Zero by default, adjusted only in 3D mode.
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.FontAttr">
-            <summary>
-            Return font attribute.
-            </summary>
-        </member>
-        <member name="P:Urho.Gui.Text.TextAttr">
-            <summary>
-            Return text attribute.
-            </summary>
-        </member>
         <member name="T:Urho.Gui.Text3D">
             <summary>
             3D text component.
@@ -17495,6 +17086,415 @@
         <member name="P:Urho.Gui.Text3D.ColorAttr">
             <summary>
             Get color attribute. Uses just the top-left color.
+            </summary>
+        </member>
+        <member name="T:Urho.Gui.Text">
+            <summary>
+            %Text %UI element.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.ApplyAttributes">
+            <summary>
+            Apply attribute changes that can not be applied immediately.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.OnResize(Urho.IntVector2,Urho.IntVector2)">
+            <summary>
+            React to resize.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.OnIndentSet">
+            <summary>
+            React to indent change.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetFont(System.String,System.Single)">
+            <summary>
+            Set font by looking from resource cache by name and font size. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetFont(Urho.Gui.Font,System.Single)">
+            <summary>
+            Set font and font size. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetFontSize(System.Single)">
+            <summary>
+            Set font size only while retaining the existing font. Return true if successful.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetText(System.String)">
+            <summary>
+            Set text. Text is assumed to be either ASCII or UTF8-encoded.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetTextAlignment(Urho.Gui.HorizontalAlignment)">
+            <summary>
+            Set row alignment.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetRowSpacing(System.Single)">
+            <summary>
+            Set row spacing, 1.0 for original font spacing.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetWordwrap(System.Boolean)">
+            <summary>
+            Set wordwrap. In wordwrap mode the text element will respect its current width. Otherwise it resizes itself freely.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetAutoLocalizable(System.Boolean)">
+            <summary>
+            The text will be automatically translated. The text value used as string identifier.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetSelection(System.UInt32,System.UInt32)">
+            <summary>
+            Set selection. When length is not provided, select until the text ends.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.ClearSelection">
+            <summary>
+            Clear selection.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetTextEffect(Urho.Gui.TextEffect)">
+            <summary>
+            Set text effect.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetEffectShadowOffset(Urho.IntVector2)">
+            <summary>
+            Set shadow offset.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetEffectStrokeThickness(System.Int32)">
+            <summary>
+            Set stroke thickness.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetEffectRoundStroke(System.Boolean)">
+            <summary>
+            Set stroke rounding. Corners of the font will be rounded off in the stroke so the stroke won't have corners.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetEffectColor(Urho.Color)">
+            <summary>
+            Set effect color.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetFont">
+            <summary>
+            Return font.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetFontSize">
+            <summary>
+            Return font size.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetText">
+            <summary>
+            Return text.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetTextAlignment">
+            <summary>
+            Return row alignment.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetRowSpacing">
+            <summary>
+            Return row spacing.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetWordwrap">
+            <summary>
+            Return wordwrap mode.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetAutoLocalizable">
+            <summary>
+            Return auto localizable mode.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetSelectionStart">
+            <summary>
+            Return selection start.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetSelectionLength">
+            <summary>
+            Return selection length.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetTextEffect">
+            <summary>
+            Return text effect.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetEffectShadowOffset">
+            <summary>
+            Return effect shadow offset.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetEffectStrokeThickness">
+            <summary>
+            Return effect stroke thickness.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetEffectRoundStroke">
+            <summary>
+            Return effect round stroke.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetEffectColor">
+            <summary>
+            Return effect color.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetRowHeight">
+            <summary>
+            Return row height.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetNumRows">
+            <summary>
+            Return number of rows.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetNumChars">
+            <summary>
+            Return number of characters.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetRowWidth(System.UInt32)">
+            <summary>
+            Return width of row by index.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetCharPosition(System.UInt32)">
+            <summary>
+            Return position of character by index relative to the text element origin.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetCharSize(System.UInt32)">
+            <summary>
+            Return size of character by index.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetEffectDepthBias(System.Single)">
+            <summary>
+            Set text effect Z bias. Zero by default, adjusted only in 3D mode.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetEffectDepthBias">
+            <summary>
+            Return effect Z bias.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetFontAttr">
+            <summary>
+            Return font attribute.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.SetTextAttr(System.String)">
+            <summary>
+            Set text attribute.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.Text.GetTextAttr">
+            <summary>
+            Return text attribute.
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.FontSize">
+            <summary>
+            Return font size.
+            
+            Or
+            Set font size only while retaining the existing font. Return true if successful.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.Value">
+            <summary>
+            Return text.
+            
+            Or
+            Set text. Text is assumed to be either ASCII or UTF8-encoded.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.TextAlignment">
+            <summary>
+            Return row alignment.
+            
+            Or
+            Set row alignment.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.RowSpacing">
+            <summary>
+            Return row spacing.
+            
+            Or
+            Set row spacing, 1.0 for original font spacing.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.Wordwrap">
+            <summary>
+            Return wordwrap mode.
+            
+            Or
+            Set wordwrap. In wordwrap mode the text element will respect its current width. Otherwise it resizes itself freely.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.AutoLocalizable">
+            <summary>
+            Return auto localizable mode.
+            
+            Or
+            The text will be automatically translated. The text value used as string identifier.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.TextEffect">
+            <summary>
+            Return text effect.
+            
+            Or
+            Set text effect.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.EffectShadowOffset">
+            <summary>
+            Return effect shadow offset.
+            
+            Or
+            Set shadow offset.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.EffectStrokeThickness">
+            <summary>
+            Return effect stroke thickness.
+            
+            Or
+            Set stroke thickness.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.EffectRoundStroke">
+            <summary>
+            Return effect round stroke.
+            
+            Or
+            Set stroke rounding. Corners of the font will be rounded off in the stroke so the stroke won't have corners.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.EffectColor">
+            <summary>
+            Return effect color.
+            
+            Or
+            Set effect color.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.Font">
+            <summary>
+            Return font.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.SelectionStart">
+            <summary>
+            Return selection start.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.SelectionLength">
+            <summary>
+            Return selection length.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.RowHeight">
+            <summary>
+            Return row height.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.NumRows">
+            <summary>
+            Return number of rows.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.NumChars">
+            <summary>
+            Return number of characters.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.EffectDepthBias">
+            <summary>
+            Return effect Z bias.
+            Or
+            Set text effect Z bias. Zero by default, adjusted only in 3D mode.
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.FontAttr">
+            <summary>
+            Return font attribute.
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.Text.TextAttr">
+            <summary>
+            Return text attribute.
             </summary>
         </member>
         <member name="T:Urho.Gui.TextEffect">
@@ -26354,84 +26354,6 @@
         <member name="F:Urho.ResourceRefList.Names">
             List of object names.
         </member>
-        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_A">
-              \name Usage page 0x07
-            
-              These values are from usage page 0x07 (USB keyboard page).
-        </member>
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_NONUSHASH" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_SEMICOLON" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_COMMA" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_HOME" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KP_DIVIDE" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_APPLICATION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_POWER" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KP_EQUALS" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_UNDO" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_INTERNATIONAL2" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_INTERNATIONAL4" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG2" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG3" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG4" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG5" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG6" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG7" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG8" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG9" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_ALTERASE" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_SYSREQ" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LGUI" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_RCTRL" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_RGUI" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_MODE" -->
-        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_AUDIONEXT">
-              \name Usage page 0x0C
-            
-              These values are mapped from usage page 0x0C (USB consumer page).
-        </member>
-        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_BRIGHTNESSDOWN">
-              \name Walther keys
-            
-              These are values that Christian Walther added (for mac keyboard?).
-        </member>
-        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KBDILLUMTOGGLE" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_QUIT" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_TERMINATING" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_LOWMEMORY" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_WILLENTERBACKGROUND" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_DIDENTERBACKGROUND" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_WILLENTERFOREGROUND" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_DIDENTERFOREGROUND" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_WINDOWEVENT" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_SYSWMEVENT" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_KEYDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_KEYUP" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_TEXTEDITING" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_TEXTINPUT" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEBUTTONDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEBUTTONUP" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEWHEEL" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYAXISMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBALLMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYHATMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBUTTONDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBUTTONUP" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYDEVICEADDED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYDEVICEREMOVED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERAXISMOTION" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERBUTTONDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERBUTTONUP" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEADDED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEREMOVED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEREMAPPED" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_FINGERDOWN" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_DROPFILE" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_RENDER_TARGETS_RESET" -->
-        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_USEREVENT" -->
-        <member name="F:Urho.SdlEventType.SDL_LASTEVENT">
-            This last event is only for bounding internal arrays
-        </member>
         <member name="T:Urho.Scene">
             <summary>
             Root scene node, represents the whole scene.
@@ -26979,6 +26901,84 @@
             <summary>
             Return node user variable reverse mappings.
             </summary>
+        </member>
+        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_A">
+              \name Usage page 0x07
+            
+              These values are from usage page 0x07 (USB keyboard page).
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_NONUSHASH" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_SEMICOLON" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_COMMA" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_HOME" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KP_DIVIDE" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_APPLICATION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_POWER" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KP_EQUALS" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_UNDO" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_INTERNATIONAL2" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_INTERNATIONAL4" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG2" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG3" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG4" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG5" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG6" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG7" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG8" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LANG9" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_ALTERASE" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_SYSREQ" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_LGUI" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_RCTRL" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_RGUI" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_MODE" -->
+        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_AUDIONEXT">
+              \name Usage page 0x0C
+            
+              These values are mapped from usage page 0x0C (USB consumer page).
+        </member>
+        <member name="F:Urho.SDL_Scancode.SDL_SCANCODE_BRIGHTNESSDOWN">
+              \name Walther keys
+            
+              These are values that Christian Walther added (for mac keyboard?).
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Urho.SDL_Scancode.SDL_SCANCODE_KBDILLUMTOGGLE" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_QUIT" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_TERMINATING" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_LOWMEMORY" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_WILLENTERBACKGROUND" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_DIDENTERBACKGROUND" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_WILLENTERFOREGROUND" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_APP_DIDENTERFOREGROUND" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_WINDOWEVENT" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_SYSWMEVENT" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_KEYDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_KEYUP" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_TEXTEDITING" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_TEXTINPUT" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEBUTTONDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEBUTTONUP" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_MOUSEWHEEL" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYAXISMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBALLMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYHATMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBUTTONDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYBUTTONUP" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYDEVICEADDED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_JOYDEVICEREMOVED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERAXISMOTION" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERBUTTONDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERBUTTONUP" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEADDED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEREMOVED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_CONTROLLERDEVICEREMAPPED" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_FINGERDOWN" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_DROPFILE" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_RENDER_TARGETS_RESET" -->
+        <!-- Badly formed XML comment ignored for member "F:Urho.SdlEventType.SDL_USEREVENT" -->
+        <member name="F:Urho.SdlEventType.SDL_LASTEVENT">
+            This last event is only for bounding internal arrays
         </member>
         <member name="T:Urho.Serializable">
             <summary>
@@ -28045,102 +28045,6 @@
             Helper functions to return elements from a VariantMap
             </summary>
         </member>
-        <member name="T:Urho.VGComponent">
-            <summary>
-            Return child VGComponent.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.GetChild(System.String,System.Boolean)">
-            <summary>
-            Return child VGComponent.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetPosition(Urho.Vector2)">
-            <summary>
-            Set floating point position.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetPosition(System.Single,System.Single)">
-            <summary>
-            Set floating point position.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetHotSpot(Urho.Vector2)">
-            <summary>
-            Set hotspot for positioning and rotation.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetHotSpot(System.Single,System.Single)">
-            <summary>
-            Set hotspot for positioning and rotation.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetScale(Urho.Vector2)">
-            <summary>
-            Set scale. Scale also affects child sprites.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetScale(System.Single,System.Single)">
-            <summary>
-            Set scale. Scale also affects child sprites.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetScale(System.Single)">
-            <summary>
-            Set uniform scale. Scale also affects child sprites.
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.SetRotation(System.Single)">
-            <summary>
-            Set rotation angle.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGComponent.GetHotSpot">
-            <summary>
-            Return hotspot.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.VGComponent.HotSpot">
-            <summary>
-            Return hotspot.
-            
-            Or
-            Set hotspot for positioning and rotation.
-            
-            </summary>
-        </member>
-        <member name="T:Urho.VGElement">
-            <summary>
-            Register object factory.
-            </summary>
-            <summary>
-            Register object factory.
-            </summary>
-        </member>
-        <member name="M:Urho.VGElement.RegisterObject(Urho.Context)">
-            <summary>
-            Register object factory.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.VGElement.OnResize(Urho.IntVector2,Urho.IntVector2)">
-            <summary>
-            React to resize.
-            </summary>
-        </member>
-        <member name="T:Urho.VGTextRowBuffer">
-            <summary>
-            Destruct.
-            </summary>
-            <summary>
-            Destruct.
-            </summary>
-        </member>
         <member name="T:Urho.VertexBuffer">
             <summary>
             Hardware vertex buffer.
@@ -28306,6 +28210,102 @@
         <member name="P:Urho.VertexBuffer.ShadowData">
             <summary>
             Return CPU memory shadow data.
+            </summary>
+        </member>
+        <member name="T:Urho.VGComponent">
+            <summary>
+            Return child VGComponent.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.GetChild(System.String,System.Boolean)">
+            <summary>
+            Return child VGComponent.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetPosition(Urho.Vector2)">
+            <summary>
+            Set floating point position.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetPosition(System.Single,System.Single)">
+            <summary>
+            Set floating point position.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetHotSpot(Urho.Vector2)">
+            <summary>
+            Set hotspot for positioning and rotation.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetHotSpot(System.Single,System.Single)">
+            <summary>
+            Set hotspot for positioning and rotation.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetScale(Urho.Vector2)">
+            <summary>
+            Set scale. Scale also affects child sprites.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetScale(System.Single,System.Single)">
+            <summary>
+            Set scale. Scale also affects child sprites.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetScale(System.Single)">
+            <summary>
+            Set uniform scale. Scale also affects child sprites.
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.SetRotation(System.Single)">
+            <summary>
+            Set rotation angle.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGComponent.GetHotSpot">
+            <summary>
+            Return hotspot.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.VGComponent.HotSpot">
+            <summary>
+            Return hotspot.
+            
+            Or
+            Set hotspot for positioning and rotation.
+            
+            </summary>
+        </member>
+        <member name="T:Urho.VGElement">
+            <summary>
+            Register object factory.
+            </summary>
+            <summary>
+            Register object factory.
+            </summary>
+        </member>
+        <member name="M:Urho.VGElement.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.VGElement.OnResize(Urho.IntVector2,Urho.IntVector2)">
+            <summary>
+            React to resize.
+            </summary>
+        </member>
+        <member name="T:Urho.VGTextRowBuffer">
+            <summary>
+            Destruct.
+            </summary>
+            <summary>
+            Destruct.
             </summary>
         </member>
         <member name="T:Urho.Viewport">
@@ -36023,11 +36023,6 @@
             
             </summary>
         </member>
-        <member name="T:Urho.DBAPI">
-            <summary>
-            Supported database API.
-            </summary>
-        </member>
         <member name="T:Urho.Database">
             <summary>
             %Database subsystem. Manage database connections.
@@ -36084,6 +36079,11 @@
             Or
             Set internal database connection pool size.
             
+            </summary>
+        </member>
+        <member name="T:Urho.DBAPI">
+            <summary>
+            Supported database API.
             </summary>
         </member>
         <member name="T:Urho.DebugHud">
@@ -37413,11 +37413,6 @@
             Frustum planes.
             </summary>
         </member>
-        <member name="T:Urho.GImpactMeshData">
-            <summary>
-            Triangle mesh geometry data.
-            </summary>
-        </member>
         <member name="T:Urho.Geometry">
             <summary>
             Defines one or more vertex buffers, an index buffer and a draw range.
@@ -37617,6 +37612,11 @@
         <member name="T:Urho.GeometryType">
             <summary>
             %Geometry type for vertex shader geometry variations.
+            </summary>
+        </member>
+        <member name="T:Urho.GImpactMeshData">
+            <summary>
+            Triangle mesh geometry data.
             </summary>
         </member>
         <member name="T:Urho.HeightfieldData">
@@ -38982,6 +38982,87 @@
         <member name="T:Urho.NavigationPathPointFlag">
             <summary>
             A flag representing the type of path point- none, the start of a path segment, the end of one, or an off-mesh connection.
+            </summary>
+        </member>
+        <member name="T:Urho.ObjectAnimation">
+            <summary>
+            Object animation class, an object animation include one or more attribute animations and theirs wrap mode and speed for an Animatable object.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.BeginLoad(Urho.IO.File)">
+            <summary>
+            Load resource from stream. May be called from a worker thread. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.BeginLoad(Urho.MemoryBuffer)">
+            <summary>
+            Load resource from stream. May be called from a worker thread. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.Save(Urho.IO.File)">
+            <summary>
+            Save resource. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.Save(Urho.MemoryBuffer)">
+            <summary>
+            Save resource. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.LoadXml(Urho.Resources.XmlElement)">
+            <summary>
+            Load from XML data. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.SaveXml(Urho.Resources.XmlElement)">
+            <summary>
+            Save as XML data. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.AddAttributeAnimation(System.String,Urho.ValueAnimation,Urho.WrapMode,System.Single)">
+            <summary>
+            Add attribute animation, attribute name can in following format: "attribute" or "#0/#1/attribute" or ""#0/#1/
+            #1/attribute.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.RemoveAttributeAnimation(System.String)">
+            <summary>
+            Remove attribute animation, attribute name can in following format: "attribute" or "#0/#1/attribute" or ""#0/#1/
+            #1/attribute.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.RemoveAttributeAnimation(Urho.ValueAnimation)">
+            <summary>
+            Remove attribute animation.
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.GetAttributeAnimation(System.String)">
+            <summary>
+            Return attribute animation by name.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.GetAttributeAnimationWrapMode(System.String)">
+            <summary>
+            Return attribute animation wrap mode by name.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.GetAttributeAnimationSpeed(System.String)">
+            <summary>
+            Return attribute animation speed by name.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.ObjectAnimation.GetAttributeAnimationInfo(System.String)">
+            <summary>
+            Return attribute animation info by name.
             </summary>
         </member>
         <member name="T:Urho.Time">
@@ -40949,87 +41030,6 @@
             <summary>
             Return whether smoothing is in progress.
             
-            </summary>
-        </member>
-        <member name="T:Urho.ObjectAnimation">
-            <summary>
-            Object animation class, an object animation include one or more attribute animations and theirs wrap mode and speed for an Animatable object.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.RegisterObject(Urho.Context)">
-            <summary>
-            Register object factory.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.BeginLoad(Urho.IO.File)">
-            <summary>
-            Load resource from stream. May be called from a worker thread. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.BeginLoad(Urho.MemoryBuffer)">
-            <summary>
-            Load resource from stream. May be called from a worker thread. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.Save(Urho.IO.File)">
-            <summary>
-            Save resource. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.Save(Urho.MemoryBuffer)">
-            <summary>
-            Save resource. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.LoadXml(Urho.Resources.XmlElement)">
-            <summary>
-            Load from XML data. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.SaveXml(Urho.Resources.XmlElement)">
-            <summary>
-            Save as XML data. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.AddAttributeAnimation(System.String,Urho.ValueAnimation,Urho.WrapMode,System.Single)">
-            <summary>
-            Add attribute animation, attribute name can in following format: "attribute" or "#0/#1/attribute" or ""#0/#1/
-            #1/attribute.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.RemoveAttributeAnimation(System.String)">
-            <summary>
-            Remove attribute animation, attribute name can in following format: "attribute" or "#0/#1/attribute" or ""#0/#1/
-            #1/attribute.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.RemoveAttributeAnimation(Urho.ValueAnimation)">
-            <summary>
-            Remove attribute animation.
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.GetAttributeAnimation(System.String)">
-            <summary>
-            Return attribute animation by name.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.GetAttributeAnimationWrapMode(System.String)">
-            <summary>
-            Return attribute animation wrap mode by name.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.GetAttributeAnimationSpeed(System.String)">
-            <summary>
-            Return attribute animation speed by name.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.ObjectAnimation.GetAttributeAnimationInfo(System.String)">
-            <summary>
-            Return attribute animation info by name.
             </summary>
         </member>
         <member name="T:Urho.ObjectFactory">
@@ -44756,6 +44756,171 @@
             Return current LOD level.
             </summary>
         </member>
+        <member name="T:Urho.Texture2DArray">
+            <summary>
+            2D texture array resource.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.BeginLoad(Urho.IO.File)">
+            <summary>
+            Load resource from stream. May be called from a worker thread. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.BeginLoad(Urho.MemoryBuffer)">
+            <summary>
+            Load resource from stream. May be called from a worker thread. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.EndLoad">
+            <summary>
+            Finish resource loading. Always called from the main thread. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.OnDeviceLost">
+            <summary>
+            Mark the GPU resource destroyed on context destruction.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.OnDeviceReset">
+            <summary>
+            Recreate the GPU resource and restore data if applicable.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.Release">
+            <summary>
+            Release the texture.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.SetLayers(System.UInt32)">
+            <summary>
+            Set the number of layers in the texture. To be used before SetData.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.SetSize(System.UInt32,System.Int32,System.Int32,System.UInt32,Urho.TextureUsage)">
+            <summary>
+            Set layers, size, format and usage. Set layers to zero to leave them unchanged. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.SetData(System.UInt32,System.UInt32,System.Int32,System.Int32,System.Int32,System.Int32,System.Void*)">
+            <summary>
+            Set data either partially or fully on a layer's mip level. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.SetData(System.UInt32,Urho.IO.File)">
+            <summary>
+            Set data of one layer from a stream. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.SetData(System.UInt32,Urho.MemoryBuffer)">
+            <summary>
+            Set data of one layer from a stream. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.SetData(System.UInt32,Urho.Resources.Image,System.Boolean)">
+            <summary>
+            Set data of one layer from an image. Return true if successful. Optionally make a single channel image alpha-only.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.GetLayers">
+            <summary>
+            Return number of layers in the texture.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.GetData(System.UInt32,System.UInt32,System.IntPtr)">
+            <summary>
+            Get data from a mip level. The destination buffer must be big enough. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture2DArray.GetRenderSurface">
+            <summary>
+            Return render surface.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Texture2DArray.Layers">
+            <summary>
+            Return number of layers in the texture.
+            
+            Or
+            Set the number of layers in the texture. To be used before SetData.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Texture2DArray.RenderSurface">
+            <summary>
+            Return render surface.
+            
+            </summary>
+        </member>
+        <member name="T:Urho.Texture3D">
+            <summary>
+            3D texture resource.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture3D.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Texture3D.BeginLoad(Urho.IO.File)">
+            <summary>
+            Load resource from stream. May be called from a worker thread. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture3D.BeginLoad(Urho.MemoryBuffer)">
+            <summary>
+            Load resource from stream. May be called from a worker thread. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture3D.EndLoad">
+            <summary>
+            Finish resource loading. Always called from the main thread. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture3D.Release">
+            <summary>
+            Release the texture.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture3D.SetSize(System.Int32,System.Int32,System.Int32,System.UInt32,Urho.TextureUsage)">
+            <summary>
+            Set size, format and usage. Zero size will follow application window size. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture3D.SetData(System.UInt32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Void*)">
+            <summary>
+            Set data either partially or fully on a mip level. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture3D.SetData(Urho.Resources.Image,System.Boolean)">
+            <summary>
+            Set data from an image. Return true if successful. Optionally make a single channel image alpha-only.
+            </summary>
+        </member>
+        <member name="M:Urho.Texture3D.GetData(System.UInt32,System.IntPtr)">
+            <summary>
+            Get data from a mip level. The destination buffer must be big enough. Return true if successful.
+            </summary>
+        </member>
+        <member name="T:Urho.TextureAddressMode">
+            <summary>
+            Texture addressing mode.
+            </summary>
+        </member>
+        <member name="T:Urho.TextureCoordinate">
+            <summary>
+            Texture coordinates.
+            </summary>
+        </member>
         <member name="T:Urho.Texture">
             <summary>
             Base class for texture resources.
@@ -45182,171 +45347,6 @@
             Return resolve texture. Only used on Direct3D11.
             </summary>
         </member>
-        <member name="T:Urho.Texture2DArray">
-            <summary>
-            2D texture array resource.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.RegisterObject(Urho.Context)">
-            <summary>
-            Register object factory.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.BeginLoad(Urho.IO.File)">
-            <summary>
-            Load resource from stream. May be called from a worker thread. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.BeginLoad(Urho.MemoryBuffer)">
-            <summary>
-            Load resource from stream. May be called from a worker thread. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.EndLoad">
-            <summary>
-            Finish resource loading. Always called from the main thread. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.OnDeviceLost">
-            <summary>
-            Mark the GPU resource destroyed on context destruction.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.OnDeviceReset">
-            <summary>
-            Recreate the GPU resource and restore data if applicable.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.Release">
-            <summary>
-            Release the texture.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.SetLayers(System.UInt32)">
-            <summary>
-            Set the number of layers in the texture. To be used before SetData.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.SetSize(System.UInt32,System.Int32,System.Int32,System.UInt32,Urho.TextureUsage)">
-            <summary>
-            Set layers, size, format and usage. Set layers to zero to leave them unchanged. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.SetData(System.UInt32,System.UInt32,System.Int32,System.Int32,System.Int32,System.Int32,System.Void*)">
-            <summary>
-            Set data either partially or fully on a layer's mip level. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.SetData(System.UInt32,Urho.IO.File)">
-            <summary>
-            Set data of one layer from a stream. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.SetData(System.UInt32,Urho.MemoryBuffer)">
-            <summary>
-            Set data of one layer from a stream. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.SetData(System.UInt32,Urho.Resources.Image,System.Boolean)">
-            <summary>
-            Set data of one layer from an image. Return true if successful. Optionally make a single channel image alpha-only.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.GetLayers">
-            <summary>
-            Return number of layers in the texture.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.GetData(System.UInt32,System.UInt32,System.IntPtr)">
-            <summary>
-            Get data from a mip level. The destination buffer must be big enough. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture2DArray.GetRenderSurface">
-            <summary>
-            Return render surface.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Texture2DArray.Layers">
-            <summary>
-            Return number of layers in the texture.
-            
-            Or
-            Set the number of layers in the texture. To be used before SetData.
-            
-            </summary>
-        </member>
-        <member name="P:Urho.Texture2DArray.RenderSurface">
-            <summary>
-            Return render surface.
-            
-            </summary>
-        </member>
-        <member name="T:Urho.Texture3D">
-            <summary>
-            3D texture resource.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture3D.RegisterObject(Urho.Context)">
-            <summary>
-            Register object factory.
-            
-            </summary>
-        </member>
-        <member name="M:Urho.Texture3D.BeginLoad(Urho.IO.File)">
-            <summary>
-            Load resource from stream. May be called from a worker thread. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture3D.BeginLoad(Urho.MemoryBuffer)">
-            <summary>
-            Load resource from stream. May be called from a worker thread. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture3D.EndLoad">
-            <summary>
-            Finish resource loading. Always called from the main thread. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture3D.Release">
-            <summary>
-            Release the texture.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture3D.SetSize(System.Int32,System.Int32,System.Int32,System.UInt32,Urho.TextureUsage)">
-            <summary>
-            Set size, format and usage. Zero size will follow application window size. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture3D.SetData(System.UInt32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Void*)">
-            <summary>
-            Set data either partially or fully on a mip level. Return true if successful.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture3D.SetData(Urho.Resources.Image,System.Boolean)">
-            <summary>
-            Set data from an image. Return true if successful. Optionally make a single channel image alpha-only.
-            </summary>
-        </member>
-        <member name="M:Urho.Texture3D.GetData(System.UInt32,System.IntPtr)">
-            <summary>
-            Get data from a mip level. The destination buffer must be big enough. Return true if successful.
-            </summary>
-        </member>
-        <member name="T:Urho.TextureAddressMode">
-            <summary>
-            Texture addressing mode.
-            </summary>
-        </member>
-        <member name="T:Urho.TextureCoordinate">
-            <summary>
-            Texture coordinates.
-            </summary>
-        </member>
         <member name="T:Urho.TextureCube">
             <summary>
             Cube texture resource.
@@ -45658,22 +45658,6 @@
         <member name="T:Urho.UpdateGeometryType">
             <summary>
             Geometry update type.
-            </summary>
-        </member>
-        <member name="T:Urho.VGCanvas">
-            <summary>
-            Construct.
-            </summary>
-        </member>
-        <member name="M:Urho.VGCanvas.RegisterObject(Urho.Context)">
-            <summary>
-            Register object factory.
-            
-            </summary>
-        </member>
-        <member name="T:Urho.VGTextRow">
-            <summary>
-            Destruct.
             </summary>
         </member>
         <member name="T:Urho.ValueAnimation">
@@ -46021,6 +46005,22 @@
         <member name="T:Urho.VertexLightVSVariation">
             <summary>
             Per-vertex light vertex shader variations.
+            </summary>
+        </member>
+        <member name="T:Urho.VGCanvas">
+            <summary>
+            Construct.
+            </summary>
+        </member>
+        <member name="M:Urho.VGCanvas.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory.
+            
+            </summary>
+        </member>
+        <member name="T:Urho.VGTextRow">
+            <summary>
+            Destruct.
             </summary>
         </member>
         <member name="T:Urho.WrapMode">
@@ -47126,6 +47126,41 @@
             If this is <c>null</c>, default serialization settings will be used.
             </param>
         </member>
+        <member name="T:Urho.Json.JsonConverterAttribute">
+            <summary>
+            Instructs the <see cref="T:Urho.Json.JsonSerializer"/> to use the specified <see cref="T:Urho.Json.JsonConverter"/> when serializing the member or class.
+            </summary>
+        </member>
+        <member name="P:Urho.Json.JsonConverterAttribute.ConverterType">
+            <summary>
+            Gets the <see cref="T:System.Type"/> of the <see cref="T:Urho.Json.JsonConverter"/>.
+            </summary>
+            <value>The <see cref="T:System.Type"/> of the <see cref="T:Urho.Json.JsonConverter"/>.</value>
+        </member>
+        <member name="P:Urho.Json.JsonConverterAttribute.ConverterParameters">
+            <summary>
+            The parameter list to use when constructing the <see cref="T:Urho.Json.JsonConverter"/> described by <see cref="P:Urho.Json.JsonConverterAttribute.ConverterType"/>.
+            If <c>null</c>, the default constructor is used.
+            </summary>
+        </member>
+        <member name="M:Urho.Json.JsonConverterAttribute.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Urho.Json.JsonConverterAttribute"/> class.
+            </summary>
+            <param name="converterType">Type of the <see cref="T:Urho.Json.JsonConverter"/>.</param>
+        </member>
+        <member name="M:Urho.Json.JsonConverterAttribute.#ctor(System.Type,System.Object[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Urho.Json.JsonConverterAttribute"/> class.
+            </summary>
+            <param name="converterType">Type of the <see cref="T:Urho.Json.JsonConverter"/>.</param>
+            <param name="converterParameters">Parameter list to use when constructing the <see cref="T:Urho.Json.JsonConverter"/>. Can be <c>null</c>.</param>
+        </member>
+        <member name="T:Urho.Json.JsonConverterCollection">
+            <summary>
+            Represents a collection of <see cref="T:Urho.Json.JsonConverter"/>.
+            </summary>
+        </member>
         <member name="T:Urho.Json.JsonConverter">
             <summary>
             Converts an object to and from JSON.
@@ -47221,41 +47256,6 @@
             <returns>
             	<c>true</c> if this instance can convert the specified object type; otherwise, <c>false</c>.
             </returns>
-        </member>
-        <member name="T:Urho.Json.JsonConverterAttribute">
-            <summary>
-            Instructs the <see cref="T:Urho.Json.JsonSerializer"/> to use the specified <see cref="T:Urho.Json.JsonConverter"/> when serializing the member or class.
-            </summary>
-        </member>
-        <member name="P:Urho.Json.JsonConverterAttribute.ConverterType">
-            <summary>
-            Gets the <see cref="T:System.Type"/> of the <see cref="T:Urho.Json.JsonConverter"/>.
-            </summary>
-            <value>The <see cref="T:System.Type"/> of the <see cref="T:Urho.Json.JsonConverter"/>.</value>
-        </member>
-        <member name="P:Urho.Json.JsonConverterAttribute.ConverterParameters">
-            <summary>
-            The parameter list to use when constructing the <see cref="T:Urho.Json.JsonConverter"/> described by <see cref="P:Urho.Json.JsonConverterAttribute.ConverterType"/>.
-            If <c>null</c>, the default constructor is used.
-            </summary>
-        </member>
-        <member name="M:Urho.Json.JsonConverterAttribute.#ctor(System.Type)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Urho.Json.JsonConverterAttribute"/> class.
-            </summary>
-            <param name="converterType">Type of the <see cref="T:Urho.Json.JsonConverter"/>.</param>
-        </member>
-        <member name="M:Urho.Json.JsonConverterAttribute.#ctor(System.Type,System.Object[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:Urho.Json.JsonConverterAttribute"/> class.
-            </summary>
-            <param name="converterType">Type of the <see cref="T:Urho.Json.JsonConverter"/>.</param>
-            <param name="converterParameters">Parameter list to use when constructing the <see cref="T:Urho.Json.JsonConverter"/>. Can be <c>null</c>.</param>
-        </member>
-        <member name="T:Urho.Json.JsonConverterCollection">
-            <summary>
-            Represents a collection of <see cref="T:Urho.Json.JsonConverter"/>.
-            </summary>
         </member>
         <member name="T:Urho.Json.JsonDictionaryAttribute">
             <summary>
@@ -51528,6 +51528,82 @@
             <param name="reader">The reader.</param>
             <returns>An instance of <see cref="T:Urho.Json.Linq.JRaw"/> with the content of the reader's current token.</returns>
         </member>
+        <member name="T:Urho.Json.Linq.JsonLoadSettings">
+            <summary>
+            Specifies the settings used when loading JSON.
+            </summary>
+        </member>
+        <member name="M:Urho.Json.Linq.JsonLoadSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Urho.Json.Linq.JsonLoadSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonLoadSettings.CommentHandling">
+            <summary>
+            Gets or sets how JSON comments are handled when loading JSON.
+            The default value is <see cref="F:Urho.Json.Linq.CommentHandling.Ignore" />.
+            </summary>
+            <value>The JSON comment handling.</value>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonLoadSettings.LineInfoHandling">
+            <summary>
+            Gets or sets how JSON line info is handled when loading JSON.
+            The default value is <see cref="F:Urho.Json.Linq.LineInfoHandling.Load" />.
+            </summary>
+            <value>The JSON line info handling.</value>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonLoadSettings.DuplicatePropertyNameHandling">
+            <summary>
+            Gets or sets how duplicate property names in JSON objects are handled when loading JSON.
+            The default value is <see cref="F:Urho.Json.Linq.DuplicatePropertyNameHandling.Replace" />.
+            </summary>
+            <value>The JSON duplicate property name handling.</value>
+        </member>
+        <member name="T:Urho.Json.Linq.JsonMergeSettings">
+            <summary>
+            Specifies the settings used when merging JSON.
+            </summary>
+        </member>
+        <member name="M:Urho.Json.Linq.JsonMergeSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Urho.Json.Linq.JsonMergeSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonMergeSettings.MergeArrayHandling">
+            <summary>
+            Gets or sets the method used when merging JSON arrays.
+            </summary>
+            <value>The method used when merging JSON arrays.</value>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonMergeSettings.MergeNullValueHandling">
+            <summary>
+            Gets or sets how null value properties are merged.
+            </summary>
+            <value>How null value properties are merged.</value>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonMergeSettings.PropertyNameComparison">
+            <summary>
+            Gets or sets the comparison used to match property names while merging.
+            The exact property name will be searched for first and if no matching property is found then
+            the <see cref="T:System.StringComparison"/> will be used to match a property.
+            </summary>
+            <value>The comparison used to match property names while merging.</value>
+        </member>
+        <member name="T:Urho.Json.Linq.JsonSelectSettings">
+            <summary>
+            Specifies the settings used when selecting JSON.
+            </summary>
+        </member>
+        <member name="P:Urho.Json.Linq.JsonSelectSettings.ErrorWhenNoMatch">
+            <summary>
+            Gets or sets a flag that indicates whether an error should be thrown if
+            no tokens are found when evaluating part of the expression.
+            </summary>
+            <value>
+            A flag that indicates whether an error should be thrown if
+            no tokens are found when evaluating part of the expression.
+            </value>
+        </member>
         <member name="T:Urho.Json.Linq.JToken">
             <summary>
             Represents an abstract JSON token.
@@ -53005,82 +53081,6 @@
             	<paramref name="obj"/> is not of the same type as this instance.
             </exception>
         </member>
-        <member name="T:Urho.Json.Linq.JsonLoadSettings">
-            <summary>
-            Specifies the settings used when loading JSON.
-            </summary>
-        </member>
-        <member name="M:Urho.Json.Linq.JsonLoadSettings.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Urho.Json.Linq.JsonLoadSettings"/> class.
-            </summary>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonLoadSettings.CommentHandling">
-            <summary>
-            Gets or sets how JSON comments are handled when loading JSON.
-            The default value is <see cref="F:Urho.Json.Linq.CommentHandling.Ignore" />.
-            </summary>
-            <value>The JSON comment handling.</value>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonLoadSettings.LineInfoHandling">
-            <summary>
-            Gets or sets how JSON line info is handled when loading JSON.
-            The default value is <see cref="F:Urho.Json.Linq.LineInfoHandling.Load" />.
-            </summary>
-            <value>The JSON line info handling.</value>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonLoadSettings.DuplicatePropertyNameHandling">
-            <summary>
-            Gets or sets how duplicate property names in JSON objects are handled when loading JSON.
-            The default value is <see cref="F:Urho.Json.Linq.DuplicatePropertyNameHandling.Replace" />.
-            </summary>
-            <value>The JSON duplicate property name handling.</value>
-        </member>
-        <member name="T:Urho.Json.Linq.JsonMergeSettings">
-            <summary>
-            Specifies the settings used when merging JSON.
-            </summary>
-        </member>
-        <member name="M:Urho.Json.Linq.JsonMergeSettings.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Urho.Json.Linq.JsonMergeSettings"/> class.
-            </summary>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonMergeSettings.MergeArrayHandling">
-            <summary>
-            Gets or sets the method used when merging JSON arrays.
-            </summary>
-            <value>The method used when merging JSON arrays.</value>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonMergeSettings.MergeNullValueHandling">
-            <summary>
-            Gets or sets how null value properties are merged.
-            </summary>
-            <value>How null value properties are merged.</value>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonMergeSettings.PropertyNameComparison">
-            <summary>
-            Gets or sets the comparison used to match property names while merging.
-            The exact property name will be searched for first and if no matching property is found then
-            the <see cref="T:System.StringComparison"/> will be used to match a property.
-            </summary>
-            <value>The comparison used to match property names while merging.</value>
-        </member>
-        <member name="T:Urho.Json.Linq.JsonSelectSettings">
-            <summary>
-            Specifies the settings used when selecting JSON.
-            </summary>
-        </member>
-        <member name="P:Urho.Json.Linq.JsonSelectSettings.ErrorWhenNoMatch">
-            <summary>
-            Gets or sets a flag that indicates whether an error should be thrown if
-            no tokens are found when evaluating part of the expression.
-            </summary>
-            <value>
-            A flag that indicates whether an error should be thrown if
-            no tokens are found when evaluating part of the expression.
-            </value>
-        </member>
         <member name="T:Urho.Json.Linq.LineInfoHandling">
             <summary>
             Specifies how line information is handled when loading JSON.
@@ -54557,6 +54557,47 @@
             </summary>
             <param name="underlyingType">The underlying type for the contract.</param>
         </member>
+        <member name="T:Urho.Json.Serialization.JsonPropertyCollection">
+            <summary>
+            A collection of <see cref="T:Urho.Json.Serialization.JsonProperty"/> objects.
+            </summary>
+        </member>
+        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Urho.Json.Serialization.JsonPropertyCollection"/> class.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.GetKeyForItem(Urho.Json.Serialization.JsonProperty)">
+            <summary>
+            When implemented in a derived class, extracts the key from the specified element.
+            </summary>
+            <param name="item">The element from which to extract the key.</param>
+            <returns>The key for the specified element.</returns>
+        </member>
+        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.AddProperty(Urho.Json.Serialization.JsonProperty)">
+            <summary>
+            Adds a <see cref="T:Urho.Json.Serialization.JsonProperty"/> object.
+            </summary>
+            <param name="property">The property to add to the collection.</param>
+        </member>
+        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.GetClosestMatchProperty(System.String)">
+            <summary>
+            Gets the closest matching <see cref="T:Urho.Json.Serialization.JsonProperty"/> object.
+            First attempts to get an exact case match of <paramref name="propertyName"/> and then
+            a case insensitive match.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <returns>A matching property if found.</returns>
+        </member>
+        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.GetProperty(System.String,System.StringComparison)">
+            <summary>
+            Gets a property by property name.
+            </summary>
+            <param name="propertyName">The name of the property to get.</param>
+            <param name="comparisonType">Type property name string comparison.</param>
+            <returns>A matching property if found.</returns>
+        </member>
         <member name="T:Urho.Json.Serialization.JsonProperty">
             <summary>
             Maps a JSON property to a .NET member or constructor parameter.
@@ -54751,47 +54792,6 @@
             Gets or sets the reference loop handling used when serializing the property's collection items.
             </summary>
             <value>The collection's items reference loop handling.</value>
-        </member>
-        <member name="T:Urho.Json.Serialization.JsonPropertyCollection">
-            <summary>
-            A collection of <see cref="T:Urho.Json.Serialization.JsonProperty"/> objects.
-            </summary>
-        </member>
-        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.#ctor(System.Type)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Urho.Json.Serialization.JsonPropertyCollection"/> class.
-            </summary>
-            <param name="type">The type.</param>
-        </member>
-        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.GetKeyForItem(Urho.Json.Serialization.JsonProperty)">
-            <summary>
-            When implemented in a derived class, extracts the key from the specified element.
-            </summary>
-            <param name="item">The element from which to extract the key.</param>
-            <returns>The key for the specified element.</returns>
-        </member>
-        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.AddProperty(Urho.Json.Serialization.JsonProperty)">
-            <summary>
-            Adds a <see cref="T:Urho.Json.Serialization.JsonProperty"/> object.
-            </summary>
-            <param name="property">The property to add to the collection.</param>
-        </member>
-        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.GetClosestMatchProperty(System.String)">
-            <summary>
-            Gets the closest matching <see cref="T:Urho.Json.Serialization.JsonProperty"/> object.
-            First attempts to get an exact case match of <paramref name="propertyName"/> and then
-            a case insensitive match.
-            </summary>
-            <param name="propertyName">Name of the property.</param>
-            <returns>A matching property if found.</returns>
-        </member>
-        <member name="M:Urho.Json.Serialization.JsonPropertyCollection.GetProperty(System.String,System.StringComparison)">
-            <summary>
-            Gets a property by property name.
-            </summary>
-            <param name="propertyName">The name of the property to get.</param>
-            <param name="comparisonType">Type property name string comparison.</param>
-            <returns>A matching property if found.</returns>
         </member>
         <member name="T:Urho.Json.Serialization.JsonStringContract">
             <summary>
