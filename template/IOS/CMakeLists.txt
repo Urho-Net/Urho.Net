@@ -54,6 +54,8 @@ set (LIBS
     libmono-component-debugger-stub-static.a
     libmono-component-hot_reload-stub-static.a
     libmono-component-diagnostics_tracing-stub-static.a
+    libSystem.Globalization.Native.a
+    libmono-component-marshal-ilgen-static.a
     "-framework Security"
     "-framework GSS"
     "-framework CFNetwork"

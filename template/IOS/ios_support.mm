@@ -46,9 +46,9 @@
 static void
 register_dllmap (void)
 {
-    mono_dllmap_insert (NULL, "System.Native", NULL, "__Internal", NULL);
-    mono_dllmap_insert (NULL, "System.IO.Compression.Native", NULL, "__Internal", NULL);
-    mono_dllmap_insert (NULL, "System.Security.Cryptography.Native.Apple", NULL, "__Internal", NULL);
+    // mono_dllmap_insert (NULL, "System.Native", NULL, "__Internal", NULL);
+    // mono_dllmap_insert (NULL, "System.IO.Compression.Native", NULL, "__Internal", NULL);
+    // mono_dllmap_insert (NULL, "System.Security.Cryptography.Native.Apple", NULL, "__Internal", NULL);
 }
 
 
@@ -76,9 +76,10 @@ void initialize() {
 
 	setenv ("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "1", TRUE);
 	
-	mono_dllmap_insert(NULL, "System.Native", NULL, "__Internal", NULL);
-	mono_dllmap_insert(NULL, "System.IO.Compression.Native", NULL, "__Internal", NULL);
-	mono_dllmap_insert(NULL, "System.Security.Cryptography.Native.Apple", NULL, "__Internal", NULL);
+	// TBD ELI , not sure if needed ?
+	// mono_dllmap_insert(NULL, "System.Native", NULL, "__Internal", NULL);
+	// mono_dllmap_insert(NULL, "System.IO.Compression.Native", NULL, "__Internal", NULL);
+	// mono_dllmap_insert(NULL, "System.Security.Cryptography.Native.Apple", NULL, "__Internal", NULL);
 
 	urho_mono_setup_aot();
     
