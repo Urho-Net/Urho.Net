@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/elialoni/Development/Urho.Net/tools/UrhoCooker/UrhoCooker.csproj": {}
+  },
+  "projects": {
+    "/Users/elialoni/Development/Urho.Net/tools/UrhoCooker/UrhoCooker.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/elialoni/Development/Urho.Net/tools/UrhoCooker/UrhoCooker.csproj",
+        "projectName": "UrhoCooker",
+        "projectPath": "/Users/elialoni/Development/Urho.Net/tools/UrhoCooker/UrhoCooker.csproj",
+        "packagesPath": "/Users/elialoni/.nuget/packages/",
+        "outputPath": "/Users/elialoni/Development/Urho.Net/tools/UrhoCooker/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/elialoni/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "CliWrap": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "CommandLineParser": {
+              "target": "Package",
+              "version": "[2.9.1, )"
+            },
+            "Microsoft.Build.Tasks.Core": {
+              "target": "Package",
+              "version": "[16.10.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.419/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -117,6 +117,12 @@
     </PropertyGroup>  
     <Copy SourceFiles="$(UrhoDotNetXML)" DestinationFolder="References" ContinueOnError="true" />
     <Delete Files="Android/app/src/main/assets/Data/DotNet/Game.dll" />
+    <PropertyGroup>
+      <UrhoCookerCSProj>@(URHONET_HOME_ROOT)\tools\UrhoCooker\UrhoCooker.csproj</UrhoCookerCSProj>
+      <UrhoCookerDLL>@(URHONET_HOME_ROOT)\tools\UrhoCooker\bin\Release\net6.0\UrhoCooker.dll</UrhoCookerDLL>
+    </PropertyGroup>  
+    <Exec Command="dotnet build -c Release $(UrhoCookerCSProj)" />
+    <Copy SourceFiles="$(UrhoCookerDLL)" DestinationFolder="$(MSBuildProjectDirectory)\tools\UrhoCooker" SkipUnchangedFiles="true" />
   </Target>
 
   <Target Name="CopyCustomContentWindows" AfterTargets="AfterBuild" Condition="'$(IsWindows)'=='true'">

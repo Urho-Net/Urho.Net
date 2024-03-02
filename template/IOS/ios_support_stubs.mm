@@ -232,5 +232,42 @@ GD_PINVOKE_EXPORT void CGContextSaveGState(void *context) {}
 
 GD_PINVOKE_EXPORT void CGContextRestoreGState(void *context) {}
 
+GD_PINVOKE_EXPORT bool CryptUnprotectData(
+  void *pDataIn,
+  void *ppszDataDescr,
+  void *pOptionalEntropy,
+  void *pvReserved,
+  void *pPromptStruct,
+  int  dwFlags,
+  void *pDataOut
+)
+{
+    return true;
+}
 
+GD_PINVOKE_EXPORT bool CryptProtectData(
+  void  *pDataIn,
+  void  *szDataDescr,
+  void  *pOptionalEntropy,
+  void  *pvReserved,
+  void  *pPromptStruct,
+  int   dwFlags,
+  void  *pDataOut
+)
+{
+    return true;
+}
+
+GD_PINVOKE_EXPORT int FormatMessageW(
+  int  dwFlags,
+  void *lpSource,
+  int  dwMessageId,
+  int  dwLanguageId,
+  void *lpBuffer,
+  int  nSize,
+  void *Arguments
+)
+{
+    return -1;
+}
 #endif // IPHONE_ENABLED

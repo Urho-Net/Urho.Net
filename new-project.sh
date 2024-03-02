@@ -188,7 +188,9 @@ cp "template/template.csproj" "$projPath/$projName.csproj"
 mkdir "-p" "$projPath/tools"
 cp "-r" "tools/ReferenceAssemblyResolver" "$projPath/tools"
 cp "-R" "tools/bash_mini/." "$projPath/tools/bash"
-cp "-r" "tools/UrhoCooker" "$projPath/tools"
+mkdir "-p" "$projPath/tools/UrhoCooker"
+dotnet build -c Release tools/UrhoCooker/UrhoCooker.csproj
+cp "-r" "tools/UrhoCooker/bin/Release/net6.0/" "$projPath/tools/UrhoCooker"
 
 
 cp "template/obfuscar.xml" "$projPath/obfuscar.xml"
