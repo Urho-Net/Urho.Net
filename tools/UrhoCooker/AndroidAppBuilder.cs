@@ -389,6 +389,12 @@ namespace UrhoCooker
             .Replace("%TEMPLATE_UUID%", PROJECT_UUID)
             .Replace("%VERSION_CODE%", VERSION_CODE)
             .Replace("%VERSION_NAME%", VERSION_NAME));
+
+            File.WriteAllText(Path.Combine(opts.OutputPath, "Android/app/src/build.gradle"),
+            Utils.GetEmbeddedResource("Android.build_gradle_lean.gradle")
+            .Replace("%TEMPLATE_UUID%", PROJECT_UUID)
+            .Replace("%VERSION_CODE%", VERSION_CODE)
+            .Replace("%VERSION_NAME%", VERSION_NAME));
         }
 
         private void CopyAndroidInitialFolder()
