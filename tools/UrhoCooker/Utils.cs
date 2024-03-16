@@ -666,6 +666,7 @@ namespace UrhoCooker
 
             string monodis_exe = Path.Combine(GetUrhoNetHomePath(), "tools", "monodis", os_folder, "monodis");
 
+
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 monodis_exe += ".exe";
@@ -677,45 +678,43 @@ namespace UrhoCooker
 
             var escapedArgs = assembly.Replace("\"", "\\\"");
 
-            // (int exitCode, string result) = Utils.RunShellCommand(null,
-            //                      $"{monodis_exe} --assemblyref {assembly} ",
-            //                      null,
-            //                      workingDir: opts.ProjectPath,
-            //                      logStdErrAsMessage: true,
-            //                      debugMessageImportance: MessageImportance.High,
-            //                      label: $"assemblyref  {assembly}");
-
-            var process = new Process()
+            ProcessStartInfo startInfo = new ProcessStartInfo
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = monodis_exe,
-                    Arguments = "--assemblyref " + assembly,
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                }
+                FileName = monodis_exe,
+                Arguments = "--assemblyref " + assembly,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
             };
 
+            //TBD ELI, Set temporary MONO_PATH environment variable specifically for startInfo to find mscorlib.dll , 
+            //it's needed in case the Mono sdk is not installed.
+            // it's a temporary hack untill the new build process implementation will be ready.
+            string mscorlib_path = Path.Combine(GetUrhoNetHomePath(), "tools", "monodis", "lib", "mono", "4.5");
+            startInfo.Environment["MONO_PATH"] = mscorlib_path;
+
+            var process = Process.Start(startInfo);
+
+            List<string> reference_assemblies = new List<string>();
+
+            if (process == null) return reference_assemblies.ToArray();
 
             process.Start();
             string result = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
 
-            List<string> reference_assemblies = new List<string>();
-            // if (exitCode == 0 && result != string.Empty)
+
+            string[] entries = result.Split("\n");
+            foreach (string entry in entries)
             {
-                string[] entries = result.Split("\n");
-                foreach (string entry in entries)
+                if (entry.Contains("Name="))
                 {
-                    if (entry.Contains("Name="))
-                    {
-                        String name = entry.Replace("Name=", "").Replace("\r", "").Replace("\t", "");
-                        name = name.Trim();
-                        reference_assemblies.Add(name);
-                    }
+                    String name = entry.Replace("Name=", "").Replace("\r", "").Replace("\t", "");
+                    name = name.Trim();
+                    reference_assemblies.Add(name);
                 }
             }
+
 
 
             return reference_assemblies.ToArray();
