@@ -26,6 +26,7 @@
     <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows> 
     <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX> 
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+    <OSArch>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSArch>
   </PropertyGroup>
 
   <ItemGroup>
@@ -136,7 +137,7 @@
 
   <Target Name="CopyCustomContentMacOS" AfterTargets="AfterBuild" Condition="'$(IsOSX)'=='true'">
     <PropertyGroup>
-      <libUrho3D>@(URHONET_HOME_ROOT)/template/libs/macos/libUrho3D.dylib</libUrho3D>
+      <libUrho3D>@(URHONET_HOME_ROOT)/template/libs/macos/$(OSArch)/libUrho3D.dylib</libUrho3D>
     </PropertyGroup>
     <Error Condition="! Exists('$(libUrho3D)')" Text="libUrho3D.dylib not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
     <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutDir)\%(RecursiveDir)" SkipUnchangedFiles="true" Retries="3" RetryDelayMilliseconds="300" />
@@ -156,7 +157,8 @@
     <PropertyGroup>
       <libUrho3D Condition="'$(PublishFlavor)'=='linux-x64'">@(URHONET_HOME_ROOT)/template/libs/linux/libUrho3D.so</libUrho3D>
       <libUrho3D Condition="'$(PublishFlavor)'=='win-x64'">@(URHONET_HOME_ROOT)/template/libs/windows/Urho3D.dll</libUrho3D>
-      <libUrho3D Condition="'$(PublishFlavor)'=='osx-x64'">@(URHONET_HOME_ROOT)/template/libs/macos/libUrho3D.dylib</libUrho3D>
+      <libUrho3D Condition="'$(PublishFlavor)'=='osx-x64'">@(URHONET_HOME_ROOT)/template/libs/macos/X64/libUrho3D.dylib</libUrho3D>
+      <libUrho3D Condition="'$(PublishFlavor)'=='osx-arm64'">@(URHONET_HOME_ROOT)/template/libs/macos/Arm64/libUrho3D.dylib</libUrho3D>
     </PropertyGroup>
     <Error Condition="! Exists('$(libUrho3D)')" Text="libUrho3D.dylib not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
     <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutDir)\publish\%(RecursiveDir)" SkipUnchangedFiles="true" Retries="3" RetryDelayMilliseconds="300" />

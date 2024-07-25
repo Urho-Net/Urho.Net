@@ -375,7 +375,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish-osx",
+            "label": "publish-osx-x64",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -384,6 +384,29 @@
                 "-r","osx-x64",
                 "--self-contained","true",
                 "/property:PublishFlavor=osx-x64",
+                "/property:PublishSingleFile=true",
+                "/property:PublishTrimmed=true",
+                "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
+                "${workspaceFolder}/${workspaceFolderBasename}.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "publish-osx-arm64",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "-c","Release",
+                "-r","osx-arm64",
+                "--self-contained","true",
+                "/property:PublishFlavor=osx-arm64",
                 "/property:PublishSingleFile=true",
                 "/property:PublishTrimmed=true",
                 "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
