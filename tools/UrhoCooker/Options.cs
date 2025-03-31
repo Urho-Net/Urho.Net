@@ -59,6 +59,15 @@ namespace UrhoCooker
 
         [Option("keystore", Required = false, HelpText = "Android key store path")]
         public string KeyStorePath { get; set; } = "";
+        
+        [Option( "aot", Required = false, HelpText = "AOT mode")]
+        public bool Aot { get; set; } = false;
+        
+        [Option("framework", Required = false, HelpText = "Set .NET target framework")]
+        public string Framework { get; set; } = "";
+        
+        [Option("properties", Required = false, HelpText = "extra  properties  -p:key=value -p:key=value  ")]
+        public string Properties { get; set; } = "";
 
     }
 

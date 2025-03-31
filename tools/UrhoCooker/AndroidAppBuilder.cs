@@ -71,30 +71,31 @@ namespace UrhoCooker
               opts.ProjectPath = fi.FullName;
               Console.WriteLine($"Project path:{opts.ProjectPath}");
 
-            if (opts.Type == "debug")
-            {
-                if (!DotNetBuildDebug())
-                {
-                    Log.LogError($"Compilation failed!");
-                    return false;
-                }
-            }
-            else if (opts.Type == "release")
-            {
-                if (!DotNetBuildRelease())
-                {
-                    Log.LogError($"Compilation failed!");
-                    return false;
-                }
-            }
-            else{
-                 Log.LogError($"You must provide build type release/debug");
-                 return false;
-            }
-
- 
-
-
+              if (!opts.Aot)
+              {
+                  if (opts.Type == "debug")
+                  {
+                      if (!DotNetBuildDebug())
+                      {
+                          Log.LogError($"Compilation failed!");
+                          return false;
+                      }
+                  }
+                  else if (opts.Type == "release")
+                  {
+                      if (!DotNetBuildRelease())
+                      {
+                          Log.LogError($"Compilation failed!");
+                          return false;
+                      }
+                  }
+                  else
+                  {
+                      Log.LogError($"You must provide build type release/debug");
+                      return false;
+                  }
+              }
+            
             SetOutputPath();
             GetUrhoNetHomePath();
             if (URHONET_HOME_PATH == string.Empty) return false;
@@ -106,48 +107,69 @@ namespace UrhoCooker
             HandleAndroidDependencies();
             HandleAndroidNDKVersion();
             HandlePlugins();
-            HandleDotnetAssembliesAndRuntime();
-            CreateAndroidManifest();
-            CopyPlatformJavaToAndroid();
-            CopyAssetsToAndroid();
-            DeleteIOSAssetFolder();
-            DeleteGameDllInAndroidFolder();
-            ResolveReferenceAssembliesAndCopyToAndroid();
-
-            if (opts.Obfuscate)
+            if (!opts.Aot)
             {
-
-                string cmd = $"mono {URHONET_HOME_PATH}/tools/obfuscar/Obfuscar.Console.exe obfuscar.xml";
-                (int exitCode, string output) = Utils.RunShellCommand(Log,
-                             cmd,
-                             null,
-                             workingDir: Path.Combine(opts.ProjectPath),
-                             logStdErrAsMessage: true,
-                             debugMessageImportance: MessageImportance.High,
-                             label: "Obfuscate Game.dll");
-
-                if (exitCode != 0)
-                {
-                    Log.LogError("Obfuscate failed");
-                    Log.LogError(output);
-                    return false;
-                }
-
-                File.Copy(Path.Combine(opts.ProjectPath, "Obfuscator_Output/Game.dll"),Path.Combine(opts.ProjectPath, "Intermediate/Game.dll"),true);
-            }
-
-            if (opts.Encrypt)
-            {
-                if(!EncryptGameDLL())
-                {
-                    Log.LogError($"build interrupted");
-                    return false;
-                }
+                HandleDotnetAssembliesAndRuntime();
             }
             else
             {
-                CopyGameDllToAndroid();
+                HandleAOTLibraries();
             }
+
+            CreateAndroidManifest();
+            CopyPlatformJavaToAndroid();
+            CopyAssetsToAndroid();
+            
+            if (!opts.Aot)
+            {
+                DeleteIOSAssetFolder();
+                DeleteGameDllInAndroidFolder();
+                ResolveReferenceAssembliesAndCopyToAndroid();
+            }
+            else
+            {
+                Path.Combine(opts.OutputPath, "Android/app/src/main/assets/Data/DotNet").DeleteDirectory();
+            }
+
+            if (!opts.Aot)
+            {
+                if (opts.Obfuscate)
+                {
+
+                    string cmd = $"mono {URHONET_HOME_PATH}/tools/obfuscar/Obfuscar.Console.exe obfuscar.xml";
+                    (int exitCode, string output) = Utils.RunShellCommand(Log,
+                        cmd,
+                        null,
+                        workingDir: Path.Combine(opts.ProjectPath),
+                        logStdErrAsMessage: true,
+                        debugMessageImportance: MessageImportance.High,
+                        label: "Obfuscate Game.dll");
+
+                    if (exitCode != 0)
+                    {
+                        Log.LogError("Obfuscate failed");
+                        Log.LogError(output);
+                        return false;
+                    }
+
+                    File.Copy(Path.Combine(opts.ProjectPath, "Obfuscator_Output/Game.dll"),
+                        Path.Combine(opts.ProjectPath, "Intermediate/Game.dll"), true);
+                }
+
+                if (opts.Encrypt)
+                {
+                    if (!EncryptGameDLL())
+                    {
+                        Log.LogError($"build interrupted");
+                        return false;
+                    }
+                }
+                else
+                {
+                    CopyGameDllToAndroid();
+                }
+            }
+
             if (opts.Type == "debug")
                 GradleBuildAAB("bundleDebug");
             else if (opts.Type == "release")
@@ -295,7 +317,98 @@ namespace UrhoCooker
                 Path.Combine(opts.OutputPath, "Android/app/build.gradle").AppendTextLine("}");
             }
         }
+        
+        /*
+             <!-- <TrimMode>partial</TrimMode>
+           <TrimmerRemoveSymbols>false</TrimmerRemoveSymbols>
+           <PublishAot Condition="'$(BuildAsLibrary)' == 'true'">true</PublishAot>
+           <PublishAotUsingRuntimePack>true</PublishAotUsingRuntimePack> -->
+           <!-- <IlcGenerateMarshallingDescriptors>true</IlcGenerateMarshallingDescriptors>
+           <IlcGenerateStackTraceData>true</IlcGenerateStackTraceData>
+           <IlcGenerateDiagnostics>true</IlcGenerateDiagnostics>
+           <IlcDisableReflection>false</IlcDisableReflection>
+           <OptimizationPreference>Size</OptimizationPreference> -->
+           
+         *   <!-- <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+           <StripSymbols>true</StripSymbols>
+           <DebugType>none</DebugType>
+           <DebugSymbols>false</DebugSymbols> -->
+         */
+        private bool DotNetBuildAOT(string androdArch)
+        {
+            bool result = true;
 
+            string  aotArch = string.Empty;
+            
+            switch (androdArch)
+            {
+                case "arm64-v8a":
+                {
+                    aotArch = "linux-bionic-arm64";
+                   
+                } 
+                    break;
+
+                case "armeabi-v7a":
+                {
+                    aotArch = "linux-bionic-arm";
+                }
+                    break;
+
+                case "x86_64":
+                {
+                    aotArch = "linux-bionic-x64";
+                }
+                    break;
+                
+            }
+
+            if (aotArch == string.Empty) return false;
+            
+            string dstFolder  = Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{androdArch}");
+
+            string buildType = (opts.Type == "release") ? "Release" : "Debug";
+            string stripSymbols = (opts.Type == "release") ? "true" : "false";
+            
+            string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
+            
+            (int exitCode, string output)  = Utils.RunShellCommand(Log,
+                $"dotnet publish -f {targetFramework} -c {buildType}  -r {aotArch}  -p:OutputType=Library {opts.Properties} -p:StripSymbols={stripSymbols} -p:BuildAsLibrary=true -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:DefineConstants=\"__ANDROID__\" -o {dstFolder}",
+                null,
+                workingDir: Path.Combine(opts.ProjectPath),
+                logStdErrAsMessage: true,
+                debugMessageImportance: MessageImportance.High,
+                label: "DotNetBuildAOT");
+
+            result = (exitCode != 0)?false:true;
+            return result;
+        }
+        
+        private void HandleAOTLibraries()
+        {
+            
+            List<string> androidArchs = GetAndroidArchitectures();
+            if (androidArchs.Count == 0) androidArchs.Add("armeabi-v7a");
+            
+            foreach (var i in androidArchs)
+            {
+                if (!DotNetBuildAOT(i))
+                {
+                    Log.LogError($"Compilation failed! for {i}");
+                }
+                    
+                Directory.CreateDirectory(Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}"));
+                
+                if (File.Exists(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}", "libUrhoMain.so")))
+                {
+                    File.Copy(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}", "libUrhoMain.so"),
+                        Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}", "libUrhoMain.so"),
+                        true);
+                }
+                
+                File.Copy(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}","libUrho3D.so"), Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}","libUrho3D.so"), true);
+            }
+        }
         private void HandleDotnetAssembliesAndRuntime()
         {
             Directory.CreateDirectory(Path.Combine(opts.ProjectPath, "libs/dotnet/bcl/android/common"));
@@ -313,12 +426,32 @@ namespace UrhoCooker
                     Directory.CreateDirectory(Path.Combine(opts.ProjectPath, $"libs/dotnet/bcl/android/{i}"));
                     Path.Combine(URHONET_HOME_PATH, $"template/libs/dotnet/bcl/android/{i}").CopyDirectory(Path.Combine(opts.ProjectPath, $"libs/dotnet/bcl/android/{i}"), true);
                 }
-
+                
                 Directory.CreateDirectory(Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}"));
-                Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}").CopyDirectory(Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}"), true);
+                if (!opts.Aot)
+                {
+                    Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}")
+                        .CopyDirectory(Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}"), true);
+                }
+                else
+                {
+                    if (File.Exists(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}", "libUrhoMain.so")))
+                    {
+                        File.Copy(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}", "libUrhoMain.so"),
+                            Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}", "libUrhoMain.so"),
+                            true);
+                    }
 
-                Directory.CreateDirectory(Path.Combine(opts.OutputPath, $"Android/app/src/main/assets/Data/DotNet/android/{i}"));
-                Path.Combine(URHONET_HOME_PATH, $"template/libs/dotnet/bcl/android/{i}").CopyDirectory(Path.Combine(opts.OutputPath, $"Android/app/src/main/assets/Data/DotNet/android/{i}"), true);
+                    File.Copy(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}","libUrho3D.so"), Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}","libUrho3D.so"), true);
+                }
+
+                if (!opts.Aot)
+                {
+                    Directory.CreateDirectory(Path.Combine(opts.OutputPath,
+                        $"Android/app/src/main/assets/Data/DotNet/android/{i}"));
+                    Path.Combine(URHONET_HOME_PATH, $"template/libs/dotnet/bcl/android/{i}").CopyDirectory(
+                        Path.Combine(opts.OutputPath, $"Android/app/src/main/assets/Data/DotNet/android/{i}"), true);
+                }
             }
 
 
@@ -409,20 +542,34 @@ namespace UrhoCooker
                 Directory.CreateDirectory(Path.Combine(opts.OutputPath, "Android/app/src/test", JAVA_PACKAGE_PATH));
 
                 File.Move(Path.Combine(opts.OutputPath, "Android/app/src/main/MainActivity.kt"), Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "MainActivity.kt"), true);
-                File.Move(Path.Combine(opts.OutputPath, "Android/app/src/main/UrhoMainActivity.kt"), Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt"), true);
+                
                 File.Move(Path.Combine(opts.OutputPath, "Android/app/src/androidTest/ExampleInstrumentedTest.kt"), Path.Combine(opts.OutputPath, "Android/app/src/androidTest", JAVA_PACKAGE_PATH, "ExampleInstrumentedTest.kt"), true);
                 File.Move(Path.Combine(opts.OutputPath, "Android/app/src/test/ExampleUnitTest.kt"), Path.Combine(opts.OutputPath, "Android/app/src/test", JAVA_PACKAGE_PATH, "ExampleUnitTest.kt"), true);
 
                 Path.Combine(opts.OutputPath, "Android/app/src/main/AndroidManifest.xml").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
                 Path.Combine(opts.OutputPath, "Android/app/build.gradle").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
                 Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "MainActivity.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
-                Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
-
+               
+                
                 Path.Combine(opts.OutputPath, "Android/app/src/androidTest", JAVA_PACKAGE_PATH, "ExampleInstrumentedTest.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
                 Path.Combine(opts.OutputPath, "Android/app/src/test", JAVA_PACKAGE_PATH, "ExampleUnitTest.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
 
                 Path.Combine(opts.OutputPath, "Android/settings.gradle").ReplaceInfile("TEMPLATE_PROJECT_NAME", PROJECT_NAME);
                 Path.Combine(opts.OutputPath, "Android/app/src/main/res/values/strings.xml").ReplaceInfile("TEMPLATE_PROJECT_NAME", PROJECT_NAME);
+            }
+            
+            if (File.Exists(Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt")))
+                File.Delete(Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt"));
+            
+            File.Copy(Path.Combine(URHONET_HOME_PATH, "template/Android/app/src/main","UrhoMainActivity.kt"), Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt"), true);
+            Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
+            if (opts.Aot)
+            {
+                Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt").ReplaceInfile("TEMPLATE_APPLICATION_LOADER", "UrhoMain");
+            }
+            else
+            {
+                Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt").ReplaceInfile("TEMPLATE_APPLICATION_LOADER", "MonoEmbedded");
             }
 
             Path.Combine(opts.OutputPath, "Android/app/src/main/jniLibs").DeleteDirectory();
@@ -496,8 +643,10 @@ namespace UrhoCooker
         private bool DotNetBuildDebug()
         {
             bool result = true;
+            string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
+            
             (int exitCode, string output)  = Utils.RunShellCommand(Log,
-                                      "dotnet build --configuration Debug -p:DefineConstants=_ANDROID_",
+                                      $"dotnet build -f {targetFramework} --configuration Debug -p:DefineConstants=_ANDROID_",
                                       null,
                                       workingDir: Path.Combine(opts.ProjectPath),
                                       logStdErrAsMessage: true,
@@ -511,8 +660,10 @@ namespace UrhoCooker
         private bool DotNetBuildRelease()
         {
             bool result = true;
+            string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
+            
             (int exitCode, string output)  = Utils.RunShellCommand(Log,
-                                      "dotnet build --configuration Release -p:DefineConstants=_ANDROID_",
+                                      $"dotnet build -f {targetFramework} --configuration Release -p:DefineConstants=_ANDROID_",
                                       null,
                                       workingDir: Path.Combine(opts.ProjectPath),
                                       logStdErrAsMessage: true,

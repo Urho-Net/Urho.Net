@@ -51,8 +51,7 @@ class UrhoMainActivity : UrhoActivity() {
         if (argumentString != null) arguments = argumentString.split(':')
         else throw IllegalArgumentException("The MainActivity requires an argument to start")
 
-        // Load the MonoEmbedded interface with the mono runtime.
-        libraryNames.add("MonoEmbedded")
+        libraryNames.add("TEMPLATE_APPLICATION_LOADER")
 
         super.onLoadLibrary(libraryNames)
     }
