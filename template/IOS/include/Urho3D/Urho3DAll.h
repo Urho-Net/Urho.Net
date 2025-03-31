@@ -296,6 +296,8 @@
 #include <Urho3D/UI/FontFace.h>
 #include <Urho3D/UI/FontFaceBitmap.h>
 #include <Urho3D/UI/FontFaceFreeType.h>
+#include <Urho3D/UI/ImGuiElement.h>
+#include <Urho3D/UI/ImGuiEvents.h>
 #include <Urho3D/UI/LineEdit.h>
 #include <Urho3D/UI/ListView.h>
 #include <Urho3D/UI/Menu.h>

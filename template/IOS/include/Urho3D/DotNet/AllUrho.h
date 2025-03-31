@@ -235,6 +235,7 @@
 #include "../UI/UIEvents.h"
 #include "../UI/View3D.h"
 #include "../UI/Window.h"
+#include "../UI/ImGuiElement.h"
 #include "../Urho2D/AnimatedSprite2D.h"
 #include "../Urho2D/AnimationSet2D.h"
 #include "../Urho2D/CollisionBox2D.h"

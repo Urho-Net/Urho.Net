@@ -57,6 +57,10 @@ public:
     /// Show an error message (last log message if empty), terminate the main loop, and set failure exit code.
     void ErrorExit(const String& message = String::EMPTY);
 
+    bool  SetupAndStart();
+    bool  RunOneFrame();
+    void  Terminate();
+
 protected:
     /// Handle log message.
     void HandleLogMessage(StringHash eventType, VariantMap& eventData);

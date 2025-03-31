@@ -30,15 +30,15 @@
 #  ifndef URHO3D_API
 #    ifdef Urho3D_EXPORTS
         /* We are building this library */
-#      define URHO3D_API 
+#      define URHO3D_API __attribute__((visibility("default")))
 #    else
         /* We are using this library */
-#      define URHO3D_API 
+#      define URHO3D_API __attribute__((visibility("default")))
 #    endif
 #  endif
 
 #  ifndef URHO3D_NO_EXPORT
-#    define URHO3D_NO_EXPORT 
+#    define URHO3D_NO_EXPORT __attribute__((visibility("hidden")))
 #  endif
 #endif
 

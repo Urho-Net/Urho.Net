@@ -19,6 +19,16 @@
 #ifndef NANOVG_H
 #define NANOVG_H
 
+#if defined(URHO3D_ANGLE_METAL)
+	#if URHO3D_GLES3
+		#include "../../ThirdParty/angle/include/GLES2/gl3.h"
+		#include "../../ThirdParty/angle/include/GLES2/gl2ext.h"
+	#else
+		#include "../../ThirdParty/angle/include/GLES2/gl2.h"
+		#include "../../ThirdParty/angle/include/GLES2/gl2ext.h"
+	#endif
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

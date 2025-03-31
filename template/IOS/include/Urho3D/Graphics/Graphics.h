@@ -99,6 +99,8 @@ struct ScreenModeParams
     int monitor_{};
     /// Refresh rate. 0 to pick automatically.
     int refreshRate_{};
+    /// Whether the window is hidden.
+    bool hidden_{};
 
     /// Compare contents except vsync flag.
     bool EqualsExceptVSync(const ScreenModeParams& rhs) const
@@ -111,7 +113,8 @@ struct ScreenModeParams
             && tripleBuffer_ == rhs.tripleBuffer_
             && multiSample_ == rhs.multiSample_
             && monitor_ == rhs.monitor_
-            && refreshRate_ == rhs.refreshRate_;
+            && refreshRate_ == rhs.refreshRate_
+            && hidden_ == rhs.hidden_;
     }
 
     /// Compare for equality with another parameter set.
@@ -159,6 +162,26 @@ public:
     void SetWindowPosition(const IntVector2& position);
     /// Set window position. Sets initial position if window is not created yet.
     void SetWindowPosition(int x, int y);
+
+    /// Set window size. .
+    /// @property
+    void SetWindowSize(const IntVector2& position);
+    /// Set window size.
+    void SetWindowSize(int x, int y);
+
+     /// Set external window size .i.e a window controled by external app such as Avalonia.
+    void SetExternalWindowSize(const IntVector2& position);
+       /// Set external window size .i.e a window controled by external app such as Avalonia.
+    void SetExternalWindowSize(int x, int y);
+    /// Set window opacity.
+    void SetWindowOpacity(float opacity);
+    /// Hide window .
+    void HideWindow();
+    /// Show Window
+    void ShowWindow();
+
+    void * GetNativeWindowHandle();
+    
     /// Set screen mode. Return true if successful.
     /// Don't use SetScreenMode if ToggleFullscreen is used directly or indirectly.
     bool SetScreenMode(int width, int height, const ScreenModeParams& params, bool maximize = false);
@@ -173,6 +196,9 @@ public:
     /// Set default window modes. Deprecated. Return true if successful.
     bool SetMode(int width, int height, bool fullscreen, bool borderless, bool resizable,
         bool highDPI, bool vsync, bool tripleBuffer, int multiSample, int monitor, int refreshRate);
+        /// Set default window modes. Deprecated. Return true if successful.
+    bool SetMode(int width, int height, bool fullscreen, bool borderless, bool resizable,
+        bool highDPI, bool vsync, bool tripleBuffer,bool hidden, int multiSample, int monitor, int refreshRate);
     /// Set screen resolution only. Deprecated. Return true if successful.
     bool SetMode(int width, int height);
     /// Set whether the main window uses sRGB conversion on write.
@@ -669,6 +695,13 @@ public:
     /// Return whether GL_APPLE_clip_distance is supported
     bool clipDistanceAPPLESupport() const { return clipDistanceAPPLESupport_; }
 
+    /// @property
+     /// Set whether Graphics is embedded inside another external Application
+    void SetEmbeddedWindow(bool enable);
+    /// @property
+    /// return whether Graphics is embedded inside another external Application
+    bool GetEmbeddedWindow() const { return isEmbeddedWindow_; }
+
     /// Return the API-specific alpha texture format.
     static unsigned GetAlphaFormat();
     /// Return the API-specific luminance texture format.
@@ -948,6 +981,8 @@ private:
     static const Vector2 pixelUVOffset;
     /// OpenGL3 support flag.
     static bool gl3Support;
+    // Flag indicating if Graphics is embedded inside another external Application
+    bool isEmbeddedWindow_{};
 };
 
 /// Register Graphics library objects.

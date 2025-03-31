@@ -80,8 +80,10 @@ struct SDL_SysWMinfo;
 #if defined(SDL_VIDEO_DRIVER_COCOA)
 #ifdef __OBJC__
 @class NSWindow;
+@class NSView;
 #else
 typedef struct _NSWindow NSWindow;
+typedef struct _NSView NSView;
 #endif
 #endif
 
@@ -232,6 +234,11 @@ struct SDL_SysWMinfo
 #if defined(SDL_VIDEO_DRIVER_COCOA)
         struct
         {
+#if defined(__OBJC__) && defined(__has_feature) && __has_feature(objc_arc)
+            NSView __unsafe_unretained *window; /**< The Cocoa window */
+#else
+            NSView *view;                     /**< The Cocoa window */
+#endif
 #if defined(__OBJC__) && defined(__has_feature) && __has_feature(objc_arc)
             NSWindow __unsafe_unretained *window; /**< The Cocoa window */
 #else

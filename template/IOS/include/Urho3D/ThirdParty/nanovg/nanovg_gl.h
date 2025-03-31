@@ -34,6 +34,18 @@ enum NVGcreateFlags {
     NVG_DEBUG             = 1<<2,
 };
 
+#if defined URHO3D_ANGLE_METAL
+    #undef NANOVG_GL2_IMPLEMENTATION
+    #undef NANOVG_GL3_IMPLEMENTATION
+    #undef NANOVG_GLES3_IMPLEMENTATION
+    #undef NANOVG_GLES2_IMPLEMENTATION
+#if defined URHO3D_GLES2
+    #define NANOVG_GLES2_IMPLEMENTATION
+#else
+    #define NANOVG_GLES3_IMPLEMENTATION
+#endif
+#endif
+
 #if defined NANOVG_GL2_IMPLEMENTATION
 #  define NANOVG_GL2 1
 #  define NANOVG_GL_IMPLEMENTATION 1
