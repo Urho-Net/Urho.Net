@@ -1,4 +1,5 @@
-﻿using Urho;
+﻿using System.Runtime.InteropServices;
+using Urho;
 
 namespace TEMPLATE_PROJECT_NAME
 {
@@ -10,8 +11,21 @@ namespace TEMPLATE_PROJECT_NAME
             var applicationPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             System.IO.Directory.SetCurrentDirectory(applicationPath);
 #endif          
-            new TEMPLATE_CLASS_NAME().Run();
+             RunGame();
         }
+
+        // This method is called when the application is run as a DLL .i.e. when it is called from a C++ application.
+        [UnmanagedCallersOnly(EntryPoint = "UrhoMain")]
+        static void UrhoMain()
+        {
+            RunGame();
+        }
+
+        static void RunGame()
+        {
+             new TEMPLATE_CLASS_NAME().Run();
+        }
+    
     }
 }
 

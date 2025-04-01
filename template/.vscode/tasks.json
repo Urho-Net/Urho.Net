@@ -2,112 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "ios-build-release-gles",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
-                "--task",
-                "build",
-                "--type",
-                "release",
-                "--architecture",
-                "ios",
-                "--path",
-                ".",
-                "--developer",
-                "${input:DeveloperID}",
-                "--obfuscate",
-                "true"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "ios-deploy-release-gles",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
-                "--task",
-                "build",
-                "--type",
-                "release",
-                "--architecture",
-                "ios",
-                "--path",
-                ".",
-                "--developer",
-                "${input:DeveloperID}",
-                "--obfuscate",
-                "true",
-                "--install",
-                "true"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "ios-build-debug-gles",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
-                "--task",
-                "build",
-                "--type",
-                "debug",
-                "--architecture",
-                "ios",
-                "--path",
-                ".",
-                "--developer",
-                "${input:DeveloperID}",
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "ios-deploy-debug-gles",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
-                "--task",
-                "build",
-                "--type",
-                "debug",
-                "--architecture",
-                "ios",
-                "--path",
-                ".",
-                "--developer",
-                "${input:DeveloperID}",
-                "--install",
-                "true"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "ios-debug-gles",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
-                "--task",
-                "build",
-                "--type",
-                "debug",
-                "--architecture",
-                "ios",
-                "--path",
-                ".",
-                "--developer",
-                "${input:DeveloperID}",
-                "--debug",
-                "true"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "ios-build-release-metal",
+            "label": "ios-build-release",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -130,7 +25,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-deploy-release-metal",
+            "label": "ios-deploy-release",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -155,7 +50,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-build-debug-metal",
+            "label": "ios-build-debug",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -176,7 +71,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-deploy-debug-metal",
+            "label": "ios-deploy-debug",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -199,7 +94,7 @@
             "problemMatcher": []
         },
         {
-            "label": "ios-debug-metal",
+            "label": "ios-debug",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -234,7 +129,9 @@
                 "--architecture",
                 "android",
                 "--path",
-                "."
+                ".",
+                "--aot",
+                "true"
             ],
             "problemMatcher": []
         },
@@ -252,6 +149,8 @@
                 "android",
                 "--path",
                 ".",
+                "--aot",
+                "true",
                 "--install",
                 "true"
             ],
@@ -271,7 +170,7 @@
                 "android",
                 "--path",
                 ".",
-                "--obfuscate",
+                "--aot",
                 "true"
             ],
             "problemMatcher": []
@@ -290,7 +189,7 @@
                 "android",
                 "--path",
                 ".",
-                "--obfuscate",
+                "--aot",
                 "true",
                 "--install",
                 "true"
@@ -382,10 +281,6 @@
                 "publish",
                 "-c","Release",
                 "-r","osx-x64",
-                "--self-contained","true",
-                "/property:PublishFlavor=osx-x64",
-                "/property:PublishSingleFile=true",
-                "/property:PublishTrimmed=true",
                 "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
                 "${workspaceFolder}/${workspaceFolderBasename}.csproj",
                 "/property:GenerateFullPaths=true",
@@ -403,12 +298,9 @@
             "type": "process",
             "args": [
                 "publish",
+                "-f","net9.0",
                 "-c","Release",
                 "-r","osx-arm64",
-                "--self-contained","true",
-                "/property:PublishFlavor=osx-arm64",
-                "/property:PublishSingleFile=true",
-                "/property:PublishTrimmed=true",
                 "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
                 "${workspaceFolder}/${workspaceFolderBasename}.csproj",
                 "/property:GenerateFullPaths=true",
@@ -428,10 +320,6 @@
                 "publish",
                 "-c","Release",
                 "-r","win-x64",
-                "--self-contained","true",
-                "/property:PublishFlavor=win-x64",
-                "/property:PublishSingleFile=true",
-                "/property:PublishTrimmed=true",
                 "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
                 "${workspaceFolder}/${workspaceFolderBasename}.csproj",
                 "/property:GenerateFullPaths=true",
@@ -451,10 +339,6 @@
                 "publish",
                 "-c","Release",
                 "-r","linux-x64",
-                "--self-contained","true",
-                "/property:PublishFlavor=linux-x64",
-                "/property:PublishSingleFile=true",
-                "/property:PublishTrimmed=true",
                 "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
                 "${workspaceFolder}/${workspaceFolderBasename}.csproj",
                 "/property:GenerateFullPaths=true",

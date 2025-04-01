@@ -35,4 +35,5 @@
 /Users/elialoni/Development/Urho.Net/tools/UrhoCooker/obj/Release/net6.0/UrhoCooker.pdb
 /Users/elialoni/Development/Urho.Net/tools/UrhoCooker/obj/Release/net6.0/UrhoCooker.genruntimeconfig.cache
 /Users/elialoni/Development/Urho.Net/tools/UrhoCooker/obj/Release/net6.0/ref/UrhoCooker.dll
-/Users/elialoni/Development/Urho.Net/tools/UrhoCooker/obj/Release/net6.0/UrhoCooker.csproj.CopyComplete
+/Users/elialoni/Development/Urho.Net/tools/UrhoCooker/obj/Release/net6.0/UrhoCooker.sourcelink.json
+/Users/elialoni/Development/Urho.Net/tools/UrhoCooker/obj/Release/net6.0/UrhoCooker.csproj.Up2Date

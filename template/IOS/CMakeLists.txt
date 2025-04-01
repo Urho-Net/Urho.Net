@@ -81,7 +81,7 @@ endif()
 
 link_directories(. ${MONO_LIBPATH})
 
-set (INCLUDE_DIRS ${INCLUDE_DIRS}  include include/Urho3D include/Urho3D/ThirdParty include/Urho3D/ThirdParty/Bullet include/mono-2.0 Plugins)
+set (INCLUDE_DIRS ${INCLUDE_DIRS}  include include/Urho3D include/Urho3D/ThirdParty include/Urho3D/ThirdParty/Bullet Plugins)
 
 file(GLOB_RECURSE cmakeFiles ${CMAKE_SOURCE_DIR}/Plugins/CMakeLists.txt)
 foreach(cmakeFile ${cmakeFiles})
@@ -119,8 +119,6 @@ set_property (TARGET ${TARGET_NAME} PROPERTY XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PA
 set_target_properties(${TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_DEVELOPMENT_TEAM ${DEVELOPMENT_TEAM})
 set_property (TARGET ${TARGET_NAME} PROPERTY XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY  ${CODE_SIGN_IDENTITY})
 set_property (TARGET ${TARGET_NAME} PROPERTY XCODE_ATTRIBUTE_PROVISIONING_PROFILE_SPECIFIER  ${PROVISIONING_PROFILE_SPECIFIER})
-
-
 
 endif() # IOS
 

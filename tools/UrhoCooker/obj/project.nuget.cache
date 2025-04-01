@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7zTuWwKB7s+Rs932yWFaILYxZNPRHIoRQIG6vVpPyHH4yBhui9NFnE6hsHivc261fmIXiezF8rbkcVcidgmh3w==",
+  "dgSpecHash": "/ZWIRakBNP4=",
   "success": true,
   "projectFilePath": "/Users/elialoni/Development/Urho.Net/tools/UrhoCooker/UrhoCooker.csproj",
   "expectedPackageFiles": [
@@ -44,7 +44,10 @@
     "/Users/elialoni/.nuget/packages/system.threading/4.0.11/system.threading.4.0.11.nupkg.sha512",
     "/Users/elialoni/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
     "/Users/elialoni/.nuget/packages/system.threading.tasks.dataflow/4.9.0/system.threading.tasks.dataflow.4.9.0.nupkg.sha512",
-    "/Users/elialoni/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512"
+    "/Users/elialoni/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512",
+    "/Users/elialoni/.nuget/packages/microsoft.netcore.app.ref/6.0.36/microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "/Users/elialoni/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.36/microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512",
+    "/Users/elialoni/.nuget/packages/microsoft.netcore.app.host.osx-arm64/6.0.36/microsoft.netcore.app.host.osx-arm64.6.0.36.nupkg.sha512"
   ],
   "logs": []
 }

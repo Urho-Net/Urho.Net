@@ -1,14 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <OutputType Condition="'$(BuildAsLibrary)' != 'true'">Exe</OutputType>
+    <OutputType Condition="'$(BuildAsLibrary)' == 'true'">Library</OutputType>
+    <TargetFrameworks>net9.0</TargetFrameworks>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>true</PublishAot>
+    <PublishAotUsingRuntimePack>true</PublishAotUsingRuntimePack>
+    <TrimMode>partial</TrimMode>
+    <TrimmerRemoveSymbols>false</TrimmerRemoveSymbols>
   </PropertyGroup>
 
-  <PropertyGroup>          
-    <TieredCompilation>false</TieredCompilation>          
+  <!-- For library builds -->
+  <PropertyGroup Condition="'$(BuildAsLibrary)' == 'true'">
+    <LibraryName>libGame</LibraryName>
+    <AssemblyName>$(LibraryName)</AssemblyName>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
+  <!-- For non-library builds -->
+  <PropertyGroup Condition="'$(BuildAsLibrary)' != 'true'">          
     <AssemblyName>Game</AssemblyName>
   </PropertyGroup>
 
@@ -27,7 +42,47 @@
     <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX> 
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
     <OSArch>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSArch>
+    <IsWindowsHost>$([MSBuild]::IsOSPlatform('Windows'))</IsWindowsHost>
+		<IsLinuxHost>$([MSBuild]::IsOSPlatform('Linux'))</IsLinuxHost>
+		<IsOSXHost>$([MSBuild]::IsOSPlatform('OSX'))</IsOSXHost>
+    <IsAndroid>$(RuntimeIdentifier.ToLower().StartsWith('android'))</IsAndroid>
+		<IsAndroid Condition="'$(IsAndroid)'=='false'">$(RuntimeIdentifier.ToLower().StartsWith('linux-bionic'))</IsAndroid>
+    <IsIOS Condition="'$(RuntimeIdentifier)' != '' And $(RuntimeIdentifier.StartsWith('ios'))">true</IsIOS>
+    <IsIOS Condition="'$(IsIOS)' == ''">false</IsIOS>
   </PropertyGroup>
+
+    	<!--Following block is exclusive for Android building-->
+	<PropertyGroup Condition="$(IsAndroid) == 'true'">
+		<CppCompilerAndLinker Condition="$(IsWindowsHost) == 'true'">./script/android_fake_clang.cmd</CppCompilerAndLinker>
+		<CppCompilerAndLinker Condition="$(IsLinuxHost) == 'true'">./script/android_fake_clang.sh</CppCompilerAndLinker>
+		<CppCompilerAndLinker Condition="$(IsOSXHost) == 'true'">./script/android_fake_clang.command</CppCompilerAndLinker>
+		<NdkHost Condition="$(IsWindowsHost) == 'true'">windows-x86_64</NdkHost>
+		<NdkHost Condition="$(IsLinuxHost) == 'true'">linux-x86_64</NdkHost>
+		<NdkHost Condition="$(IsOSXHost) == 'true'">darwin-x86_64</NdkHost>
+		<ObjCopyName Condition="'$(ObjCopyName)' == ''">$(ANDROID_NDK_ROOT)/toolchains/llvm/prebuilt/$(NdkHost)/bin/llvm-objcopy</ObjCopyName>
+		<SysRoot Condition="'$(SysRoot)' == ''">$(ANDROID_NDK_ROOT)/toolchains/llvm/prebuilt/$(NdkHost)/sysroot</SysRoot>
+		<!--Hack for removing init and fini sections into the exports file-->
+		<ExportsPatch>'s/global: _init; _fini;/global: /g;'</ExportsPatch>
+	</PropertyGroup>
+
+  <Target Name="RemoveSections" Condition="$(IsAndroid) == 'true' And $(RemoveSections) == 'true'" AfterTargets="IlcCompile" BeforeTargets="LinkNative">
+		<!--Reads as lines the generated exports file-->
+		<ReadLinesFromFile File="$(ExportsFile)">
+			<Output TaskParameter="Lines" PropertyName="ExportsLines" />
+		</ReadLinesFromFile>
+		<!--Gets a single text from the exports lines-->
+		<PropertyGroup>
+			<ExportsText Condition="$(ExportsLines) != ''">@(ExportsLines)</ExportsText>
+		</PropertyGroup>
+		<!--The sed tool is used as invalid lines remover-->
+		<Exec Command="sed -i -z $(ExportsPatch) $(ExportsFile)" />
+	</Target>
+
+    <ItemGroup Condition="'$(IsAndroid)' == 'true'">
+    <!-- https://github.com/exelix11/SysDVR/blob/master/Client/Client.csproj -->
+    <!-- Android needs a proper soname property or it will refuse to load the library -->
+    <LinkerArg Include="-Wl,-soname,$(LibraryName).so,--undefined-version" />
+    </ItemGroup>
 
   <ItemGroup>
     <AssetsSourceFiles Include="Assets/**/*.*" />
@@ -50,52 +105,6 @@
     <None Remove="libs\dotnet\bcl\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="libs\dotnet\bcl\ios\Consts.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="libs\dotnet\urho\mobile\.DS_Store" />
-    <None Remove="libs\dotnet\urho\mobile\ios\UrhoDotNet.dll" />
-    <None Remove="libs\dotnet\urho\mobile\android\UrhoDotNet.dll" />
-    <None Remove="libs\ios\lib-urho3d-mono-aot.a" />
-    <None Remove="libs\ios\libmono-native.iphone.fat.a" />
-    <None Remove="libs\ios\libmonosgen-2.0.iphone.fat.a" />
-    <None Remove="libs\ios\libmono-ee-interp.iphone.fat.a" />
-    <None Remove="libs\ios\libmono-icall-table.iphone.fat.a" />
-    <None Remove="libs\ios\libmono-ilgen.iphone.fat.a" />
-    <None Remove="libs\ios\libmono-profiler-log.iphone.fat.a" />
-    <None Remove="Assets\Data\DotNet\.DS_Store" />
-    <None Remove="Assets\Data\DotNet\Game.dll" />
-    <None Remove="Assets\Data\DotNet\ios\UrhoDotNet.dll" />
-    <None Remove="Assets\Data\DotNet\ios\mscorlib.dll" />
-    <None Remove="Assets\Data\DotNet\ios\System.Threading.Tasks.dll" />
-    <None Remove="Assets\Data\DotNet\ios\Mono.Security.dll" />
-    <None Remove="Assets\Data\DotNet\ios\System.Runtime.dll" />
-    <None Remove="Assets\Data\DotNet\ios\System.dll" />
-    <None Remove="Assets\Data\DotNet\ios\System.Numerics.dll" />
-    <None Remove="Assets\Data\DotNet\ios\System.Xml.dll" />
-    <None Remove="Assets\Data\DotNet\ios\System.Core.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\.DS_Store" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\Game.dll" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\ios\UrhoDotNet.dll" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\ios\mscorlib.dll" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\ios\System.Threading.Tasks.dll" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\ios\Mono.Security.dll" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\ios\System.Runtime.dll" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\ios\System.dll" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\ios\System.Numerics.dll" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\ios\System.Xml.dll" />
-    <AssetsSourceFiles Remove="Assets\Data\DotNet\ios\System.Core.dll" />
-  </ItemGroup>
-  
-
-  <ItemGroup>
-    <AndroidAssetsDestinationDir Include="Android/app/src/main/assets/Data/DotNet" />
-  </ItemGroup>
 
 
   <Target Name="CustomBeforeBuild" BeforeTargets="BeforeBuild" >
@@ -104,20 +113,24 @@
         <Output TaskParameter="Result" ItemName="URHONET_HOME_ROOT" />
     </XmlPeek>
     <Message Text="URHONET_HOME_ROOT=@(URHONET_HOME_ROOT)" Importance="high" />
+
+    <!-- Set different UrhoDotNet.dll paths based on target platform -->
+  <PropertyGroup>
+    <UrhoDotNetDLL Condition="'$(IsAndroid)' == 'true'">@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\mobile\android\UrhoDotNet.dll</UrhoDotNetDLL>
+    <UrhoDotNetDLL Condition="'$(IsIOS)' == 'true'">@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\mobile\ios\UrhoDotNet.dll</UrhoDotNetDLL>
+    <UrhoDotNetDLL Condition="'$(IsAndroid)' != 'true' And '$(IsIOS)' != 'true'">@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\desktop\UrhoDotNet.dll</UrhoDotNetDLL>
+  </PropertyGroup>
+
     <ItemGroup>
       <Reference Include="UrhoDotNet">
-        <HintPath>@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\desktop\UrhoDotNet.dll</HintPath>
+        <HintPath>$(UrhoDotNetDLL)</HintPath>
       </Reference>
     </ItemGroup>
-    <PropertyGroup>
-      <UrhoDotNetDLL>@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\desktop\UrhoDotNet.dll</UrhoDotNetDLL>
-    </PropertyGroup>  
     <Copy SourceFiles="$(UrhoDotNetDLL)" DestinationFolder="References" ContinueOnError="true" />
     <PropertyGroup>
     <UrhoDotNetXML>@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\desktop\UrhoDotNet.xml</UrhoDotNetXML>
     </PropertyGroup>  
     <Copy SourceFiles="$(UrhoDotNetXML)" DestinationFolder="References" ContinueOnError="true" />
-    <Delete Files="Android/app/src/main/assets/Data/DotNet/Game.dll" />
     <PropertyGroup>
       <UrhoCookerCSProj>@(URHONET_HOME_ROOT)\tools\UrhoCooker\UrhoCooker.csproj</UrhoCookerCSProj>
       <UrhoCookerDLL>@(URHONET_HOME_ROOT)\tools\UrhoCooker\bin\Release\net6.0\UrhoCooker.dll</UrhoCookerDLL>
@@ -153,22 +166,43 @@
     <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
   </Target>
 
-  <Target Name="CopyCustomContentPublish" AfterTargets="Publish" Condition="'$(PublishFlavor)'=='linux-x64' Or '$(PublishFlavor)'=='win-x64' Or '$(PublishFlavor)'=='osx-x64'">
+<Target Name="CopyCustomContentPublish" AfterTargets="Publish" 
+        Condition="'$(RuntimeIdentifier)'=='linux-x64' Or '$(RuntimeIdentifier)'=='win-x64' Or 
+                  '$(RuntimeIdentifier)'=='osx-x64' Or '$(RuntimeIdentifier)'=='osx-arm64'">
+     <Message Text="AssetsSourceFiles: @(AssetsSourceFiles)" Importance="high" />
     <PropertyGroup>
-      <libUrho3D Condition="'$(PublishFlavor)'=='linux-x64'">@(URHONET_HOME_ROOT)/template/libs/linux/libUrho3D.so</libUrho3D>
-      <libUrho3D Condition="'$(PublishFlavor)'=='win-x64'">@(URHONET_HOME_ROOT)/template/libs/windows/Urho3D.dll</libUrho3D>
-      <libUrho3D Condition="'$(PublishFlavor)'=='osx-x64'">@(URHONET_HOME_ROOT)/template/libs/macos/X64/libUrho3D.dylib</libUrho3D>
-      <libUrho3D Condition="'$(PublishFlavor)'=='osx-arm64'">@(URHONET_HOME_ROOT)/template/libs/macos/Arm64/libUrho3D.dylib</libUrho3D>
+      <OutputPath Condition="'$(PublishDir)' != ''">$(PublishDir)</OutputPath>
+      <OutputPath Condition="'$(OutputPath)' == ''">$(OutDir)</OutputPath>
+      <libUrho3D Condition="'$(RuntimeIdentifier)'=='linux-x64'">@(URHONET_HOME_ROOT)/template/libs/linux/libUrho3D.so</libUrho3D>
+      <libUrho3D Condition="'$(RuntimeIdentifier)'=='win-x64'">@(URHONET_HOME_ROOT)/template/libs/windows/Urho3D.dll</libUrho3D>
+      <libUrho3D Condition="'$(RuntimeIdentifier)'=='osx-x64'">@(URHONET_HOME_ROOT)/template/libs/macos/X64/libUrho3D.dylib</libUrho3D>
+      <libUrho3D Condition="'$(RuntimeIdentifier)'=='osx-arm64'">@(URHONET_HOME_ROOT)/template/libs/macos/Arm64/libUrho3D.dylib</libUrho3D>
     </PropertyGroup>
     <Error Condition="! Exists('$(libUrho3D)')" Text="libUrho3D.dylib not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
-    <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutDir)\publish\%(RecursiveDir)" SkipUnchangedFiles="true" Retries="3" RetryDelayMilliseconds="300" />
-    <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)\publish" SkipUnchangedFiles="true" />
+    <!-- <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutputPath)\%(RecursiveDir)" SkipUnchangedFiles="true" Retries="3" RetryDelayMilliseconds="300" /> -->
+    <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Exec Command="cp -rf $(ProjectDir)Assets/Data/ $(OutputPath)/Data/" />
+    <Exec Command="cp -rf $(ProjectDir)Assets/CoreData/ $(OutputPath)/CoreData/" />
   </Target>
 
 
-  <Target Name="CopyGameAssembly" AfterTargets="AfterBuild">
+  <Target Condition="'$(BuildAsLibrary)' != 'true'" Name="CopyGameAssembly" AfterTargets="AfterBuild">
     <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Intermediate/" SkipUnchangedFiles="true" />
   </Target>
+
+<Target Name="RemoveDebugFiles" AfterTargets="LinkNative">
+  <Message Text="Removing debug symbol files" Importance="high" />
+  <Delete Files="$(OutDir)$(LibraryName).so.dbg" />
+  <Delete Files="$(PublishDir)$(LibraryName).so.dbg" />
+  <!-- Delete any debug files in output directories -->
+  <Exec Command="find $(OutDir) -name '*.dbg' -type f -delete" />
+  <Exec Command="find $(PublishDir) -name '*.dbg' -type f -delete" />
+</Target>
+
+<Target Name="RemoveXmlFiles" AfterTargets="Publish">
+  <Message Text="Removing XML documentation files" Importance="high" />
+  <Exec Command="find $(PublishDir) -name '*.xml' -type f -delete" />
+</Target>
 
   <Target Name = "CustomAfterClean" AfterTargets="AfterClean">
         <Message Text="Urho.Net clean all" Importance="high" />
@@ -189,5 +223,6 @@
         <HintPath>References\UrhoDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
+
 
 </Project>

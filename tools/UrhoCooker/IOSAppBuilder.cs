@@ -77,6 +77,93 @@ namespace UrhoCooker
             return BuildIOSApp();
         }
 
+        private bool PublishAOT()
+        {
+            string buildType = "Debug";
+
+            if (opts.Type == "release")
+            {
+                buildType = "Release";
+            }
+            string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
+            /*
+             * dotnet publish -f net9.0 -r  ios-arm64 -c Release -p:OutputType=Library  -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:StripSymbols=true -p:BuildAsLibrary=true  -p:DefineConstants="__IOS__"
+               mkdir Game.framework
+               install_name_tool -rpath @executable_path @executable_path/Frameworks bin/Release/net9.0/ios-arm64/publish/libGame.dylib 
+               install_name_tool -id @rpath/Game.framework/Game bin/Release/net9.0/ios-arm64/publish/libGame.dylib 
+               lipo -create  bin/Release/net9.0/ios-arm64/publish/libGame.dylib -output Game.framework/Game
+               cp  Info.plist Game.framework/Info.plist
+               mkdir -p IOS/Frameworks
+               rm -rf IOS/Frameworks/Game.framework
+               mv -f Game.framework IOS/Frameworks
+             */
+            
+            string dotnet_build_command = $"dotnet publish -f {targetFramework} -r  ios-arm64 -c {buildType} -p:OutputType=Library  -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:StripSymbols=true -p:BuildAsLibrary=true  -p:DefineConstants=\"__IOS__\"";
+
+            (int exitCode, string output) = Utils.RunShellCommand(Log,
+                dotnet_build_command,
+                envVars,
+                workingDir: opts.ProjectPath,
+                logStdErrAsMessage: true,
+                debugMessageImportance: MessageImportance.High,
+                label: "dotnet-build");
+
+            if (exitCode != 0)
+            {
+                Log.LogError("dotnet publish error");
+                return false;
+            }
+            
+            Utils.DeleteDirectory(Path.Combine(opts.OutputPath, "IOS/Frameworks","Game.framework"));
+            Directory.CreateDirectory(Path.Combine(opts.OutputPath, "IOS/Frameworks","Game.framework"));
+            
+            ( exitCode,  output) = Utils.RunShellCommand(Log,
+                $"install_name_tool -rpath @executable_path @executable_path/Frameworks bin/Release/{targetFramework}/ios-arm64/publish/libGame.dylib",
+                envVars,
+                workingDir: opts.ProjectPath,
+                logStdErrAsMessage: true,
+                debugMessageImportance: MessageImportance.High,
+                label: "dotnet-build");
+
+            if (exitCode != 0)
+            {
+                Log.LogError("dotnet publish error");
+                return false;
+            }
+            
+            ( exitCode,  output) = Utils.RunShellCommand(Log,
+                $"install_name_tool -id @rpath/Game.framework/Game bin/Release/{targetFramework}/ios-arm64/publish/libGame.dylib",
+                envVars,
+                workingDir: opts.ProjectPath,
+                logStdErrAsMessage: true,
+                debugMessageImportance: MessageImportance.High,
+                label: "dotnet-build");
+
+            if (exitCode != 0)
+            {
+                Log.LogError("dotnet publish error");
+                return false;
+            }
+            
+            ( exitCode,  output) = Utils.RunShellCommand(Log,
+                $"lipo -create  bin/Release/{targetFramework}/ios-arm64/publish/libGame.dylib -output {Path.Combine(opts.OutputPath, "IOS/Frameworks","Game.framework","Game")}",
+                envVars,
+                workingDir: opts.ProjectPath,
+                logStdErrAsMessage: true,
+                debugMessageImportance: MessageImportance.High,
+                label: "dotnet-build");
+
+            if (exitCode != 0)
+            {
+                Log.LogError("dotnet publish error");
+                return false;
+            }
+            
+            File.Copy(Path.Combine(URHONET_HOME_PATH, "template/IOS" , "Info.plist"), Path.Combine(opts.OutputPath, "IOS/Frameworks","Game.framework","Info.plist"), true);
+            
+            return true;
+        }
+
         private bool BuildIOSApp()
         {
 
@@ -271,22 +358,11 @@ namespace UrhoCooker
                                       debugMessageImportance: MessageImportance.High,
                                       label: "link-assets");
 
-
-            if (!Directory.Exists(Path.Combine(opts.ProjectPath, "libs/ios")))
-            {
-                if (!Directory.Exists(Path.Combine(URHONET_HOME_PATH, "template/libs/ios")))
-                {
-                    Log.LogError(Path.Combine(URHONET_HOME_PATH, "template/libs/ios") + "Doesn't exist");
-                    return false;
-                }
-
-                Path.Combine(URHONET_HOME_PATH, "template/libs/ios").CopyDirectory(Path.Combine(opts.ProjectPath, "libs/ios"), false);
-            }
-
-            if (!HandlePlugins())
-            {
-                return false;
-            }
+            // TBD ELI
+            // if (!HandlePlugins())
+            // {
+            //     return false;
+            // }
 
             Utils.RunShellCommand(Log,
                            "plutil -remove NSUserTrackingUsageDescription  CMake/Modules/iOSBundleInfo.plist.template",
@@ -406,45 +482,28 @@ namespace UrhoCooker
                 label: "plist-update");
             }
           
-            string renderingBackend = "gles";
-            if (opts.GraphicsBackend != string.Empty)
-            {
-                if (opts.GraphicsBackend == "metal")
-                {
-                    renderingBackend = "metal";
-                }
-                else if (opts.GraphicsBackend == "gles")
-                {
-                    renderingBackend = "gles";
-                }
-                else
-                {
-                    Log.LogError($"Unknown backend {opts.GraphicsBackend} fallback to gles  ");
-                    renderingBackend = "gles";
-                }
-            }
-            else
-            {
-                renderingBackend = "gles";
-            }
+  
 
-            Directory.CreateDirectory(Path.Combine(opts.OutputPath, "IOS/lib"));
+            Directory.CreateDirectory(Path.Combine(opts.OutputPath, "IOS/Frameworks"));
 
             if (opts.Type == "debug")
             {
-                if (File.Exists(Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a")))
-                    File.Delete(Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a"));
-                (exitCode, output) = Utils.RunShellCommand(Log,
-                              $"cat libUrho3D.split.??  > {Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a")}",
-                              envVars,
-                              workingDir: Path.Combine(URHONET_HOME_PATH, "template/libs/ios/urho3d", renderingBackend, "debug"),
-                              logStdErrAsMessage: true,
-                              debugMessageImportance: MessageImportance.High,
-                              label: "copy cat libUrho3D.a");
+                
+                // if (File.Exists(Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a")))
+                //     File.Delete(Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a"));
+                // (exitCode, output) = Utils.RunShellCommand(Log,
+                //               $"cat libUrho3D.split.??  > {Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a")}",
+                //               envVars,
+                //               workingDir: Path.Combine(URHONET_HOME_PATH, "template/libs/ios/urho3d", renderingBackend, "debug"),
+                //               logStdErrAsMessage: true,
+                //               debugMessageImportance: MessageImportance.High,
+                //               label: "copy cat libUrho3D.a");
+                // TBD ELI
+                Path.Combine(URHONET_HOME_PATH, "template/libs/ios/urho3d","release").CopyDirectory(Path.Combine(opts.OutputPath, "IOS/Frameworks"), true);
             }
             else
             {
-                File.Copy(Path.Combine(URHONET_HOME_PATH, "template/libs/ios/urho3d", renderingBackend, "release", "libUrho3D.a"), Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a"), true);
+                Path.Combine(URHONET_HOME_PATH, "template/libs/ios/urho3d","release").CopyDirectory(Path.Combine(opts.OutputPath, "IOS/Frameworks"), true);
             }
 
 
@@ -466,12 +525,7 @@ namespace UrhoCooker
                 }
             }
 
-
-
-            Directory.CreateDirectory(Path.Combine(opts.OutputPath, "IOS/bin/Data/DotNet/ios"));
-            Directory.CreateDirectory(Path.Combine(opts.OutputPath, "IOS/build/intermediate"));
-
-
+            
             File.Copy(Path.Combine(opts.OutputPath, "IOS/script/ios.entitlements"), Path.Combine(opts.OutputPath, "IOS/build/ios.entitlements"), true);
             Path.Combine(opts.OutputPath, "IOS/build/ios.entitlements").ReplaceInfile("T_DEVELOPER_ID", (opts.DeveloperID == null)?"":opts.DeveloperID);
             Path.Combine(opts.OutputPath, "IOS/build/ios.entitlements").ReplaceInfile("T_UUID", PROJECT_UUID);
@@ -484,162 +538,13 @@ namespace UrhoCooker
                 buildType = "Release";
             }
 
-            string dotnet_build_command = $"dotnet build --configuration {buildType} -p:DefineConstants=_IOS_ ";
 
-            (exitCode, output) = Utils.RunShellCommand(Log,
-                                       dotnet_build_command,
-                                       envVars,
-                                       workingDir: opts.ProjectPath,
-                                       logStdErrAsMessage: true,
-                                       debugMessageImportance: MessageImportance.High,
-                                       label: "dotnet-build");
-
-            if (exitCode != 0)
+            if (!PublishAOT())
             {
-                Log.LogError("dotnet build error");
+                Log.LogError("dotnet publish error");
                 return false;
             }
-
-
-            if (opts.Obfuscate)
-            {
-
-                string cmd = $"mono {URHONET_HOME_PATH}/tools/obfuscar/Obfuscar.Console.exe obfuscar.xml";
-                ( exitCode,  output) = Utils.RunShellCommand(Log,
-                             cmd,
-                             null,
-                             workingDir: Path.Combine(opts.ProjectPath),
-                             logStdErrAsMessage: true,
-                             debugMessageImportance: MessageImportance.High,
-                             label: "Obfuscate Game.dll");
-
-                if (exitCode != 0)
-                {
-                    Log.LogError("Obfuscate failed");
-                    Log.LogError(output);
-                    return false;
-                }
-
-                File.Copy(Path.Combine(opts.ProjectPath, "Obfuscator_Output/Game.dll"),Path.Combine(opts.ProjectPath, "Intermediate/Game.dll"),true);
-                Path.Combine(opts.ProjectPath, "Obfuscator_Output").DeleteDirectory();
-
-            }
-
-            Utils.CopyIfDifferent(Path.Combine(opts.ProjectPath, "Intermediate/Game.dll"), Path.Combine(opts.OutputPath, "IOS/bin/Data/DotNet/Game.dll"), true);
-            ResolveReferenceAssembliesAndCopyToIOS(out List<string> assemblies);
-
-            foreach (var assemblyPath in assemblies)
-            {
-                if (!AOTCompile(assemblyPath))
-                {
-                    Log.LogError($"iOS AOT faild for {assemblyPath}");
-                    return false;
-                }
-            }
-
-            if (!AOTCompile(Path.Combine(opts.OutputPath, "IOS/bin/Data/DotNet/Game.dll")))
-            {
-                Log.LogError($"iOS AOT faild for {Path.Combine(opts.OutputPath, "IOS/bin/Data/DotNet/Game.dll")}");
-                return false;
-            }
-
-            string INTERMEDIATE_FOLDER = Path.Combine(opts.OutputPath, "IOS/build/intermediate");
-            (exitCode, output) = Utils.RunShellCommand(Log,
-                                      $"{AR_CMD} cr lib-urho3d-mono-aot.a  {INTERMEDIATE_FOLDER}/*.o",
-                                      envVars,
-                                      workingDir: Path.Combine(opts.OutputPath, "IOS/build/intermediate"),
-                                      logStdErrAsMessage: true,
-                                      debugMessageImportance: MessageImportance.High,
-                                      label: "ar-objects");
-
-            if (exitCode != 0)
-            {
-                Log.LogError($"ar failed");
-                return false;
-            }
-
-            (exitCode, output) = Utils.RunShellCommand(Log,
-                                  $"mv {Path.Combine(opts.OutputPath, "IOS/build/intermediate", "lib-urho3d-mono-aot.a")} {Path.Combine(opts.ProjectPath, "libs/ios")}",
-                                  envVars,
-                                  workingDir: Path.Combine(opts.OutputPath, "IOS/build/intermediate"),
-                                  logStdErrAsMessage: true,
-                                  debugMessageImportance: MessageImportance.High,
-                                  label: "ar-objects");
-
-            if (exitCode != 0)
-            {
-                Log.LogError($"failed to move lib-urho3d-mono-aot.a to {Path.Combine(opts.ProjectPath, "libs/ios")} ");
-                return false;
-            }
-
-
-
-            using (StreamWriter sw = File.CreateText(Path.Combine(opts.ProjectPath, "IOS/ios_aot_modules.h")))
-            {
-                /// PROLOG ////////////////////////////////////////
-                sw.WriteLine("#ifndef IOS_AOT_MODULES_H");
-                sw.WriteLine("#define IOS_AOT_MODULES_H");
-                sw.WriteLine(" ");
-                sw.WriteLine("extern \"C\" {");
-                ///////////////////////////////////////////////////
-
-                foreach (var assemblyPath in assemblies)
-                {
-                    string assemblyName = Path.GetFileName(assemblyPath);
-                    assemblyName = assemblyName.Replace(".dll", "").Replace(".", "_");
-                    sw.WriteLine($"  extern void * mono_aot_module_{assemblyName}_info;");
-                }
-                sw.WriteLine(" extern void * mono_aot_module_Game_info;");
-
-                /// EPILOG ////////////////////////////////////////
-                sw.WriteLine("} // extern \"C\"");
-                sw.WriteLine(" ");
-                sw.WriteLine("void ios_aot_register_modules();");
-                sw.WriteLine(" ");
-                sw.WriteLine("#endif");
-            }
-
-            //////////////////////////////////////
-            using (StreamWriter sw = File.CreateText(Path.Combine(opts.ProjectPath, "IOS/ios_aot_modules.mm")))
-            {
-                sw.WriteLine("#include <mono/jit/jit.h>");
-                sw.WriteLine("#include \"ios_aot_modules.h\"");
-                sw.WriteLine("void ios_aot_register_modules()");
-                sw.WriteLine("{");
-
-                foreach (var assemblyPath in assemblies)
-                {
-                    string assemblyName = Path.GetFileName(assemblyPath);
-                    assemblyName = assemblyName.Replace(".dll", "").Replace(".", "_");
-                    sw.WriteLine($"  mono_aot_register_module((void **)mono_aot_module_{assemblyName}_info);");
-                }
-
-                sw.WriteLine("  mono_aot_register_module((void **)mono_aot_module_Game_info);");
-                sw.WriteLine("}");
-            }
-
-            using (StreamWriter sw = File.CreateText(Path.Combine(opts.ProjectPath, "IOS/register_plugins.cpp")))
-            {
-                sw.WriteLine("#include \"../Core/Context.h\"");
-                sw.WriteLine(" ");
-                sw.WriteLine("using namespace Urho3D;");
-                sw.WriteLine(" ");
-
-                List<string> PLUGINS = GetPlugins();
-                foreach (var plugin in PLUGINS)
-                {
-                    sw.WriteLine($"void Register{plugin}(Context * context);");
-                }
-                sw.WriteLine(" ");
-                sw.WriteLine("void RegisterPlugins(Context * context)");
-                sw.WriteLine("{");
-                foreach (var plugin in PLUGINS)
-                {
-                    sw.WriteLine($"  Register{plugin}(context);");
-                }
-                sw.WriteLine("}");
-            }
-
+            
             (exitCode, output) = Utils.RunShellCommand(Log,
                        $"{Path.Combine(opts.OutputPath, "IOS/script/cmake_ios_dotnet.sh")} {Path.Combine(opts.OutputPath, "IOS/build")} -DDEVELOPMENT_TEAM={GetEnvValue("DEVELOPMENT_TEAM")} -DCODE_SIGN_IDENTITY={GetEnvValue("CODE_SIGN_IDENTITY")} -DPROVISIONING_PROFILE_SPECIFIER={GetEnvValue("PROVISIONING_PROFILE_SPECIFIER")}",
                        envVars,
@@ -709,82 +614,7 @@ namespace UrhoCooker
 
             return true;
         }
-
-
-
-
-        bool AOTCompile(string assemblyPath)
-        {
-            bool result = true;
-            string ios_aot_compiler = Path.Combine(URHONET_HOME_PATH, 
-            "tools/aotcompiler/ios/macos",
-            (processortArchitecture == ProcessortArchitecture.Intel)?"x86_64":"arm64",
-            "mono-aot-cross");
-            string filename = Path.GetFileName(assemblyPath);
-            string command_aot_compile_assembler = ios_aot_compiler;
-            string INTERMEDIATE_FOLDER = Path.Combine(opts.OutputPath, "IOS/build/intermediate");
-
-            string object_file = $"{INTERMEDIATE_FOLDER}/{filename}.o";
-            if (!File.Exists(object_file) || File.GetLastWriteTime(assemblyPath) > File.GetLastWriteTime(object_file))
-            {
-                command_aot_compile_assembler += $" --aot=asmonly,full,direct-icalls,direct-pinvoke,static,mtriple=arm64-ios,outfile={INTERMEDIATE_FOLDER}/{filename}.s  -O=gsharedvt {assemblyPath}";
-
-                (int exitCode, string output) = Utils.RunShellCommand(Log,
-                                       command_aot_compile_assembler,
-                                       envVars,
-                                       workingDir: opts.ProjectPath,
-                                       logStdErrAsMessage: true,
-                                       debugMessageImportance: MessageImportance.High,
-                                       label: "ios-aot-compile-assembler");
-
-
-                if (exitCode != 0)
-                {
-                    Log.LogError($"iOS AOT assembler faild for {filename}");
-                    return false;
-                }
-                string command_aot_compile_object = CLANG_CMD + " ";
-                command_aot_compile_object += $" -isysroot {IOS_SDK_PATH} -Qunused-arguments -miphoneos-version-min=10.0  -arch arm64 -c -o {INTERMEDIATE_FOLDER}/{filename}.o -x assembler {INTERMEDIATE_FOLDER}/{filename}.s";
-                (exitCode, output) = Utils.RunShellCommand(Log,
-                                          command_aot_compile_object,
-                                          envVars,
-                                          workingDir: opts.ProjectPath,
-                                          logStdErrAsMessage: true,
-                                          debugMessageImportance: MessageImportance.High,
-                                          label: "ios-aot-compile");
-                if (exitCode != 0)
-                {
-                    Log.LogError($"iOS AOT object faild for {filename}");
-                    return false;
-                }
-            }
-
-            return result;
-        }
-
-        private void ResolveReferenceAssembliesAndCopyToIOS(out List<string> assemblies)
-        {
-            assemblies = new List<string>();
-            Utils.ResolveReferenceAssemblies(Path.Combine(opts.OutputPath, "IOS/bin/Data/DotNet/Game.dll"),
-            new string[]
-            {
-                Path.Combine(URHONET_HOME_PATH, "template/libs/dotnet/urho/mobile/ios"),
-                Path.Combine(URHONET_HOME_PATH, "template/libs/dotnet/bcl/ios"),
-                Path.Combine(opts.ProjectPath, "References")
-            },
-            out List<string> assembliesList, out List<string> assembliesFullPathList);
-
-            // Console.WriteLine("Reference assemblies");
-            // Console.WriteLine("==============================================================");
-            foreach (var assemblyPath in assembliesFullPathList)
-            {
-                // Console.WriteLine(assemblyPath);
-                Utils.CopyIfDifferent(assemblyPath, Path.Combine(opts.OutputPath, $"IOS/bin/Data/DotNet/ios/{Path.GetFileName(assemblyPath)}"), true);
-                assemblies.Add(Path.Combine(opts.OutputPath, $"IOS/bin/Data/DotNet/ios/{Path.GetFileName(assemblyPath)}"));
-            }
-            // Console.WriteLine("==============================================================");
-        }
-
+        
         public override int GetHashCode()
         {
             return base.GetHashCode();

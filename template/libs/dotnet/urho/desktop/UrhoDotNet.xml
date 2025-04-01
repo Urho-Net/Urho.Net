@@ -15017,6 +15017,144 @@
             %UI element horizontal alignment.
             </summary>
         </member>
+        <member name="T:Urho.Gui.ImGuiElement">
+            <summary>
+            Implements a fullscreen Dear ImGui context.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.RegisterObject(Urho.Context)">
+            <summary>
+            Register object factory and properties.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.Update(System.Single)">
+            <summary>
+            Updates and 'soft renders' the ImGui context.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.RemoveTexture(System.IntPtr)">
+            <summary>
+            Remove a texture from the table.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.GetAlphaMultiplier">
+            <summary>
+            Returns the factor by which all alpha transparency is multiplied.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.AntialiasEnabled">
+            <summary>
+            Returns true if antialiasing of lines and fill is active.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.GetTouchPadding">
+            <summary>
+            Returns the extra padding around controls for easier touch interaction.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.IsMetricsWindowVisible">
+            <summary>
+            Returns true if the ImGui debugging window is visible.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.IsDemoWindowVisible">
+            <summary>
+            Returns true if the ImGui standard demo is visible.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.SetAlphaMultiplier(System.Single)">
+            <summary>
+            Sets the global alpha multiplier.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.SetAntialize(System.Boolean)">
+            <summary>
+            Activates or deactivates antialiasing of fill and lines.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.SetTouchPadding(Urho.Vector2)">
+            <summary>
+            Sets the extra padding around controls for touch interaction.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.SetMetricsWindowVisible(System.Boolean)">
+            <summary>
+            Sets the visibility of the ImGui debug window for tracking draws.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.SetDemoWindowVisible(System.Boolean)">
+            <summary>
+            Sets the visibility of the demo window, this is useful for tracking down widgets/layout.
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.SetMovable(System.Boolean)">
+            <summary>
+            Set whether can be moved.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.SetResizable(System.Boolean)">
+            <summary>
+            Set whether can be resized.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.IsMovable">
+            <summary>
+            Return whether is movable.
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Gui.ImGuiElement.IsResizable">
+            <summary>
+            Return whether is resizable.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.ImGuiElement.AlphaMultiplier">
+            <summary>
+            Returns the factor by which all alpha transparency is multiplied.
+            Or
+            Sets the global alpha multiplier.
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.ImGuiElement.TouchPadding">
+            <summary>
+            Returns the extra padding around controls for easier touch interaction.
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.ImGuiElement.MetricsWindowVisible">
+            <summary>
+            Returns true if the ImGui debugging window is visible.
+            Or
+            Sets the visibility of the ImGui debug window for tracking draws.
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.ImGuiElement.DemoWindowVisible">
+            <summary>
+            Returns true if the ImGui standard demo is visible.
+            Or
+            Sets the visibility of the demo window, this is useful for tracking down widgets/layout.
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.ImGuiElement.Movable">
+            <summary>
+            Return whether is movable.
+            
+            Or
+            Set whether can be moved.
+            
+            </summary>
+        </member>
+        <member name="P:Urho.Gui.ImGuiElement.Resizable">
+            <summary>
+            Return whether is resizable.
+            
+            Or
+            Set whether can be resized.
+            
+            </summary>
+        </member>
         <member name="T:Urho.Gui.LayoutMode">
             <summary>
             Layout operation mode.
@@ -17933,6 +18071,42 @@
             Set window position. Sets initial position if window is not created yet.
             </summary>
         </member>
+        <member name="M:Urho.Graphics.SetWindowSize(Urho.IntVector2)">
+            <summary>
+            Set window size. .
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Graphics.SetWindowSize(System.Int32,System.Int32)">
+            <summary>
+            Set window size.
+            </summary>
+        </member>
+        <member name="M:Urho.Graphics.SetExternalWindowSize(Urho.IntVector2)">
+            <summary>
+            Set external window size .i.e a window controled by external app such as Avalonia.
+            </summary>
+        </member>
+        <member name="M:Urho.Graphics.SetExternalWindowSize(System.Int32,System.Int32)">
+            <summary>
+            Set external window size .i.e a window controled by external app such as Avalonia.
+            </summary>
+        </member>
+        <member name="M:Urho.Graphics.SetWindowOpacity(System.Single)">
+            <summary>
+            Set window opacity.
+            </summary>
+        </member>
+        <member name="M:Urho.Graphics.HideWindow">
+            <summary>
+            Hide window .
+            </summary>
+        </member>
+        <member name="M:Urho.Graphics.ShowWindow">
+            <summary>
+            Show Window
+            </summary>
+        </member>
         <member name="M:Urho.Graphics.SetScreenMode(System.Int32,System.Int32)">
             <summary>
             Set screen resolution only. Return true if successful.
@@ -17940,6 +18114,11 @@
             </summary>
         </member>
         <member name="M:Urho.Graphics.SetMode(System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Set default window modes. Deprecated. Return true if successful.
+            </summary>
+        </member>
+        <member name="M:Urho.Graphics.SetMode(System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Int32,System.Int32)">
             <summary>
             Set default window modes. Deprecated. Return true if successful.
             </summary>
@@ -18783,6 +18962,18 @@
             Return whether GL_APPLE_clip_distance is supported
             </summary>
         </member>
+        <member name="M:Urho.Graphics.SetEmbeddedWindow(System.Boolean)">
+            <summary>
+            
+            Set whether Graphics is embedded inside another external Application
+            </summary>
+        </member>
+        <member name="M:Urho.Graphics.GetEmbeddedWindow">
+            <summary>
+            
+            return whether Graphics is embedded inside another external Application
+            </summary>
+        </member>
         <member name="M:Urho.Graphics.GetAlphaFormat">
             <summary>
             Return the API-specific alpha texture format.
@@ -19302,6 +19493,15 @@
         <member name="P:Urho.Graphics.VersionString">
             <summary>
             Get Version string. Used on OpenGL
+            </summary>
+        </member>
+        <member name="P:Urho.Graphics.EmbeddedWindow">
+            <summary>
+            
+            return whether Graphics is embedded inside another external Application
+            Or
+            
+            Set whether Graphics is embedded inside another external Application
             </summary>
         </member>
         <member name="P:Urho.Graphics.AlphaFormat">
@@ -21550,6 +21750,22 @@
         <member name="M:Urho.Input.GetTouchEmulation">
             <summary>
             Return whether touch emulation is enabled.
+            </summary>
+        </member>
+        <member name="M:Urho.Input.SetExternalInput(System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Input.SetInputScale(Urho.Vector2)">
+            <summary>
+            Only will viable in case of externalInput
+            
+            </summary>
+        </member>
+        <member name="M:Urho.Input.GetExternalInput">
+            <summary>
+            
             </summary>
         </member>
         <member name="M:Urho.Input.IsMouseVisible">
