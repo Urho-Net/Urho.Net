@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UrhoCooker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae4ebf7aca2d016d3169c3d065060a85a1ab79f6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12bc48098c5f1af700638d7c55f21c36a41603bd")]
 [assembly: System.Reflection.AssemblyProductAttribute("UrhoCooker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UrhoCooker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
