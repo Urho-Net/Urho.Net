@@ -14,6 +14,9 @@
     <TrimmerRemoveSymbols>false</TrimmerRemoveSymbols>
   </PropertyGroup>
 
+      <!-- Import NDK pressets -->
+    <Import Project="BionicNativeAot.targets"/>
+
   <!-- For library builds -->
   <PropertyGroup Condition="'$(BuildAsLibrary)' == 'true'">
     <LibraryName>libGame</LibraryName>
@@ -51,43 +54,6 @@
     <IsIOS Condition="'$(IsIOS)' == ''">false</IsIOS>
   </PropertyGroup>
 
-  <Target Name="ValidateAndroidEnvironment" Condition="$(IsAndroid) == 'true'" BeforeTargets="Build">
-    <Error
-        Condition=" '$(ANDROID_NDK_HOME)' == '' Or !Exists($(ANDROID_NDK_HOME)) "
-        Text="Set the %24ANDROID_NDK_HOME environment variable to the path of the Android NDK."
-     />
-    <Error
-        Condition=" '$(ANDROID_HOME)' == '' Or !Exists($(ANDROID_HOME)) "
-        Text="Set the %ANDROID_HOME environment variable to the path of the Android SDK."
-    />
-  </Target>
-
-    	<!--Following block is exclusive for Android building-->
-	<PropertyGroup Condition="$(IsAndroid) == 'true'">
-		<CppCompilerAndLinker Condition="$(IsWindowsHost) == 'true'">./script/android_fake_clang.cmd</CppCompilerAndLinker>
-		<CppCompilerAndLinker Condition="$(IsLinuxHost) == 'true'">./script/android_fake_clang.sh</CppCompilerAndLinker>
-		<CppCompilerAndLinker Condition="$(IsOSXHost) == 'true'">./script/android_fake_clang.command</CppCompilerAndLinker>
-		<NdkHost Condition="$(IsWindowsHost) == 'true'">windows-x86_64</NdkHost>
-		<NdkHost Condition="$(IsLinuxHost) == 'true'">linux-x86_64</NdkHost>
-		<NdkHost Condition="$(IsOSXHost) == 'true'">darwin-x86_64</NdkHost>
-		<ObjCopyName Condition="'$(ObjCopyName)' == ''">$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(NdkHost)/bin/llvm-objcopy</ObjCopyName>
-		<SysRoot Condition="'$(SysRoot)' == ''">$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(NdkHost)/sysroot</SysRoot>
-		<!--Hack for removing init and fini sections into the exports file-->
-		<ExportsPatch>'s/global: _init; _fini;/global: /g;'</ExportsPatch>
-	</PropertyGroup>
-
-  <Target Name="RemoveSections" Condition="$(IsAndroid) == 'true' And $(RemoveSections) == 'true'" AfterTargets="IlcCompile" BeforeTargets="LinkNative">
-		<!--Reads as lines the generated exports file-->
-		<ReadLinesFromFile File="$(ExportsFile)">
-			<Output TaskParameter="Lines" PropertyName="ExportsLines" />
-		</ReadLinesFromFile>
-		<!--Gets a single text from the exports lines-->
-		<PropertyGroup>
-			<ExportsText Condition="$(ExportsLines) != ''">@(ExportsLines)</ExportsText>
-		</PropertyGroup>
-		<!--The sed tool is used as invalid lines remover-->
-		<Exec Command="sed -i -z $(ExportsPatch) $(ExportsFile)" />
-	</Target>
 
     <ItemGroup Condition="'$(IsAndroid)' == 'true'">
     <!-- https://github.com/exelix11/SysDVR/blob/master/Client/Client.csproj -->
@@ -115,8 +81,6 @@
     <None Remove="libs\dotnet\bcl\ios\**" />
     <None Remove="libs\dotnet\bcl\**" />
   </ItemGroup>
-
-
 
   <Target Name="CustomBeforeBuild" BeforeTargets="BeforeBuild" >
     <Error Condition="! Exists('$(UrhoNetHome)')" Text="Urho.Net is not configured , please run configure.sh (configure.bat on Windows) from the Urho.Net installation folder " /> 
@@ -146,8 +110,8 @@
       <UrhoCookerCSProj>@(URHONET_HOME_ROOT)\tools\UrhoCooker\UrhoCooker.csproj</UrhoCookerCSProj>
       <UrhoCookerDLL>@(URHONET_HOME_ROOT)\tools\UrhoCooker\bin\Release\net6.0\UrhoCooker.dll</UrhoCookerDLL>
     </PropertyGroup>  
-    <Exec Command="dotnet build -c Release $(UrhoCookerCSProj)" />
-    <Copy SourceFiles="$(UrhoCookerDLL)" DestinationFolder="$(MSBuildProjectDirectory)\tools\UrhoCooker" SkipUnchangedFiles="true" />
+    <!-- <Exec Command="dotnet build -c Release $(UrhoCookerCSProj)" />
+    <Copy SourceFiles="$(UrhoCookerDLL)" DestinationFolder="$(MSBuildProjectDirectory)\tools\UrhoCooker" SkipUnchangedFiles="true" /> -->
   </Target>
 
   <Target Name="CopyCustomContentWindows" AfterTargets="AfterBuild" Condition="'$(IsWindows)'=='true'">
@@ -197,23 +161,13 @@
   </Target>
 
 
-  <Target Condition="'$(BuildAsLibrary)' != 'true'" Name="CopyGameAssembly" AfterTargets="AfterBuild">
-    <Copy SourceFiles="$(OutDir)/Game.dll" DestinationFolder="Intermediate/" SkipUnchangedFiles="true" />
+  <Target Name="RemoveXmlFiles" AfterTargets="Publish">
+    <ItemGroup>
+      <XmlFilesToDelete Include="$(PublishDir)**/*.xml" />
+    </ItemGroup>
+    <Delete Files="@(XmlFilesToDelete)" />
+    <Delete Files="$(PublishDir)$(LibraryName).so.dbg" />
   </Target>
-
-<Target Name="RemoveDebugFiles" AfterTargets="LinkNative">
-  <Message Text="Removing debug symbol files" Importance="high" />
-  <Delete Files="$(OutDir)$(LibraryName).so.dbg" />
-  <Delete Files="$(PublishDir)$(LibraryName).so.dbg" />
-  <!-- Delete any debug files in output directories -->
-  <Exec Command="find $(OutDir) -name '*.dbg' -type f -delete" />
-  <Exec Command="find $(PublishDir) -name '*.dbg' -type f -delete" />
-</Target>
-
-<Target Name="RemoveXmlFiles" AfterTargets="Publish">
-  <Message Text="Removing XML documentation files" Importance="high" />
-  <Exec Command="find $(PublishDir) -name '*.xml' -type f -delete" />
-</Target>
 
   <Target Name = "CustomAfterClean" AfterTargets="AfterClean">
         <Message Text="Urho.Net clean all" Importance="high" />

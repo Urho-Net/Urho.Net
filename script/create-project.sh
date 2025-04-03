@@ -169,13 +169,14 @@ aliassedinplace "s*TEMPLATE_PROJECT_NAME*$projName*g" "$projPath/Program.cs"
 aliassedinplace "s*TEMPLATE_CLASS_NAME*$className*g" "$projPath/Program.cs"
 
 cp "template/template.csproj" "$projPath/$projName.csproj"
+cp "template/BionicNativeAot.targets" "$projPath/BionicNativeAot.targets"
 
 mkdir "-p" "$projPath/tools"
 cp "-r" "tools/ReferenceAssemblyResolver" "$projPath/tools"
 cp "-R" "tools/bash_mini/." "$projPath/tools/bash"
 mkdir "-p" "$projPath/tools/UrhoCooker"
 dotnet build -c Release tools/UrhoCooker/UrhoCooker.csproj
-cp "-r" "tools/UrhoCooker/bin/Release/net6.0/" "$projPath/tools/UrhoCooker"
+cp "-r" "tools/UrhoCooker/bin/Release/net6.0/"* "$projPath/tools/UrhoCooker"
 
 cp "template/obfuscar.xml" "$projPath/obfuscar.xml"
 cp "template/global.json" "$projPath/global.json"
