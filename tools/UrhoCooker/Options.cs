@@ -69,6 +69,9 @@ namespace UrhoCooker
         [Option("properties", Required = false, HelpText = "extra  properties  -p:key=value -p:key=value  ")]
         public string Properties { get; set; } = "";
 
+        [Option( "rid", Required = false, HelpText = "runtime identifier")]
+        public string  RID { get; set; } = "";
+
     }
 
 }

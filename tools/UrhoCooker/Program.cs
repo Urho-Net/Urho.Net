@@ -69,6 +69,14 @@ namespace UrhoCooker
                                     }
                                     break;
 
+                                case "desktop":
+                                    {
+                                        var task = new DesktopBuildTask(opts);
+                                        task.BuildEngine = buildEngine;
+                                        task.Execute();
+                                    }
+                                    break;
+
                                 default:
                                     {
                                         Console.WriteLine("Unknown Architecture " + opts.Task);

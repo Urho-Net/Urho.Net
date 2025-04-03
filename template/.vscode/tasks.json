@@ -290,19 +290,21 @@
             "type": "process",
             "dependsOn": "build-urho-cooker",
             "args": [
-                "publish",
-                "-c","Release",
-                "-r","osx-x64",
-                "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
-                "${workspaceFolder}/${workspaceFolderBasename}.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "release",
+                "--architecture",
+                "desktop",
+                "--rid",
+                "osx-x64",
+                "--path",
+                ".",
+                "--output",
+                "${workspaceFolder}/output",
             ],
-            "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "problemMatcher": []
         },
         {
             "label": "publish-osx-arm64",
@@ -310,61 +312,66 @@
             "type": "process",
             "dependsOn": "build-urho-cooker",
             "args": [
-                "publish",
-                "-f","net9.0",
-                "-c","Release",
-                "-r","osx-arm64",
-                "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
-                "${workspaceFolder}/${workspaceFolderBasename}.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "release",
+                "--architecture",
+                "desktop",
+                "--rid",
+                "osx-arm64",
+                "--path",
+                ".",
+                "--output",
+                "${workspaceFolder}/output",
             ],
-            "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "problemMatcher": []
         },
         {
-            "label": "publish-windows",
+            "label": "publish-windows-x64",
             "command": "dotnet",
             "type": "process",
             "dependsOn": "build-urho-cooker",
             "args": [
-                "publish",
-                "-c","Release",
-                "-r","win-x64",
-                "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
-                "${workspaceFolder}/${workspaceFolderBasename}.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "release",
+                "--architecture",
+                "desktop",
+                "--rid",
+                "win-x64",
+                "--path",
+                ".",
+                "--output",
+                "${workspaceFolder}/output",
             ],
-            "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "problemMatcher": []
         },
         {
-            "label": "publish-linux",
+            "label": "publish-linux-x64",
             "command": "dotnet",
             "type": "process",
             "dependsOn": "build-urho-cooker",
             "args": [
-                "publish",
-                "-c","Release",
-                "-r","linux-x64",
-                "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
-                "${workspaceFolder}/${workspaceFolderBasename}.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "release",
+                "--architecture",
+                "desktop",
+                "--rid",
+                "linux-x64",
+                "--path",
+                ".",
+                "--output",
+                "${workspaceFolder}/output",
             ],
-            "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        }, 
+            "problemMatcher": []
+        },
         {
             "label": "watch",
             "command": "dotnet",
