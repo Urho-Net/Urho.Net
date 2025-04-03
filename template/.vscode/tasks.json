@@ -2,9 +2,21 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "build-urho-cooker",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "msbuild",
+                "-t:BuildUrhoCooker"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
             "label": "ios-build-release",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -28,6 +40,7 @@
             "label": "ios-deploy-release",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -53,6 +66,7 @@
             "label": "ios-build-debug",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -74,6 +88,7 @@
             "label": "ios-deploy-debug",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -97,6 +112,7 @@
             "label": "ios-debug",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -120,6 +136,7 @@
             "label": "android-build-debug",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -139,6 +156,7 @@
             "label": "android-deploy-debug",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -160,6 +178,7 @@
             "label": "android-build-release",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -179,6 +198,7 @@
             "label": "android-deploy-release",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -200,6 +220,7 @@
             "label": "android-build-signed-release",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -220,6 +241,7 @@
             "label": "android-deploy-signed-release",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
                 "--task",
@@ -235,17 +257,6 @@
                 "--install",
                 "true",
                 "--keystore","${input:keystore}"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "web-build",
-            "command": "./script/build-web.sh",
-            "windows":{
-                "command": "call \"tools/bash/git-bash.exe\" script/build-web.sh"
-            },
-            "type": "shell",
-            "args": [
             ],
             "problemMatcher": []
         },
@@ -277,6 +288,7 @@
             "label": "publish-osx-x64",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "publish",
                 "-c","Release",
@@ -296,6 +308,7 @@
             "label": "publish-osx-arm64",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "publish",
                 "-f","net9.0",
@@ -316,6 +329,7 @@
             "label": "publish-windows",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "publish",
                 "-c","Release",
@@ -335,6 +349,7 @@
             "label": "publish-linux",
             "command": "dotnet",
             "type": "process",
+            "dependsOn": "build-urho-cooker",
             "args": [
                 "publish",
                 "-c","Release",

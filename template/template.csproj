@@ -54,6 +54,27 @@
     <IsIOS Condition="'$(IsIOS)' == ''">false</IsIOS>
   </PropertyGroup>
 
+  <Target Name="BuildUrhoCooker">
+    <Error Condition="! Exists('$(UrhoNetHome)')" Text="Urho.Net is not configured, please run configure.sh (configure.bat on Windows) from the Urho.Net installation folder" /> 
+    <XmlPeek XmlInputPath="$(UrhoNetHome)" Query="UrhoNetHome/add[@key='UrhoNetHome']/@value">
+        <Output TaskParameter="Result" ItemName="URHONET_HOME_ROOT" />
+    </XmlPeek>
+    <PropertyGroup>
+      <UrhoCookerCSProj>@(URHONET_HOME_ROOT)\tools\UrhoCooker\UrhoCooker.csproj</UrhoCookerCSProj>
+      <UrhoCookerOutputDir>@(URHONET_HOME_ROOT)\tools\UrhoCooker\bin\Release\net9.0</UrhoCookerOutputDir>
+    </PropertyGroup>
+    <Message Text="Building UrhoCooker from $(UrhoCookerCSProj)" Importance="high" />
+    <Exec Command="dotnet build -c Release $(UrhoCookerCSProj)" />
+    <ItemGroup>
+      <UrhoCookerFiles Include="$(UrhoCookerOutputDir)\**\*.*" />
+    </ItemGroup>
+    <MakeDir Directories="$(MSBuildProjectDirectory)\tools\UrhoCooker" Condition="!Exists('$(MSBuildProjectDirectory)\tools\UrhoCooker')" />
+    <Copy SourceFiles="@(UrhoCookerFiles)" 
+          DestinationFiles="$(MSBuildProjectDirectory)\tools\UrhoCooker\%(RecursiveDir)%(Filename)%(Extension)" 
+          SkipUnchangedFiles="true" />
+    <Message Text="UrhoCooker files copied successfully to $(MSBuildProjectDirectory)\tools\UrhoCooker" Importance="high" />
+  </Target>
+
 
     <ItemGroup Condition="'$(IsAndroid)' == 'true'">
     <!-- https://github.com/exelix11/SysDVR/blob/master/Client/Client.csproj -->

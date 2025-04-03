@@ -561,6 +561,10 @@ namespace UrhoCooker
             if (File.Exists(Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt")))
                 File.Delete(Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt"));
             
+            if (File.Exists(Path.Combine(opts.OutputPath, "Android/app/src/main", "UrhoMainActivity.kt")))
+                File.Delete(Path.Combine(opts.OutputPath, "Android/app/src/main", "UrhoMainActivity.kt"));
+            
+            
             File.Copy(Path.Combine(URHONET_HOME_PATH, "template/Android/app/src/main","UrhoMainActivity.kt"), Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt"), true);
             Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
             if (opts.Aot)
