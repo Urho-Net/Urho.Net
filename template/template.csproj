@@ -159,7 +159,7 @@
 <Target Name="CopyCustomContentPublish" AfterTargets="Publish" 
         Condition="'$(RuntimeIdentifier)'=='linux-x64' Or '$(RuntimeIdentifier)'=='win-x64' Or 
                   '$(RuntimeIdentifier)'=='osx-x64' Or '$(RuntimeIdentifier)'=='osx-arm64'">
-     <Message Text="AssetsSourceFiles: @(AssetsSourceFiles)" Importance="high" />
+     <!-- <Message Text="AssetsSourceFiles: @(AssetsSourceFiles)" Importance="high" /> -->
     <PropertyGroup>
       <OutputPath Condition="'$(PublishDir)' != ''">$(PublishDir)</OutputPath>
       <OutputPath Condition="'$(OutputPath)' == ''">$(OutDir)</OutputPath>
@@ -171,8 +171,6 @@
     <Error Condition="! Exists('$(libUrho3D)')" Text="libUrho3D.dylib not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
     <!-- <Copy SourceFiles="@(AssetsSourceFiles)" DestinationFolder="$(OutputPath)\%(RecursiveDir)" SkipUnchangedFiles="true" Retries="3" RetryDelayMilliseconds="300" /> -->
     <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
-    <Exec Command="cp -rf $(ProjectDir)Assets/Data/ $(OutputPath)/Data/" />
-    <Exec Command="cp -rf $(ProjectDir)Assets/CoreData/ $(OutputPath)/CoreData/" />
   </Target>
 
 
