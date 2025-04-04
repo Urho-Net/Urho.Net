@@ -44,7 +44,7 @@ namespace UrhoCooker
         string VERSION_CODE = string.Empty;
         string VERSION_NAME = string.Empty;
 
-         string URHONET_HOME_PATH = string.Empty;
+        string URHONET_HOME_PATH = string.Empty;
 
 
         public AndroidBuildTask(Options opts)
@@ -67,40 +67,40 @@ namespace UrhoCooker
         bool BuildAndroidAppBundle()
         {
 
-              FileInfo fi = new FileInfo(opts.ProjectPath);
-              opts.ProjectPath = fi.FullName;
-              Console.WriteLine($"Project path:{opts.ProjectPath}");
+            FileInfo fi = new FileInfo(opts.ProjectPath);
+            opts.ProjectPath = fi.FullName;
+            Console.WriteLine($"Project path:{opts.ProjectPath}");
 
-              if (!opts.Aot)
-              {
-                  if (opts.Type == "debug")
-                  {
-                      if (!DotNetBuildDebug())
-                      {
-                          Log.LogError($"Compilation failed!");
-                          return false;
-                      }
-                  }
-                  else if (opts.Type == "release")
-                  {
-                      if (!DotNetBuildRelease())
-                      {
-                          Log.LogError($"Compilation failed!");
-                          return false;
-                      }
-                  }
-                  else
-                  {
-                      Log.LogError($"You must provide build type release/debug");
-                      return false;
-                  }
-              }
-            
+            if (!opts.Aot)
+            {
+                if (opts.Type == "debug")
+                {
+                    if (!DotNetBuildDebug())
+                    {
+                        Log.LogError($"Compilation failed!");
+                        return false;
+                    }
+                }
+                else if (opts.Type == "release")
+                {
+                    if (!DotNetBuildRelease())
+                    {
+                        Log.LogError($"Compilation failed!");
+                        return false;
+                    }
+                }
+                else
+                {
+                    Log.LogError($"You must provide build type release/debug");
+                    return false;
+                }
+            }
+
             SetOutputPath();
             GetUrhoNetHomePath();
             if (URHONET_HOME_PATH == string.Empty) return false;
             ParseEnvironmentVariables();
-            if(CheckvariablesValidity() == false)return false;
+            if (CheckvariablesValidity() == false) return false;
             CopyAndroidInitialFolder();
             CreateBuildGradle();
             HandleOverwrites();
@@ -119,7 +119,7 @@ namespace UrhoCooker
             CreateAndroidManifest();
             CopyPlatformJavaToAndroid();
             CopyAssetsToAndroid();
-            
+
             if (!opts.Aot)
             {
                 DeleteIOSAssetFolder();
@@ -196,10 +196,10 @@ namespace UrhoCooker
         bool EncryptGameDLL()
         {
             int keyIndex = 0;
-            if(!File.Exists(Path.Combine(opts.ProjectPath, opts.EncryptKeyPath)))
+            if (!File.Exists(Path.Combine(opts.ProjectPath, opts.EncryptKeyPath)))
             {
                 Log.LogError($"encryption key file not found {Path.Combine(opts.ProjectPath, opts.EncryptKeyPath)}");
-                return false ;
+                return false;
             }
 
             string keyStr = File.ReadAllText(Path.Combine(opts.ProjectPath, opts.EncryptKeyPath));
@@ -207,7 +207,7 @@ namespace UrhoCooker
             if (encryption_key.Count() == 0)
             {
                 Log.LogError($"encryption key is invalid");
-                return false ;
+                return false;
             }
 
             using (FileStream fs = System.IO.File.Open(Path.Combine(opts.ProjectPath, "Intermediate/Game.dll"), System.IO.FileMode.Open, FileAccess.Read, FileShare.Delete))
@@ -317,7 +317,7 @@ namespace UrhoCooker
                 Path.Combine(opts.OutputPath, "Android/app/build.gradle").AppendTextLine("}");
             }
         }
-        
+
         /*
              <!-- <TrimMode>partial</TrimMode>
            <TrimmerRemoveSymbols>false</TrimmerRemoveSymbols>
@@ -338,41 +338,41 @@ namespace UrhoCooker
         {
             bool result = true;
 
-            string  aotArch = string.Empty;
-            
+            string aotArch = string.Empty;
+
             switch (androdArch)
             {
                 case "arm64-v8a":
-                {
-                    aotArch = "linux-bionic-arm64";
-                   
-                } 
+                    {
+                        aotArch = "linux-bionic-arm64";
+
+                    }
                     break;
 
                 case "armeabi-v7a":
-                {
-                    aotArch = "linux-bionic-arm";
-                }
+                    {
+                        aotArch = "linux-bionic-arm";
+                    }
                     break;
 
                 case "x86_64":
-                {
-                    aotArch = "linux-bionic-x64";
-                }
+                    {
+                        aotArch = "linux-bionic-x64";
+                    }
                     break;
-                
+
             }
 
             if (aotArch == string.Empty) return false;
-            
-            string dstFolder  = Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{androdArch}");
+
+            string dstFolder = Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{androdArch}");
 
             string buildType = (opts.Type == "release") ? "Release" : "Debug";
             string stripSymbols = (opts.Type == "release") ? "true" : "false";
-            
-            string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
-            
-            (int exitCode, string output)  = Utils.RunShellCommand(Log,
+
+            string targetFramework = (opts.Framework != "") ? opts.Framework : "net9.0";
+
+            (int exitCode, string output) = Utils.RunShellCommand(Log,
                 $"dotnet publish -f {targetFramework} -c {buildType}  -r {aotArch}  -p:OutputType=Library {opts.Properties} -p:StripSymbols={stripSymbols} -p:BuildAsLibrary=true -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:DefineConstants=\"__ANDROID__\" -o {dstFolder}",
                 null,
                 workingDir: Path.Combine(opts.ProjectPath),
@@ -380,33 +380,45 @@ namespace UrhoCooker
                 debugMessageImportance: MessageImportance.High,
                 label: "DotNetBuildAOT");
 
-            result = (exitCode != 0)?false:true;
+            result = (exitCode != 0) ? false : true;
             return result;
         }
-        
+
         private void HandleAOTLibraries()
         {
-            
+
             List<string> androidArchs = GetAndroidArchitectures();
             if (androidArchs.Count == 0) androidArchs.Add("armeabi-v7a");
-            
+
             foreach (var i in androidArchs)
             {
                 if (!DotNetBuildAOT(i))
                 {
                     Log.LogError($"Compilation failed! for {i}");
+                    return;
                 }
-                    
+
                 Directory.CreateDirectory(Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}"));
-                
+
                 if (File.Exists(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}", "libUrhoMain.so")))
                 {
                     File.Copy(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}", "libUrhoMain.so"),
                         Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}", "libUrhoMain.so"),
                         true);
                 }
+
+                File.Copy(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}", "libUrho3D.so"), Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}", "libUrho3D.so"), true);
                 
-                File.Copy(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}","libUrho3D.so"), Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}","libUrho3D.so"), true);
+                foreach (string debugFile in Directory.GetFiles(Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}"), "*.so.dbg"))
+                {
+                    File.Delete(debugFile);
+                }
+
+                foreach (string debugFile in Directory.GetFiles(Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}"), "*.xml"))
+                {
+                    File.Delete(debugFile);
+                }
+                
             }
         }
         private void HandleDotnetAssembliesAndRuntime()
@@ -426,7 +438,7 @@ namespace UrhoCooker
                     Directory.CreateDirectory(Path.Combine(opts.ProjectPath, $"libs/dotnet/bcl/android/{i}"));
                     Path.Combine(URHONET_HOME_PATH, $"template/libs/dotnet/bcl/android/{i}").CopyDirectory(Path.Combine(opts.ProjectPath, $"libs/dotnet/bcl/android/{i}"), true);
                 }
-                
+
                 Directory.CreateDirectory(Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}"));
                 if (!opts.Aot)
                 {
@@ -442,7 +454,7 @@ namespace UrhoCooker
                             true);
                     }
 
-                    File.Copy(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}","libUrho3D.so"), Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}","libUrho3D.so"), true);
+                    File.Copy(Path.Combine(URHONET_HOME_PATH, $"template/libs/android/{i}", "libUrho3D.so"), Path.Combine(opts.OutputPath, $"Android/app/src/main/jniLibs/{i}", "libUrho3D.so"), true);
                 }
 
                 if (!opts.Aot)
@@ -542,30 +554,30 @@ namespace UrhoCooker
                 Directory.CreateDirectory(Path.Combine(opts.OutputPath, "Android/app/src/test", JAVA_PACKAGE_PATH));
 
                 File.Move(Path.Combine(opts.OutputPath, "Android/app/src/main/MainActivity.kt"), Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "MainActivity.kt"), true);
-                
+
                 File.Move(Path.Combine(opts.OutputPath, "Android/app/src/androidTest/ExampleInstrumentedTest.kt"), Path.Combine(opts.OutputPath, "Android/app/src/androidTest", JAVA_PACKAGE_PATH, "ExampleInstrumentedTest.kt"), true);
                 File.Move(Path.Combine(opts.OutputPath, "Android/app/src/test/ExampleUnitTest.kt"), Path.Combine(opts.OutputPath, "Android/app/src/test", JAVA_PACKAGE_PATH, "ExampleUnitTest.kt"), true);
 
                 Path.Combine(opts.OutputPath, "Android/app/src/main/AndroidManifest.xml").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
                 Path.Combine(opts.OutputPath, "Android/app/build.gradle").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
                 Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "MainActivity.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
-               
-                
+
+
                 Path.Combine(opts.OutputPath, "Android/app/src/androidTest", JAVA_PACKAGE_PATH, "ExampleInstrumentedTest.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
                 Path.Combine(opts.OutputPath, "Android/app/src/test", JAVA_PACKAGE_PATH, "ExampleUnitTest.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
 
                 Path.Combine(opts.OutputPath, "Android/settings.gradle").ReplaceInfile("TEMPLATE_PROJECT_NAME", PROJECT_NAME);
                 Path.Combine(opts.OutputPath, "Android/app/src/main/res/values/strings.xml").ReplaceInfile("TEMPLATE_PROJECT_NAME", PROJECT_NAME);
             }
-            
+
             if (File.Exists(Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt")))
                 File.Delete(Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt"));
-            
+
             if (File.Exists(Path.Combine(opts.OutputPath, "Android/app/src/main", "UrhoMainActivity.kt")))
                 File.Delete(Path.Combine(opts.OutputPath, "Android/app/src/main", "UrhoMainActivity.kt"));
-            
-            
-            File.Copy(Path.Combine(URHONET_HOME_PATH, "template/Android/app/src/main","UrhoMainActivity.kt"), Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt"), true);
+
+
+            File.Copy(Path.Combine(URHONET_HOME_PATH, "template/Android/app/src/main", "UrhoMainActivity.kt"), Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt"), true);
             Path.Combine(opts.OutputPath, "Android/app/src/main", JAVA_PACKAGE_PATH, "UrhoMainActivity.kt").ReplaceInfile("TEMPLATE_UUID", PROJECT_UUID);
             if (opts.Aot)
             {
@@ -583,7 +595,7 @@ namespace UrhoCooker
         string GetUrhoNetHomePath()
         {
 
-            if(URHONET_HOME_PATH != string.Empty)return URHONET_HOME_PATH;
+            if (URHONET_HOME_PATH != string.Empty) return URHONET_HOME_PATH;
 
             string homeFolder = Utils.GetHomeFolder();
             string urhoNetConfigFolderPath = Path.Combine(homeFolder, ".urhonet_config");
@@ -613,7 +625,7 @@ namespace UrhoCooker
                     break;
                 }
             }
-      
+
             return URHONET_HOME_PATH;
         }
 
@@ -647,9 +659,9 @@ namespace UrhoCooker
         private bool DotNetBuildDebug()
         {
             bool result = true;
-            string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
-            
-            (int exitCode, string output)  = Utils.RunShellCommand(Log,
+            string targetFramework = (opts.Framework != "") ? opts.Framework : "net9.0";
+
+            (int exitCode, string output) = Utils.RunShellCommand(Log,
                                       $"dotnet build -f {targetFramework} --configuration Debug -p:DefineConstants=_ANDROID_",
                                       null,
                                       workingDir: Path.Combine(opts.ProjectPath),
@@ -657,23 +669,23 @@ namespace UrhoCooker
                                       debugMessageImportance: MessageImportance.High,
                                       label: "DotNetBuildDebug");
 
-            result = (exitCode != 0)?false:true;
+            result = (exitCode != 0) ? false : true;
             return result;
         }
 
         private bool DotNetBuildRelease()
         {
             bool result = true;
-            string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
-            
-            (int exitCode, string output)  = Utils.RunShellCommand(Log,
+            string targetFramework = (opts.Framework != "") ? opts.Framework : "net9.0";
+
+            (int exitCode, string output) = Utils.RunShellCommand(Log,
                                       $"dotnet build -f {targetFramework} --configuration Release -p:DefineConstants=_ANDROID_",
                                       null,
                                       workingDir: Path.Combine(opts.ProjectPath),
                                       logStdErrAsMessage: true,
                                       debugMessageImportance: MessageImportance.High,
                                       label: "build-apks");
-            result = (exitCode != 0)?false:true;
+            result = (exitCode != 0) ? false : true;
             return result;
         }
 
@@ -701,35 +713,37 @@ namespace UrhoCooker
         private void InstallAAB(bool signed = false)
         {
             string command = string.Empty;
-             string bundleName = "";
+            string bundleName = "";
             if (opts.Type == "debug")
             {
                 string signCommand = "";
-                if(signed)
+                if (signed)
                 {
                     bundleName = "app-debug-signed";
                     signCommand = $"--ks={opts.KeyStorePath} --ks-pass=pass:Android --ks-key-alias=my-alias --key-pass=pass:Android";
                 }
-                else{
+                else
+                {
                     bundleName = "app-debug";
                 }
-                command =  $"java -jar {URHONET_HOME_PATH}/tools/bundletool.jar build-apks --connected-device --bundle=output/Android/{bundleName}.aab --output=output/Android/{bundleName}.apks {signCommand}";
+                command = $"java -jar {URHONET_HOME_PATH}/tools/bundletool.jar build-apks --connected-device --bundle=output/Android/{bundleName}.aab --output=output/Android/{bundleName}.apks {signCommand}";
             }
             else if (opts.Type == "release")
             {
                 string signCommand = "";
-                if(signed)
+                if (signed)
                 {
                     bundleName = "app-release-signed";
                     signCommand = $"--ks={opts.KeyStorePath} --ks-pass=pass:Android --ks-key-alias=my-alias --key-pass=pass:Android";
                 }
-                else{
+                else
+                {
                     bundleName = "app-release";
                 }
-                command =  $"java -jar {URHONET_HOME_PATH}/tools/bundletool.jar build-apks --connected-device --bundle=output/Android/{bundleName}.aab --output=output/Android/{bundleName}.apks  {signCommand}";
+                command = $"java -jar {URHONET_HOME_PATH}/tools/bundletool.jar build-apks --connected-device --bundle=output/Android/{bundleName}.aab --output=output/Android/{bundleName}.apks  {signCommand}";
             }
 
-            if(command == string.Empty)return;
+            if (command == string.Empty) return;
 
 
             Utils.RunShellCommand(Log,
@@ -759,11 +773,11 @@ namespace UrhoCooker
 
             if (opts.Type == "debug")
             {
-                command =  $"java -jar {URHONET_HOME_PATH}/tools/bundletool.jar install-apks --apks=output/Android/{bundleName}.apks";
+                command = $"java -jar {URHONET_HOME_PATH}/tools/bundletool.jar install-apks --apks=output/Android/{bundleName}.apks";
             }
             else if (opts.Type == "release")
             {
-                command =  $"java -jar {URHONET_HOME_PATH}/tools/bundletool.jar install-apks --apks=output/Android/{bundleName}.apks";
+                command = $"java -jar {URHONET_HOME_PATH}/tools/bundletool.jar install-apks --apks=output/Android/{bundleName}.apks";
             }
 
             Utils.RunShellCommand(Log,
@@ -825,37 +839,38 @@ namespace UrhoCooker
 
             if (opts.KeyStorePath.StartsWith("./"))
             {
-                opts.KeyStorePath = opts.KeyStorePath.Remove(0,2);
-                opts.KeyStorePath = Path.Combine(opts.ProjectPath,opts.KeyStorePath);
+                opts.KeyStorePath = opts.KeyStorePath.Remove(0, 2);
+                opts.KeyStorePath = Path.Combine(opts.ProjectPath, opts.KeyStorePath);
             }
 
 
-            if(Path.HasExtension(opts.KeyStorePath) && !opts.KeyStorePath.EndsWith(".jks"))
+            if (Path.HasExtension(opts.KeyStorePath) && !opts.KeyStorePath.EndsWith(".jks"))
             {
                 Log.LogError($"Wrong {opts.KeyStorePath}");
                 return false;
             }
 
             bool isFile = Path.HasExtension(opts.KeyStorePath) && opts.KeyStorePath.EndsWith(".jks");
-            string ?keyStorePath = string.Empty;
+            string? keyStorePath = string.Empty;
             string keyName = string.Empty;
-            if(isFile)
+            if (isFile)
             {
-                 keyStorePath = Path.GetDirectoryName(opts.KeyStorePath);
-                 keyName = Path.GetFileName(opts.KeyStorePath);
+                keyStorePath = Path.GetDirectoryName(opts.KeyStorePath);
+                keyName = Path.GetFileName(opts.KeyStorePath);
             }
-            else{
+            else
+            {
                 keyStorePath = opts.KeyStorePath;
                 keyName = "android-release-key.jks";
             }
 
-            
-            if(keyStorePath == null || keyStorePath == string.Empty)
+
+            if (keyStorePath == null || keyStorePath == string.Empty)
             {
                 keyStorePath = opts.ProjectPath;
             }
 
-            if(keyName == null || keyName == string.Empty)
+            if (keyName == null || keyName == string.Empty)
             {
                 keyName = "android-release-key.jks";
             }
@@ -888,16 +903,16 @@ namespace UrhoCooker
             if (File.Exists(Path.Combine(keyStorePath, keyName)))
             {
                 string bundle_input_path = "";
-                 string bundle_output_path = "";
+                string bundle_output_path = "";
                 if (opts.Type == "debug")
                 {
                     bundle_input_path = "output/Android/app-debug.aab";
-                    bundle_output_path =  "output/Android/app-debug-signed.aab";
+                    bundle_output_path = "output/Android/app-debug-signed.aab";
                 }
                 else
                 {
                     bundle_input_path = "output/Android/app-release.aab";
-                    bundle_output_path =  "output/Android/app-release-signed.aab";
+                    bundle_output_path = "output/Android/app-release-signed.aab";
                 }
 
                 (int exitCode, string output) = Utils.RunShellCommand(
@@ -914,12 +929,13 @@ namespace UrhoCooker
                     return false;
                 }
             }
-            else{
+            else
+            {
                 Log.LogError($"{Path.Combine(keyStorePath, keyName)}  not found");
                 return false;
             }
 
-            opts.KeyStorePath = Path.Combine(keyStorePath,keyName);
+            opts.KeyStorePath = Path.Combine(keyStorePath, keyName);
 
             return true;
         }
@@ -1049,8 +1065,8 @@ namespace UrhoCooker
             {
                 AndroidManifest.AppendTextLine($"   <uses-permission android:name=\"{i}\"/>");
             }
-            
-    
+
+
             if (File.Exists(Path.Combine(opts.ProjectPath, "platform/android/manifest/AndroidManifest.xml")))
             {
                 string extra = File.ReadAllText(Path.Combine(opts.ProjectPath, "platform/android/manifest/AndroidManifest.xml"));
@@ -1071,7 +1087,7 @@ namespace UrhoCooker
             AndroidManifest.AppendTextLine($"              <action android:name=\"android.intent.action.MAIN\" />");
             AndroidManifest.AppendTextLine($"              <category android:name=\"android.intent.category.LAUNCHER\" />");
             AndroidManifest.AppendTextLine($"          </intent-filter>");
-            
+
             if (File.Exists(Path.Combine(opts.ProjectPath, "platform/android/manifest/IntentFilters.xml")))
             {
                 string extra = File.ReadAllText(Path.Combine(opts.ProjectPath, "platform/android/manifest/IntentFilters.xml"));
@@ -1085,7 +1101,7 @@ namespace UrhoCooker
             {
                 SCREEN_ORIENTATION = "landscape";
             }
-            if(SCREEN_ORIENTATION != "landscape" && SCREEN_ORIENTATION != "portrait")
+            if (SCREEN_ORIENTATION != "landscape" && SCREEN_ORIENTATION != "portrait")
             {
                 SCREEN_ORIENTATION = "landscape";
             }
@@ -1097,7 +1113,7 @@ namespace UrhoCooker
                 string extra = File.ReadAllText(Path.Combine(opts.ProjectPath, "platform/android/manifest/Activities.xml"));
                 AndroidManifest.AppendText(extra);
             }
-          
+
             AndroidManifest.AppendTextLine($"   </application>");
             AndroidManifest.AppendTextLine($"</manifest>");
 
