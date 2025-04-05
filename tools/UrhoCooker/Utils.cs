@@ -30,7 +30,7 @@ namespace UrhoCooker
 
         public static Options? opts;
 
-        static string GetUrhoNetHomePath()
+        public static string GetUrhoNetHomePath()
         {
 
             if (URHONET_HOME_PATH != string.Empty) return URHONET_HOME_PATH;

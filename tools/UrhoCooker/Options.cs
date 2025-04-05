@@ -18,7 +18,7 @@ namespace UrhoCooker
         [Option("task", Required = true, HelpText = "Set Task")]
         public string Task { get; set; } = "";
 
-        [Option("architecture", Required = false, HelpText = "Set Architecture , android/ios")]
+        [Option("architecture", Required = false, HelpText = "Set Architecture , android/ios/desktop/web")]
         public string Arch { get; set; } = "";
 
         [Option("subtask", Required = false, HelpText = "Set Sub Task")]

@@ -1,0 +1,132 @@
+<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <WasmBuildNative>true</WasmBuildNative>
+        <RunAOTCompilation>true</RunAOTCompilation>
+        <WasmEnableSIMD>false</WasmEnableSIMD>
+        <EmccEnableAssertions>false</EmccEnableAssertions>
+        <RootNamespace>UrhoNetTestAppWASM</RootNamespace>
+        <EnableAggressiveTrimming>true</EnableAggressiveTrimming>
+        <PublishTrimmed>true</PublishTrimmed>
+        <TrimMode>partial</TrimMode>
+        <WasmAllowUndefinedSymbols>true</WasmAllowUndefinedSymbols>
+    </PropertyGroup>
+
+  <PropertyGroup>
+    <HomeDir>$(UserProfile)</HomeDir>
+    <HomeDir Condition="'$(HomeDir)' == ''">$(Home)</HomeDir>
+  </PropertyGroup>
+
+    <PropertyGroup>
+        <UrhoNetHome>$(HomeDir)/.urhonet_config/UrhoNetHome.config</UrhoNetHome>
+    </PropertyGroup>
+
+  
+  <Target Name="CustomBeforeBuild" BeforeTargets="BeforeBuild" >
+    
+    <Error Condition="! Exists('$(UrhoNetHome)')" Text="Urho.Net is not configured , please run configure.sh (configure.bat on Windows) from the Urho.Net installation folder " /> 
+    <XmlPeek XmlInputPath="$(UrhoNetHome)" Query="UrhoNetHome/add[@key='UrhoNetHome']/@value">
+        <Output TaskParameter="Result" ItemName="URHONET_HOME_ROOT" />
+    </XmlPeek>
+    <Message Text="URHONET_HOME_ROOT=@(URHONET_HOME_ROOT)" Importance="high" />
+
+    <PropertyGroup>
+      <UrhoDotNetDLL>@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\web\UrhoDotNet.dll</UrhoDotNetDLL>
+      <UrhoDotNetLIB>@(URHONET_HOME_ROOT)\template\libs\web\Urho3D.a</UrhoDotNetLIB>
+    </PropertyGroup>
+
+    <Copy SourceFiles="$(UrhoDotNetDLL)" DestinationFolder="assemblies" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(UrhoDotNetLIB)" DestinationFolder="libs" SkipUnchangedFiles="true" />
+  </Target>
+
+
+    <ItemGroup>
+      <Reference Include="UrhoDotNet">
+        <HintPath>assemblies\UrhoDotNet.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <NativeFileReference Include="libs\Urho3D.a">
+        <Link>libs\Urho3D.a</Link>
+      </NativeFileReference>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <Compile Include="..\Source\**\*.cs">
+            <Link>Source\%(RecursiveDir)%(FileName)%(Extension)</Link>
+        </Compile>
+        <Compile Include="..\Program.cs"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <AssetsSourceFiles Include="../Assets/**/*.*">
+            <Link>Assets\%(RecursiveDir)%(FileName)%(Extension)</Link>
+        </AssetsSourceFiles>
+    </ItemGroup>
+    
+  <Target  Name="CopyIndexHTML" AfterTargets="AfterBuild">
+  <PropertyGroup>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(OutDir)</OutputPath>
+  </PropertyGroup>
+    <Copy SourceFiles="wwwroot/index.html" DestinationFolder="$(OutputPath)/wwwroot" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="wwwroot/main.js" DestinationFolder="$(OutputPath)/wwwroot" SkipUnchangedFiles="true" />
+  </Target>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+    
+    <Choose>
+        <When Condition=" $(Configuration) == 'Debug' ">
+            <PropertyGroup>
+                <WasmEmitSymbolMap>true</WasmEmitSymbolMap>
+                <EmccFlags>
+                    -s EXPORT_ALL=1
+                    --bind  
+                    -Wbad-function-cast -Wcast-function-type 
+                    -O1 
+                    -g3 
+                    -sVERBOSE=1
+                    -s FULL_ES2
+                    -s WASM=1
+                    -s INITIAL_MEMORY=128MB 
+                    -s MAXIMUM_MEMORY=2048MB 
+                    -s ALLOW_MEMORY_GROWTH=1
+                    -s ASYNCIFY_STACK_SIZE=10000000
+                    -s TOTAL_MEMORY=160MB
+                    --embed-file ../Assets@/
+                </EmccFlags>
+                <EmccExtraLDFlags>
+                    -lidbfs.js
+                    -s EXPORTED_RUNTIME_METHODS='['ccall','dynCall', 'FS_createPath','addFunction','cwrap','UTF8ArrayToString','runtimeKeepalivePop','runtimeKeepalivePush']'
+                </EmccExtraLDFlags>
+            </PropertyGroup>
+        </When>
+        <When Condition=" $(Configuration) == 'Release' ">
+            <PropertyGroup>
+                <EmccFlags>
+                    -s EXPORT_ALL=1
+                    -O3 
+                    --bind
+                    -s FULL_ES2
+                    -s WASM=1
+                    -s INITIAL_MEMORY=128MB
+                    -s MAXIMUM_MEMORY=2048MB
+                    -s ALLOW_MEMORY_GROWTH=1
+                    -s TOTAL_MEMORY=160MB
+                    --embed-file ../Assets@/
+                </EmccFlags>
+                <EmccExtraLDFlags>
+                    -lexports.js
+                    -s EXPORTED_RUNTIME_METHODS='['ccall','dynCall', 'FS_createPath','addFunction','cwrap','UTF8ArrayToString','runtimeKeepalivePop','runtimeKeepalivePush']'
+                </EmccExtraLDFlags>
+            </PropertyGroup>
+        </When>
+    </Choose>
+    
+</Project>

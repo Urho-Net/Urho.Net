@@ -77,6 +77,14 @@ namespace UrhoCooker
                                     }
                                     break;
 
+                                case "web":
+                                    {
+                                        var task = new WebBuildTask(opts);
+                                        task.BuildEngine = buildEngine;
+                                        task.Execute();
+                                    }
+                                    break;
+
                                 default:
                                     {
                                         Console.WriteLine("Unknown Architecture " + opts.Task);

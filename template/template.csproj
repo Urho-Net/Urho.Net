@@ -83,6 +83,33 @@
     </ItemGroup>
 
   <ItemGroup>
+      <None Remove="Web\**" />
+      <Compile Remove="Web\**" />
+      <Content Remove="Web\**" />
+      <EmbeddedResource Remove="Web\**" />
+      <ApplicationDefinition Remove="Web\**" />
+      <Page Remove="Web\**" />
+      <Resource Remove="Web\**" />
+      <ProjectReference Remove="Web\**" />
+      <PackageReference Remove="Web\**" />
+      <UpToDateCheckInput Remove="Web\**" />
+      <AvailableItemName Remove="Web\**" />
+  </ItemGroup>
+  <ItemGroup>
+      <None Remove="output\**" />
+      <Compile Remove="output\**" />
+      <Content Remove="output\**" />
+      <EmbeddedResource Remove="output\**" />
+      <ApplicationDefinition Remove="output\**" />
+      <Page Remove="output\**" />
+      <Resource Remove="output\**" />
+      <ProjectReference Remove="output\**" />
+      <PackageReference Remove="output\**" />
+      <UpToDateCheckInput Remove="output\**" />
+      <AvailableItemName Remove="output\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <AssetsSourceFiles Include="Assets/**/*.*" />
   </ItemGroup>
   

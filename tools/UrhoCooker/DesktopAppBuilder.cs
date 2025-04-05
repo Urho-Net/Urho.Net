@@ -8,8 +8,8 @@ using Task = Microsoft.Build.Utilities.Task;
 
 namespace UrhoCooker
 {
-     public class DesktopBuildTask : Task
-     {
+    public class DesktopBuildTask : Task
+    {
         Options opts;
         Dictionary<string, string> envVars = new();
 
@@ -43,24 +43,15 @@ namespace UrhoCooker
             {
                 buildType = "Release";
             }
-            string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
+            string targetFramework = (opts.Framework != "") ? opts.Framework : "net9.0";
 
-            
-            /*
-     "publish",
-                "-c","Release",
-                "-r","osx-x64",
-                "/property:DefineConstants=_DESKTOP_PUBLISHED_BINARY_",
-                "${workspaceFolder}/${workspaceFolderBasename}.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            */
 
-            if(opts.OutputPath != "")
+
+            if (opts.OutputPath != "")
             {
                 opts.OutputPath = Path.Combine(opts.OutputPath, opts.RID);
             }
-     
+
             string dotnet_build_command = $"dotnet publish -f {targetFramework} -r  {opts.RID} -c {buildType}   -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:StripSymbols=true   -p:DefineConstants=\"_DESKTOP_PUBLISHED_BINARY_\" -o {opts.OutputPath}";
 
             (int exitCode, string output) = Utils.RunShellCommand(Log,
@@ -81,6 +72,16 @@ namespace UrhoCooker
 
             return true;
         }
-     }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string? ToString()
+        {
+            return base.ToString();
+        }
+    }
 
 }

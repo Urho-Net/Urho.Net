@@ -13,6 +13,46 @@
             "group": "build"
         },
         {
+            "label": "build-web-debug",
+            "command": "dotnet",
+            "type": "process",
+            "dependsOn": "build-urho-cooker",
+            "args": [
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "debug",
+                "--architecture",
+                "web",
+                "--path",
+                ".",
+                "--output",
+                "../output"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "build-web-release",
+            "command": "dotnet",
+            "type": "process",
+            "dependsOn": "build-urho-cooker",
+            "args": [
+                "${workspaceFolder}/tools/UrhoCooker/UrhoCooker.dll",
+                "--task",
+                "build",
+                "--type",
+                "release",
+                "--architecture",
+                "web",
+                "--path",
+                ".",
+                "--output",
+                "../output"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "ios-build-release",
             "command": "dotnet",
             "type": "process",
