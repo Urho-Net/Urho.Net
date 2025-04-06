@@ -12,9 +12,22 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
+using Microsoft.Build.Evaluation;
+using Microsoft.Build.Locator;  // Add this
 namespace UrhoCooker
 {
+    public class ReferenceInfo
+    {
+        public string Name { get; set; }
+        public string HintPath { get; set; }
+    };
+
+    public class PackageReferenceInfo
+    {
+        public string Name { get; set; }
+        public string Version { get; set; }
+    };
+
     public static class Utils
     {
         private static readonly object s_SyncObj = new object();
@@ -719,6 +732,160 @@ namespace UrhoCooker
 
             return reference_assemblies.ToArray();
         }
+
+
+        public static void RegisterMSBuild()
+        {
+            // Only register if not already registered
+            if (!MSBuildLocator.IsRegistered)
+            {
+                var instances = MSBuildLocator.QueryVisualStudioInstances().ToArray();
+                if (instances.Length > 0)
+                {
+                    MSBuildLocator.RegisterInstance(instances.OrderByDescending(x => x.Version).First());
+                }
+                else
+                {
+                    Console.WriteLine("No MSBuild instances found !!");
+                }
+            }
+        }
+
+        public static void GetProjectReferences(string csprojPath, ref List<ReferenceInfo> referencesList)
+        {
+            // Create a project collection
+            using (var pc = new ProjectCollection())
+            {
+                // Load the project
+                var project = pc.LoadProject(csprojPath);
+
+                // Get all Reference items
+                var references = project.GetItems("Reference");
+
+                // Output the results
+                foreach (var reference in references)
+                {
+                    string name = reference.EvaluatedInclude;
+                    if (name == "UrhoDotNet" || name.Contains("UrhoDotNet")) continue;
+                    string hintPath = reference.GetMetadataValue("HintPath");
+                    referencesList.Add(new ReferenceInfo { Name = name, HintPath = hintPath });
+                    Console.WriteLine($"Reference: {name}, HintPath: {hintPath}");
+                }
+            }
+        }
+
+        public static void GetProjectPackageReferences(string csprojPath, ref List<PackageReferenceInfo> packageReferenceInfos)
+        {
+            using (var pc = new ProjectCollection())
+            {
+                var project = pc.LoadProject(csprojPath);
+
+                var packageReferences = project.GetItems("PackageReference");
+
+                foreach (var package in packageReferences)
+                {
+                    string name = package.EvaluatedInclude;
+                    string version = package.GetMetadataValue("Version");
+                    packageReferenceInfos.Add(new PackageReferenceInfo { Name = name, Version = version });
+                    Console.WriteLine($"Package: {name}, Version: {version}");
+                }
+            }
+        }
+
+
+        public static void AppendReferencesAndPackageReferencesToProject(string csprojPath, List<ReferenceInfo> referencesList, List<PackageReferenceInfo> packageReferenceInfos)
+        {
+            using (var pc = new ProjectCollection())
+            {
+                var project = pc.LoadProject(csprojPath);
+                foreach (var reference in referencesList)
+                {
+                    var item = project.AddItem("Reference", reference.Name);
+                    item.First().SetMetadataValue("HintPath", reference.HintPath);
+                }
+                foreach (var packageReference in packageReferenceInfos)
+                {
+                    var item = project.AddItem("PackageReference", packageReference.Name);
+                    item.First().SetMetadataValue("Version", packageReference.Version);
+                }
+                project.Save();
+            }
+        }
+
+
+        public static void AppendReferencesToProject(string csprojPath, List<ReferenceInfo> referencesList)
+        {
+            using (var pc = new ProjectCollection())
+            {
+                var project = pc.LoadProject(csprojPath);
+                foreach (var reference in referencesList)
+                {
+                    var item = project.AddItem("Reference", reference.Name);
+                    item.First().SetMetadataValue("HintPath", reference.HintPath);
+                }
+                project.Save();
+            }
+        }
+
+        public static void AppendPackageReferencesToProject(string csprojPath, ref List<PackageReferenceInfo> packageReferencesList)
+        {
+            using (var pc = new ProjectCollection())
+            {
+                var project = pc.LoadProject(csprojPath);
+                foreach (var packageReference in packageReferencesList)
+                {
+                    var item = project.AddItem("PackageReference", packageReference.Name);
+                    item.First().SetMetadataValue("Version", packageReference.Version);
+                }
+                project.Save();
+            }
+        }
+
+        public static bool FindProjectInPath(string path, ref string projectPath)
+        {
+            bool found = false;
+            string[] files = Directory.GetFiles(path, "*.csproj", SearchOption.AllDirectories);
+            if (files.Length > 0)
+            {
+                projectPath = files[0];
+                found = true;
+            }
+            else
+            {
+                Console.WriteLine($"Project not found in {path}");
+            }
+            return found;
+        }
+
+        public static void ParseEnvironmentVariables(this string project_vars_path , out Dictionary<string, string> envVarsDict)
+        {
+            string[] project_vars = project_vars_path.FileReadAllLines();
+            envVarsDict = new Dictionary<string, string>();
+            foreach (string v in project_vars)
+            {
+                if (v.Contains('#') || v == string.Empty) continue;
+                string tr = v.Trim();
+                if (tr.StartsWith("export"))
+                {
+                    tr = tr.Replace("export", "");
+                    string[] vars = tr.Split('=', 2);
+                    envVarsDict[vars[0].Trim()] = vars[1].Trim();
+                }
+            }
+        }
+
+
+        public static string GetEnvValue( this Dictionary<string, string> envVarsDict, string key)
+        {
+            string value = string.Empty;
+            if (envVarsDict.TryGetValue(key, out var val))
+            {
+                value = val;
+                value = value.Replace("\'", "");
+            }
+            return value.Trim();
+        }
+        
 
     }
 }

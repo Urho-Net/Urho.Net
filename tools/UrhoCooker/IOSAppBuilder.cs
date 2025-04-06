@@ -87,7 +87,7 @@ namespace UrhoCooker
             }
             string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
             /*
-             * dotnet publish -f net9.0 -r  ios-arm64 -c Release -p:OutputType=Library  -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:StripSymbols=true -p:BuildAsLibrary=true  -p:DefineConstants="__IOS__"
+             * dotnet publish -f net9.0 -r  ios-arm64 -c Release -p:OutputType=Library  -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:StripSymbols=true -p:BuildAsLibrary=true  -p:DefineConstants="IOS"
                mkdir Game.framework
                install_name_tool -rpath @executable_path @executable_path/Frameworks bin/Release/net9.0/ios-arm64/publish/libGame.dylib 
                install_name_tool -id @rpath/Game.framework/Game bin/Release/net9.0/ios-arm64/publish/libGame.dylib 
@@ -98,7 +98,7 @@ namespace UrhoCooker
                mv -f Game.framework IOS/Frameworks
              */
             
-            string dotnet_build_command = $"dotnet publish -f {targetFramework} -r  ios-arm64 -c {buildType} -p:OutputType=Library  -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:StripSymbols=true -p:BuildAsLibrary=true  -p:DefineConstants=\"__IOS__\"";
+            string dotnet_build_command = $"dotnet publish -f {targetFramework} -r  ios-arm64 -c {buildType} -p:OutputType=Library  -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:StripSymbols=true -p:BuildAsLibrary=true  -p:DefineConstants=\"IOS\"";
 
             (int exitCode, string output) = Utils.RunShellCommand(Log,
                 dotnet_build_command,

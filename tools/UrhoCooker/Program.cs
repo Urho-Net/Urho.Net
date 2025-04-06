@@ -38,6 +38,7 @@ namespace UrhoCooker
         static UrhoCookerBuildEngine buildEngine = new UrhoCookerBuildEngine();
         static void Main(string[] args)
         {
+            Utils.RegisterMSBuild();
             Parser.Default.ParseArguments<Options>(args)
            .WithParsed(RunOptions);
 

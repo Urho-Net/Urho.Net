@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Task = Microsoft.Build.Utilities.Task;
+using System;
+
 
 namespace UrhoCooker
 {
@@ -37,14 +39,37 @@ namespace UrhoCooker
             return base.Equals(obj);
         }
 
+
         public override bool Execute()
         {
+            // Register all .NET SDKs that are installe on this machine.
+
             URHONET_HOME_PATH = Utils.GetUrhoNetHomePath();
-            if(!ParseEnvironmentVariables())
+            if (!ParseEnvironmentVariables())
             {
                 Log.LogError("Failed to parse environment variables");
                 return false;
             }
+
+            string parentProjectPath = Path.Combine(opts.ProjectPath, PROJECT_NAME+".csproj");
+            if (!File.Exists(parentProjectPath))
+            {
+                Log.LogError($"Project file {PROJECT_NAME+".csproj"} not found , searching for a default project file");
+                if(!Utils.FindProjectInPath(opts.ProjectPath, ref parentProjectPath))
+                {
+                    Log.LogError("Default Project file not found");
+                    return false;
+                }
+                else
+                {
+                    Log.LogMessage($"Project file {parentProjectPath} found");
+                }
+            }
+
+            List<ReferenceInfo> references = new List<ReferenceInfo>();
+            List<PackageReferenceInfo> packageReferences = new List<PackageReferenceInfo>();
+            Utils.GetProjectReferences(parentProjectPath,ref references);
+            Utils.GetProjectPackageReferences(parentProjectPath, ref packageReferences);
 
             string buildType = "Debug";
 
@@ -64,16 +89,51 @@ namespace UrhoCooker
 
             opts.ProjectPath = Path.Combine(opts.ProjectPath, "Web");
 
-            string projectName = PROJECT_NAME+ "Web.csproj";
+            string projectName = PROJECT_NAME + "Web.csproj";
 
 
             if (!Directory.Exists(Path.Combine(opts.ProjectPath, "Web")))
             {
                 Path.Combine(URHONET_HOME_PATH, "template/Web").CopyDirectory(Path.Combine(opts.ProjectPath), true);
-                File.Move(Path.Combine(opts.ProjectPath,"template.csproj"), Path.Combine(opts.ProjectPath,projectName), true);
+                File.Move(Path.Combine(opts.ProjectPath, "template.csproj"), Path.Combine(opts.ProjectPath, projectName), true);
             }
 
-            string dotnet_build_command = $"dotnet build -f {targetFramework}  {projectName} -c {buildType} -o {opts.OutputPath}";
+
+            string initialMemory = envVarsDict.GetEnvValue("WEB_INITIAL_MEMORY");
+            if(initialMemory == string.Empty)
+            {
+                initialMemory = "128MB";
+            }
+            Path.Combine(opts.ProjectPath, projectName).ReplaceInfile("@INITIAL_MEMORY@", initialMemory);
+
+            string maxMemory = envVarsDict.GetEnvValue("WEB_MAXIMUM_MEMORY");
+            if(maxMemory == string.Empty)
+            {
+                maxMemory = "2048MB";
+            }
+            Path.Combine(opts.ProjectPath, projectName).ReplaceInfile("@MAXIMUM_MEMORY@", maxMemory);
+
+            string stackSize = envVarsDict.GetEnvValue("WEB_STACK_SIZE");
+            if(stackSize == string.Empty)
+            {
+                stackSize = "10000000";
+            }
+            Path.Combine(opts.ProjectPath, projectName).ReplaceInfile("@ASYNCIFY_STACK_SIZE@", stackSize);
+
+
+            string totalMemory = envVarsDict.GetEnvValue("WEB_TOTAL_MEMORY");
+            if(totalMemory == string.Empty)
+            {
+                totalMemory = "520MB";
+            }
+            Path.Combine(opts.ProjectPath, projectName).ReplaceInfile("@TOTAL_MEMORY@", totalMemory);
+
+      
+
+            // ADD all referecnes and package references to the project
+            Utils.AppendReferencesAndPackageReferencesToProject(Path.Combine(opts.ProjectPath, projectName), references, packageReferences);
+
+            string dotnet_build_command = $"dotnet build -f {targetFramework}  {projectName} -c {buildType} -p:DefineConstants=\"WEB\" -o {opts.OutputPath}";
 
             (int exitCode, string output) = Utils.RunShellCommand(Log,
                 dotnet_build_command,
@@ -92,35 +152,6 @@ namespace UrhoCooker
             return true;
         }
 
-
-        void ParseEnvironmentVars(string project_vars_path)
-        {
-            string[] project_vars = project_vars_path.FileReadAllLines();
-
-            foreach (string v in project_vars)
-            {
-                if (v.Contains('#') || v == string.Empty) continue;
-                string tr = v.Trim();
-                if (tr.StartsWith("export"))
-                {
-                    tr = tr.Replace("export", "");
-                    string[] vars = tr.Split('=', 2);
-                    envVarsDict[vars[0].Trim()] = vars[1].Trim();
-                }
-            }
-        }
-
-        string GetEnvValue(string key)
-        {
-            string value = string.Empty;
-            if (envVarsDict.TryGetValue(key, out var val))
-            {
-                value = val;
-                value = value.Replace("\'", "");
-            }
-            return value.Trim();
-        }
-
         private bool ParseEnvironmentVariables()
         {
 
@@ -131,13 +162,14 @@ namespace UrhoCooker
                 Log.LogError($"project_vars.sh not found");
                 return false;
             }
-            ParseEnvironmentVars(project_vars_path);
 
-            PROJECT_UUID = GetEnvValue("PROJECT_UUID");
-            PROJECT_NAME = GetEnvValue("PROJECT_NAME");
-            JAVA_PACKAGE_PATH = GetEnvValue("JAVA_PACKAGE_PATH");
-            VERSION_CODE = GetEnvValue("VERSION_CODE");
-            VERSION_NAME = GetEnvValue("VERSION_NAME");
+            project_vars_path.ParseEnvironmentVariables(out envVarsDict);
+
+            PROJECT_UUID = envVarsDict.GetEnvValue("PROJECT_UUID");
+            PROJECT_NAME = envVarsDict.GetEnvValue("PROJECT_NAME");
+            JAVA_PACKAGE_PATH = envVarsDict.GetEnvValue("JAVA_PACKAGE_PATH");
+            VERSION_CODE = envVarsDict.GetEnvValue("VERSION_CODE");
+            VERSION_NAME = envVarsDict.GetEnvValue("VERSION_NAME");
 
             if (VERSION_CODE == string.Empty)
             {

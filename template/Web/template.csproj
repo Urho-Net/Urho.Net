@@ -94,11 +94,11 @@
                     -sVERBOSE=1
                     -s FULL_ES2
                     -s WASM=1
-                    -s INITIAL_MEMORY=128MB 
-                    -s MAXIMUM_MEMORY=2048MB 
+                    -s INITIAL_MEMORY=@INITIAL_MEMORY@
+                    -s MAXIMUM_MEMORY=@MAXIMUM_MEMORY@
                     -s ALLOW_MEMORY_GROWTH=1
-                    -s ASYNCIFY_STACK_SIZE=10000000
-                    -s TOTAL_MEMORY=160MB
+                    -s ASYNCIFY_STACK_SIZE=@ASYNCIFY_STACK_SIZE@
+                    -s TOTAL_MEMORY=@TOTAL_MEMORY@
                     --embed-file ../Assets@/
                 </EmccFlags>
                 <EmccExtraLDFlags>
@@ -115,10 +115,10 @@
                     --bind
                     -s FULL_ES2
                     -s WASM=1
-                    -s INITIAL_MEMORY=128MB
-                    -s MAXIMUM_MEMORY=2048MB
+                    -s INITIAL_MEMORY=@INITIAL_MEMORY@
+                    -s MAXIMUM_MEMORY=@MAXIMUM_MEMORY@
                     -s ALLOW_MEMORY_GROWTH=1
-                    -s TOTAL_MEMORY=160MB
+                    -s TOTAL_MEMORY=@TOTAL_MEMORY@
                     --embed-file ../Assets@/
                 </EmccFlags>
                 <EmccExtraLDFlags>

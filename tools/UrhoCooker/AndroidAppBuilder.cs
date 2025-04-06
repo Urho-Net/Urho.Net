@@ -373,7 +373,7 @@ namespace UrhoCooker
             string targetFramework = (opts.Framework != "") ? opts.Framework : "net9.0";
 
             (int exitCode, string output) = Utils.RunShellCommand(Log,
-                $"dotnet publish -f {targetFramework} -c {buildType}  -r {aotArch}  -p:OutputType=Library {opts.Properties} -p:StripSymbols={stripSymbols} -p:BuildAsLibrary=true -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:DefineConstants=\"__ANDROID__\" -o {dstFolder}",
+                $"dotnet publish -f {targetFramework} -c {buildType}  -r {aotArch}  -p:OutputType=Library {opts.Properties} -p:StripSymbols={stripSymbols} -p:BuildAsLibrary=true -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:DefineConstants=\"ANDROID\" -o {dstFolder}",
                 null,
                 workingDir: Path.Combine(opts.ProjectPath),
                 logStdErrAsMessage: true,
@@ -662,7 +662,7 @@ namespace UrhoCooker
             string targetFramework = (opts.Framework != "") ? opts.Framework : "net9.0";
 
             (int exitCode, string output) = Utils.RunShellCommand(Log,
-                                      $"dotnet build -f {targetFramework} --configuration Debug -p:DefineConstants=_ANDROID_",
+                                      $"dotnet build -f {targetFramework} --configuration Debug -p:DefineConstants=ANDROID",
                                       null,
                                       workingDir: Path.Combine(opts.ProjectPath),
                                       logStdErrAsMessage: true,
@@ -679,7 +679,7 @@ namespace UrhoCooker
             string targetFramework = (opts.Framework != "") ? opts.Framework : "net9.0";
 
             (int exitCode, string output) = Utils.RunShellCommand(Log,
-                                      $"dotnet build -f {targetFramework} --configuration Release -p:DefineConstants=_ANDROID_",
+                                      $"dotnet build -f {targetFramework} --configuration Release -p:DefineConstants=ANDROID",
                                       null,
                                       workingDir: Path.Combine(opts.ProjectPath),
                                       logStdErrAsMessage: true,
