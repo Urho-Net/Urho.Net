@@ -271,7 +271,7 @@
                 "android",
                 "--path",
                 ".",
-                "--obfuscate",
+                "--aot",
                 "true",
                 "--keystore","${input:keystore}"
             ],
@@ -292,7 +292,7 @@
                 "android",
                 "--path",
                 ".",
-                "--obfuscate",
+                "--aot",
                 "true",
                 "--install",
                 "true",

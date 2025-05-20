@@ -92,7 +92,7 @@ namespace UrhoCooker
             string projectName = PROJECT_NAME + "Web.csproj";
 
 
-            if (!Directory.Exists(Path.Combine(opts.ProjectPath, "Web")))
+            if (!Directory.Exists(Path.Combine(opts.ProjectPath)))
             {
                 Path.Combine(URHONET_HOME_PATH, "template/Web").CopyDirectory(Path.Combine(opts.ProjectPath), true);
                 File.Move(Path.Combine(opts.ProjectPath, "template.csproj"), Path.Combine(opts.ProjectPath, projectName), true);
