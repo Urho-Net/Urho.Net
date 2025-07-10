@@ -1,0 +1,142 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
+    <!-- <GenerateAssemblyInfo>false</GenerateAssemblyInfo> -->
+      <!-- Suppress ALL warnings -->
+    <WarningLevel>0</WarningLevel>
+     <!-- Suppress warnings, show only errors -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <WarningsNotAsErrors />
+    <NoWarn>$(NoWarn);CS1591;CS1701;CS1702;CS1998;CS0649;CS0169;CS0067;CS8632;CS0436</NoWarn>
+    <MSBuildWarningsAsMessages>true</MSBuildWarningsAsMessages>
+     <!-- <GenerateAssemblyInfo>false</GenerateAssemblyInfo> -->
+  </PropertyGroup>
+
+  <PropertyGroup>          
+    <TieredCompilation>false</TieredCompilation>          
+    <AssemblyName>Game</AssemblyName>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>false</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows> 
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX> 
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+    <OSArch>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSArch>
+  </PropertyGroup>
+
+  <!-- <ItemGroup>
+    <Compile Include="../SharedMemory/SharedMemory.cs" />
+  </ItemGroup> -->
+  
+  <ItemGroup>
+    <AssetsSourceFiles Include="Assets/**/*.*" />
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <HomeDir>$(UserProfile)</HomeDir>
+    <HomeDir Condition="'$(HomeDir)' == ''">$(Home)</HomeDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <UrhoNetHome>$(HomeDir)/.urhonet_config/UrhoNetHome.config</UrhoNetHome>
+  </PropertyGroup>
+
+
+  <Target Name="CustomBeforeBuild" BeforeTargets="BeforeBuild" >
+    <Error Condition="! Exists('$(UrhoNetHome)')" Text="Urho.Net is not configured , please run configure.sh (configure.bat on Windows) from the Urho.Net installation folder " /> 
+    <XmlPeek XmlInputPath="$(UrhoNetHome)" Query="UrhoNetHome/add[@key='UrhoNetHome']/@value">
+        <Output TaskParameter="Result" ItemName="URHONET_HOME_ROOT" />
+    </XmlPeek>
+    <Message Text="URHONET_HOME_ROOT=@(URHONET_HOME_ROOT)" Importance="high" />
+    <ItemGroup>
+      <Reference Include="UrhoDotNet">
+        <HintPath>@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\desktop\UrhoDotNet.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+    <PropertyGroup>
+      <UrhoDotNetDLL>@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\desktop\UrhoDotNet.dll</UrhoDotNetDLL>
+    </PropertyGroup>  
+    <Copy SourceFiles="$(UrhoDotNetDLL)" DestinationFolder="References" ContinueOnError="true" />
+    <PropertyGroup>
+    <UrhoDotNetXML>@(URHONET_HOME_ROOT)\template\libs\dotnet\urho\desktop\UrhoDotNet.xml</UrhoDotNetXML>
+    </PropertyGroup>  
+    <Copy SourceFiles="$(UrhoDotNetXML)" DestinationFolder="References" ContinueOnError="true" />
+    <Delete Files="Android/app/src/main/assets/Data/DotNet/Game.dll" />
+  </Target>
+
+  <Target Name="CopyCustomContentWindows" AfterTargets="AfterBuild" Condition="'$(IsWindows)'=='true'">
+    <PropertyGroup>
+      <libUrho3D>@(URHONET_HOME_ROOT)/template/libs/windows/Urho3D.dll</libUrho3D>
+    </PropertyGroup>  
+    <Error Condition="! Exists('$(libUrho3D)')" Text="Urho3D.dll not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
+    <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+     <RemoveDir Directories="obj" />
+  </Target>
+
+  <Target Name="CopyCustomContentMacOS" AfterTargets="AfterBuild" Condition="'$(IsOSX)'=='true'">
+    <PropertyGroup>
+      <libUrho3D>@(URHONET_HOME_ROOT)/template/libs/macos/$(OSArch)/libUrho3D.dylib</libUrho3D>
+    </PropertyGroup>
+    <Error Condition="! Exists('$(libUrho3D)')" Text="libUrho3D.dylib not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
+    <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+     <RemoveDir Directories="obj" />
+  </Target>
+  
+  <Target Name="CopyCustomContentLinux" AfterTargets="AfterBuild" Condition="'$(IsLinux)'=='true'">
+    <PropertyGroup>
+      <libUrho3D>@(URHONET_HOME_ROOT)/template/libs/linux/libUrho3D.so</libUrho3D>
+    </PropertyGroup>
+    <Error Condition="! Exists('$(libUrho3D)')" Text="libUrho3D.so not found are you sure URHONET_HOME_ROOT is pointing to the right place ?" /> 
+    <Copy SourceFiles="$(libUrho3D)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+     <RemoveDir Directories="obj" />
+  </Target>
+
+
+
+  <Target Name = "CustomAfterClean" AfterTargets="AfterClean">
+        <Message Text="Urho.Net clean all" Importance="high" />
+        <RemoveDir Directories="bin" />
+        <RemoveDir Directories="Android" />
+        <RemoveDir Directories="IOS" />
+        <RemoveDir Directories="libs" />
+        <RemoveDir Directories="output" />
+        <RemoveDir Directories="obj" />
+        <RemoveDir Directories= "Assets/Data/DotNet" />
+        <RemoveDir Directories="Web" />
+        <RemoveDir Directories="Intermediate" />
+  </Target>
+
+  <!-- needed for intellisense -->
+  <ItemGroup>
+    <Reference Include="UrhoDotNet" >
+        <HintPath>References\UrhoDotNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+    <ItemGroup>
+    <PackageReference Include="NetMQ" Version="4.0.1.12" />
+    <PackageReference Include="CliWrap" Version="3.6.4" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="9.0.0-*" />
+    <PackageReference Include="H.Pipes" Version="15.0.0" />
+    <PackageReference Include="H.Formatters.Newtonsoft.Json" Version="15.0.0" />
+    
+  </ItemGroup>
+
+</Project>
