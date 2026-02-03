@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net9.0/Game.dll",
+            "program": "${workspaceFolder}/bin/Debug/net10.0/Game.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
