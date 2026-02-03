@@ -40,6 +40,18 @@ android {
             useLegacyPackaging = false
         }
     }
+
+    bundle {
+        abi {
+            enableSplit = true
+        }
+        language {
+            enableSplit = false
+        }
+        storeArchive {
+            enable = true
+        }
+    }
 }
 
 dependencies {
