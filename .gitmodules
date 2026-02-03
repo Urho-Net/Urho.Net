@@ -1,3 +1,4 @@
 [submodule "Source"]
 	path = Source
 	url = https://github.com/Urho-Net/Urho3D.git
+	branch = dotnet-10.x
