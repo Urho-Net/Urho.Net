@@ -85,13 +85,13 @@ namespace UrhoCooker
             {
                 buildType = "Release";
             }
-            string targetFramework = (opts.Framework != "")? opts.Framework : "net9.0";
+            string targetFramework = (opts.Framework != "")? opts.Framework : "net10.0";
             /*
-             * dotnet publish -f net9.0 -r  ios-arm64 -c Release -p:OutputType=Library  -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:StripSymbols=true -p:BuildAsLibrary=true  -p:DefineConstants="IOS"
+             * dotnet publish -f net10.0 -r  ios-arm64 -c Release -p:OutputType=Library  -p:PublishAot=true -p:TrimmerRemoveSymbols=false -p:TrimMode=partial -p:DisableUnsupportedError=true -p:PublishAotUsingRuntimePack=true -p:RemoveSections=true -p:StripSymbols=true -p:BuildAsLibrary=true  -p:DefineConstants="IOS"
                mkdir Game.framework
-               install_name_tool -rpath @executable_path @executable_path/Frameworks bin/Release/net9.0/ios-arm64/publish/libGame.dylib 
-               install_name_tool -id @rpath/Game.framework/Game bin/Release/net9.0/ios-arm64/publish/libGame.dylib 
-               lipo -create  bin/Release/net9.0/ios-arm64/publish/libGame.dylib -output Game.framework/Game
+               install_name_tool -add_rpath @executable_path @executable_path/Frameworks bin/Release/net10.0/ios-arm64/publish/libGame.dylib 
+               install_name_tool -id @rpath/Game.framework/Game bin/Release/net10.0/ios-arm64/publish/libGame.dylib 
+               lipo -create  bin/Release/net10.0/ios-arm64/publish/libGame.dylib -output Game.framework/Game
                cp  Info.plist Game.framework/Info.plist
                mkdir -p IOS/Frameworks
                rm -rf IOS/Frameworks/Game.framework
@@ -118,7 +118,7 @@ namespace UrhoCooker
             Directory.CreateDirectory(Path.Combine(opts.OutputPath, "IOS/Frameworks","Game.framework"));
             
             ( exitCode,  output) = Utils.RunShellCommand(Log,
-                $"install_name_tool -rpath @executable_path @executable_path/Frameworks bin/Release/{targetFramework}/ios-arm64/publish/libGame.dylib",
+                $"install_name_tool -add_rpath  @executable_path/Frameworks bin/Release/{targetFramework}/ios-arm64/publish/libGame.dylib",
                 envVars,
                 workingDir: opts.ProjectPath,
                 logStdErrAsMessage: true,

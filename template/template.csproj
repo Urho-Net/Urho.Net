@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType Condition="'$(BuildAsLibrary)' != 'true'">Exe</OutputType>
     <OutputType Condition="'$(BuildAsLibrary)' == 'true'">Library</OutputType>
-    <TargetFrameworks>net9.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -61,7 +61,7 @@
     </XmlPeek>
     <PropertyGroup>
       <UrhoCookerCSProj>@(URHONET_HOME_ROOT)\tools\UrhoCooker\UrhoCooker.csproj</UrhoCookerCSProj>
-      <UrhoCookerOutputDir>@(URHONET_HOME_ROOT)\tools\UrhoCooker\bin\Release\net9.0</UrhoCookerOutputDir>
+      <UrhoCookerOutputDir>@(URHONET_HOME_ROOT)\tools\UrhoCooker\bin\Release\net10.0</UrhoCookerOutputDir>
     </PropertyGroup>
     <Message Text="Building UrhoCooker from $(UrhoCookerCSProj)" Importance="high" />
     <Exec Command="dotnet build -c Release $(UrhoCookerCSProj)" />

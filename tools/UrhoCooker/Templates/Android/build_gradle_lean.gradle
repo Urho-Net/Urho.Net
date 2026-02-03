@@ -2,15 +2,14 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 android {
-    compileSdkVersion 34
+    namespace '%TEMPLATE_UUID%'
+    compileSdkVersion 35
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "%TEMPLATE_UUID%"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode %VERSION_CODE%
         versionName "%VERSION_NAME%"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -30,6 +29,16 @@ android {
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
     }
 }
 
