@@ -117,45 +117,60 @@ namespace UrhoCooker
             Utils.DeleteDirectory(Path.Combine(opts.OutputPath, "IOS/Frameworks","Game.framework"));
             Directory.CreateDirectory(Path.Combine(opts.OutputPath, "IOS/Frameworks","Game.framework"));
             
+            string dylibPath = $"bin/{buildType}/{targetFramework}/ios-arm64/publish/libGame.dylib";
+            
+            // Check if rpath already exists before adding
+            (exitCode, output) = Utils.RunShellCommand(Log,
+                $"otool -l {dylibPath} | grep -A 2 LC_RPATH | grep '@executable_path/Frameworks'",
+                envVars,
+                workingDir: opts.ProjectPath,
+                logStdErrAsMessage: false,
+                debugMessageImportance: MessageImportance.High,
+                label: "check-rpath");
+
+            // Only add rpath if it doesn't exist (exitCode != 0 means grep didn't find it)
+            if (exitCode != 0)
+            {
+                (exitCode, output) = Utils.RunShellCommand(Log,
+                    $"install_name_tool -add_rpath @executable_path/Frameworks {dylibPath}",
+                    envVars,
+                    workingDir: opts.ProjectPath,
+                    logStdErrAsMessage: true,
+                    debugMessageImportance: MessageImportance.High,
+                    label: "add-rpath");
+
+                if (exitCode != 0)
+                {
+                    Log.LogError("Failed to add rpath to dylib");
+                    return false;
+                }
+            }
+            
             ( exitCode,  output) = Utils.RunShellCommand(Log,
-                $"install_name_tool -add_rpath  @executable_path/Frameworks bin/Release/{targetFramework}/ios-arm64/publish/libGame.dylib",
+                $"install_name_tool -id @rpath/Game.framework/Game {dylibPath}",
                 envVars,
                 workingDir: opts.ProjectPath,
                 logStdErrAsMessage: true,
                 debugMessageImportance: MessageImportance.High,
-                label: "dotnet-build");
+                label: "set-dylib-id");
 
             if (exitCode != 0)
             {
-                Log.LogError("dotnet publish error");
+                Log.LogError("Failed to set dylib id");
                 return false;
             }
             
             ( exitCode,  output) = Utils.RunShellCommand(Log,
-                $"install_name_tool -id @rpath/Game.framework/Game bin/Release/{targetFramework}/ios-arm64/publish/libGame.dylib",
+                $"lipo -create {dylibPath} -output {Path.Combine(opts.OutputPath, "IOS/Frameworks","Game.framework","Game")}",
                 envVars,
                 workingDir: opts.ProjectPath,
                 logStdErrAsMessage: true,
                 debugMessageImportance: MessageImportance.High,
-                label: "dotnet-build");
+                label: "create-framework");
 
             if (exitCode != 0)
             {
-                Log.LogError("dotnet publish error");
-                return false;
-            }
-            
-            ( exitCode,  output) = Utils.RunShellCommand(Log,
-                $"lipo -create  bin/Release/{targetFramework}/ios-arm64/publish/libGame.dylib -output {Path.Combine(opts.OutputPath, "IOS/Frameworks","Game.framework","Game")}",
-                envVars,
-                workingDir: opts.ProjectPath,
-                logStdErrAsMessage: true,
-                debugMessageImportance: MessageImportance.High,
-                label: "dotnet-build");
-
-            if (exitCode != 0)
-            {
-                Log.LogError("dotnet publish error");
+                Log.LogError("Failed to create framework with lipo");
                 return false;
             }
             
@@ -488,18 +503,27 @@ namespace UrhoCooker
 
             if (opts.Type == "debug")
             {
+                string debugFrameworkSource = Path.Combine(URHONET_HOME_PATH, "template/libs/ios/urho3d", "debug", "Urho3D.framework");
+                string frameworkDest = Path.Combine(opts.OutputPath, "IOS/Frameworks", "Urho3D.framework");
                 
-                // if (File.Exists(Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a")))
-                //     File.Delete(Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a"));
-                // (exitCode, output) = Utils.RunShellCommand(Log,
-                //               $"cat libUrho3D.split.??  > {Path.Combine(opts.OutputPath, "IOS/lib", "libUrho3D.a")}",
-                //               envVars,
-                //               workingDir: Path.Combine(URHONET_HOME_PATH, "template/libs/ios/urho3d", renderingBackend, "debug"),
-                //               logStdErrAsMessage: true,
-                //               debugMessageImportance: MessageImportance.High,
-                //               label: "copy cat libUrho3D.a");
-                // TBD ELI
-                Path.Combine(URHONET_HOME_PATH, "template/libs/ios/urho3d","release").CopyDirectory(Path.Combine(opts.OutputPath, "IOS/Frameworks"), true);
+                // Copy the debug framework directory structure
+                Directory.CreateDirectory(frameworkDest);
+                File.Copy(Path.Combine(debugFrameworkSource, "Info.plist"), Path.Combine(frameworkDest, "Info.plist"), true);
+                
+                // Concatenate split files to create the full framework binary
+                (exitCode, output) = Utils.RunShellCommand(Log,
+                              $"cat Urho3D.split.* > {Path.Combine(frameworkDest, "Urho3D")}",
+                              envVars,
+                              workingDir: debugFrameworkSource,
+                              logStdErrAsMessage: true,
+                              debugMessageImportance: MessageImportance.High,
+                              label: "concatenate debug framework");
+                
+                if (exitCode != 0)
+                {
+                    Log.LogError("Failed to concatenate debug framework split files");
+                    return false;
+                }
             }
             else
             {
